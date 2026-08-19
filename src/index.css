@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Custom scrollbars */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Editorial Input with floating label style */
+.ineco-input-container {
+  position: relative;
+  width: 100%;
+}
+
+.ineco-input-box {
+  width: 100%;
+  border: 1.5px solid #0D9488;
+  border-radius: 12px;
+  padding: 14px 16px;
+  background-color: #FFFFFF;
+  font-size: 15px;
+  color: #1A202C;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.ineco-input-box:focus {
+  border-color: #0F766E;
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+}
+
+.ineco-input-label {
+  position: absolute;
+  top: -10px;
+  left: 14px;
+  background-color: #ffffff;
+  padding: 0 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #0D9488;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Editorial Palette */
+:root {
+  --primary-teal: #0D9488;
+  --primary-teal-dark: #134E4A;
+  --primary-teal-hover: #0F766E;
+  --primary-teal-light: #F0FDFA;
+  --editorial-bg: #F9FBFC;
+}
