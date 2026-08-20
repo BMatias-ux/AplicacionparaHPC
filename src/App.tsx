@@ -3,6 +3,7 @@ import { UserProfile, Appointment } from './types';
 import { INITIAL_USER } from './mockData';
 import { OnboardingWizard } from './components/OnboardingWizard';
 import { BottomNavBar, TabType } from './components/BottomNavBar';
+import { InstallAppBanner } from './components/InstallAppBanner';
 import { HomeScreen } from './components/HomeScreen';
 import { TurnosScreen } from './components/TurnosScreen';
 import { ActividadesScreen } from './components/ActividadesScreen';
@@ -196,6 +197,8 @@ export default function App() {
               )}
 
               {currentTab === 'mas' && <MasScreen />}
+
+              <InstallAppBanner />
 
               {/* Persistent Bottom Bar across all screens */}
               <BottomNavBar
