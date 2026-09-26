@@ -39,3 +39,11 @@ verificado en la documentación de Meta: la coexistencia existe pero sólo la ha
 Tres caminos planteados (A Tech Provider, B proveedor, C sin coexistencia).
 
 **Quedó pendiente:** decidir A o B; merge del PR #1; CNAME `portal`.
+
+## 26/09/2026 (2) — Decisión: camino B (proveedor)
+
+**Decisión de Matías:** camino B; M Digital no tiene verificación de negocio en Meta (D-10).
+**Hecho:** verificado el alta con coexistencia en 360dialog (QR desde la app, Business Portfolio de HPC con datos
+completos, app abierta cada 13 días, €49/mes por número + Meta sin recargo, webhook propio con `smb_message_echoes`).
+Estimados los cambios en el bot (endpoint y cabecera de envío + manejo de echoes). Redactado el pedido de cotización.
+**Pendiente:** enviar cotizaciones; confirmar Business Portfolio de HPC; merge PR #1; CNAME `portal`.

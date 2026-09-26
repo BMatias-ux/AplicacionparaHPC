@@ -106,6 +106,7 @@ formaciones anuales y membresía.
 | D-07 | 25/09/2026 | No listar presencial en **Zona Norte ni Salta** | Sin profesionales cargados al corte de sept. 2026 y hubo reclamo por publicidad de Salta | Hecha; revisar al sumar equipo |
 | D-08 | — | Acceso de profesionales: ¿dentro del portal o app aparte? | Ver *Proyección* | Pendiente |
 | D-09 | 25/09/2026 | v1 = información + WhatsApp, sin registro ni datos personales | Decisión de Matías; evita guardar datos de salud sin backend | Aprobada |
+| D-10 | 26/09/2026 | Coexistencia del bot con el equipo **a través de un proveedor (BSP)**, no como Tech Provider | M Digital no tiene verificación de negocio en Meta; el proveedor lo resuelve en días | Aprobada; proveedor a elegir |
 
 ## Marco legal a tener presente
 

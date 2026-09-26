@@ -1,6 +1,6 @@
 # Etapa 2 · Bot en el número del equipo (coexistencia)
 
-**Fecha de apertura:** 26/09/2026 · **Estado:** análisis, sin cambios de código todavía
+**Fecha de apertura:** 26/09/2026 · **Estado:** camino B decidido; pidiendo cotizaciones
 
 ## Pedido
 
@@ -54,9 +54,43 @@ Según la documentación de Meta para desarrolladores (fuente al pie), las condi
 | **B. Usar un proveedor (BSP)** que ya ofrezca coexistencia (ej. 360dialog, YCloud, y otros) y apuntar su webhook al bot en Vercel | Cuenta en el proveedor, migrar el número a través de él | Se activa en días; el bot casi no cambia (cambia la URL a la que envía mensajes) | Costo mensual del proveedor además de las tarifas de Meta; dependencia de un tercero |
 | **C. Sin coexistencia**: el número del equipo pasa entero a la API y las personas responden desde una bandeja web | Construir o contratar una bandeja (inbox) | Es lo que preveía el plan original | El equipo pierde la app en el celular: cambio de hábito fuerte. Es el camino que el pedido actual quiere evitar |
 
-**Recomendación provisoria:** explorar **A** y **B** en paralelo durante una semana: pedir el alta de Tech
-Provider (no cuesta nada intentarlo) y pedir cotización a dos proveedores. Se decide con los tiempos y costos
-reales en la mano. Mientras tanto, el bot sigue en su número actual y el portal enlaza a ese número.
+**Decisión (Matías, 26/09/2026): camino B.** M Digital no tiene la verificación de negocio en Meta, requisito
+previo para ser Tech Provider (D-10). El bot sigue en su número actual hasta migrar.
+
+## Camino B en detalle (lo verificado el 26/09)
+
+Tomamos 360dialog como referencia porque documenta la coexistencia públicamente; hay que cotizar al menos un
+segundo proveedor.
+
+**Cómo es el alta con coexistencia (360dialog):**
+1. Desde el panel del proveedor: "Add channel" → plan → número → confirmar "Sí, uso la app Business".
+2. En el celular del equipo llega un mensaje con un **código QR**; se escanea desde la app WhatsApp Business.
+3. Se elige si compartir historial de chats y contactos (opcional, recomendado).
+4. Requisitos: app WhatsApp Business actualizada; el **Business Portfolio (Meta) tiene que ser de HPC**, con
+   razón social, dirección, sitio web y teléfono completos. La verificación de negocio de Meta **no figura como
+   obligatoria** para coexistencia (sí para nombre visible y tilde azul).
+5. Después del alta, la app del celular tiene que abrirse al menos **cada 13 días** o la conexión se cae.
+
+**Precio de referencia (360dialog, plan Regular):** €49 por número por mes + las tarifas de mensajes de Meta
+sin recargo. El plan Premium (€99) suma bandeja y verificación asistida. Los mensajes enviados desde la app del
+celular no se cobran.
+
+**Qué cambia en el bot (`bot-hpc`) al pasar por un proveedor:**
+- El envío de mensajes: hoy `api/webhook.js` llama a `graph.facebook.com/<versión>/<PHONE_NUMBER_ID>/messages`
+  con `Authorization: Bearer`. Con 360dialog pasa a ser el endpoint del proveedor con su propia API key en la
+  cabecera. Es un cambio de dos líneas en `enviar()` más dos variables de entorno.
+- El webhook: se registra en el panel del proveedor apuntando a la URL de Vercel. La verificación por
+  `x-hub-signature-256` puede no aplicar igual; confirmar con el proveedor cómo autentica sus llamadas.
+- Nuevo: manejar `smb_message_echoes` (cuando responde una persona desde la app) → marcar el número como
+  atendido por humano y silenciar el bot.
+
+**Qué NO cambia:** los flujos, textos, Redis, la hoja 'Demanda', el protocolo de riesgo.
+
+**Riesgos a cerrar antes de migrar:**
+- El Business Portfolio de HPC: ¿existe y está a nombre de la Fundación, con datos completos? Es el requisito duro.
+- Backup: exportar el historial del WhatsApp del equipo antes de escanear el QR.
+- Ventana de corte: hacerlo un viernes a la tarde, con el bot en modo "sólo menú" hasta validar que las
+  respuestas del equipo llegan como `smb_message_echoes`.
 
 ## Cambios que el bot necesita en cualquier camino
 
