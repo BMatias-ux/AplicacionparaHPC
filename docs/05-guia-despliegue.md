@@ -12,15 +12,15 @@ URL actual: `app-hpc.vercel.app`.
 
 ### 1. En Vercel
 1. Proyecto `app-hpc` → **Settings → Domains → Add Domain**.
-2. Escribir el subdominio elegido, ej. `app.habilidadesparaelcambio.com.ar`.
+2. Escribir el subdominio elegido, `portal.habilidadesparaelcambio.com.ar`.
 3. Vercel muestra el registro DNS que necesita (normalmente un **CNAME**). **Copiar exactamente el valor que muestre**
    (Vercel puede dar un valor específico del proyecto; no usar uno de memoria).
 
 ### 2. En Hostinger
 1. hPanel → **Dominios** → `habilidadesparaelcambio.com.ar` → **DNS / Nameservers**.
 2. Verificar que los nameservers sean los de Hostinger (si apuntan a otro lado, el DNS se edita allá).
-3. **Agregar registro**: Tipo `CNAME` · Nombre `app` (solo la parte del subdominio) · Destino: el valor que dio Vercel · TTL por defecto.
-4. Guardar. Revisar antes que no exista ya un registro `app` (A o CNAME) que choque.
+3. **Agregar registro**: Tipo `CNAME` · Nombre `portal` (solo la parte del subdominio) · Destino: el valor que dio Vercel · TTL por defecto.
+4. Guardar. Revisar antes que no exista ya un registro `portal` (A o CNAME) que choque.
 
 ### 3. Verificar
 - Volver a Vercel → Domains: pasa a **Valid Configuration** (puede tardar de minutos a unas horas).
@@ -29,7 +29,7 @@ URL actual: `app-hpc.vercel.app`.
 
 ```powershell
 # Muestra a dónde apunta el subdominio
-Resolve-DnsName app.habilidadesparaelcambio.com.ar -Type CNAME
+Resolve-DnsName portal.habilidadesparaelcambio.com.ar -Type CNAME
 ```
 
 ## Trabajo local

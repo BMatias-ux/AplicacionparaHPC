@@ -1,61 +1,48 @@
 @import "tailwindcss";
 
+/*
+  Identidad HPC (la misma de la Ficha Profesional y el directorio):
+  teal #0e4f55 · crema #f5f1e8 · dorado #c98e3f · Fraunces (títulos) + DM Sans (texto).
+
+  En Tailwind v4 los colores se declaran en @theme: cada --color-X genera clases
+  como bg-X, text-X, border-X. Por eso abajo se usa "bg-hpc" o "text-dorado".
+*/
+@theme {
+  --color-hpc: #0e4f55;
+  --color-hpc-oscuro: #0a3a3f;
+  --color-hpc-claro: #e3eeee;
+  --color-crema: #f5f1e8;
+  --color-dorado: #c98e3f;
+  --color-tinta: #1d2b2d;
+  --color-whatsapp: #1f8b4c;
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-sans: "DM Sans", system-ui, sans-serif;
+}
+
 @layer base {
-  * {
-    -webkit-tap-highlight-color: transparent;
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-crema);
+    color: var(--color-tinta);
+    font-family: var(--font-sans);
+  }
+  h1, h2, h3 {
+    font-family: var(--font-display);
+  }
+  /* Foco visible para quien navega con teclado */
+  :focus-visible {
+    outline: 3px solid var(--color-dorado);
+    outline-offset: 2px;
   }
 }
 
-/* Custom scrollbars */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-/* Editorial Input with floating label style */
-.ineco-input-container {
-  position: relative;
-  width: 100%;
-}
-
-.ineco-input-box {
-  width: 100%;
-  border: 1.5px solid #0D9488;
-  border-radius: 12px;
-  padding: 14px 16px;
-  background-color: #FFFFFF;
-  font-size: 15px;
-  color: #1A202C;
-  outline: none;
-  transition: all 0.2s ease;
-}
-
-.ineco-input-box:focus {
-  border-color: #0F766E;
-  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
-}
-
-.ineco-input-label {
-  position: absolute;
-  top: -10px;
-  left: 14px;
-  background-color: #ffffff;
-  padding: 0 6px;
-  font-size: 11px;
-  font-weight: 700;
-  color: #0D9488;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-/* Editorial Palette */
-:root {
-  --primary-teal: #0D9488;
-  --primary-teal-dark: #134E4A;
-  --primary-teal-hover: #0F766E;
-  --primary-teal-light: #F0FDFA;
-  --editorial-bg: #F9FBFC;
+/* Respeta a quien pidió menos animaciones en su sistema operativo */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
