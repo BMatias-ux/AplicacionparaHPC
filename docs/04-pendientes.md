@@ -1,31 +1,35 @@
 # 04 · Pendientes
 
-Prioridad: 🔴 bloquea · 🟠 importante · 🟢 mejora
+Prioridad: 🔴 bloquea · 🟠 importante · 🟢 mejora · ✅ hecho
 
-## Decisiones que necesita Matías / la Fundación
-- 🔴 Nombre del subdominio: `app.`, `portal.` u otro de `habilidadesparaelcambio.com.ar`.
-- 🔴 Número único de WhatsApp: ¿cuál queda? (`+54 9 387 523-3693` del bot vs. `+54 9 11 4060-7020` de la app). Verificar coexistencia con Meta antes de migrar.
-- 🟠 Backend y login (D-04). Sin esto, turnos y datos no llegan al equipo.
-- 🟠 Qué hace la app en la versión 1: ¿solo información + WhatsApp, o ya turnos reales?
-
-## Etapa 1 — Base publicable
-- 🔴 Quitar marco de teléfono y selector Móvil/Expandido; layout responsive (celular / tablet / escritorio).
-- 🔴 Reemplazar `mockData.ts`: sacar profesionales, fotos y calificaciones de ejemplo.
-- 🔴 Constante única `WHATSAPP_NUMERO` + botones con mensaje prellenado por pantalla.
-- 🟠 Paleta e tipografía HPC (`#0e4f55`, `#f5f1e8`, `#c98e3f`, Fraunces + DM Sans).
-- 🟠 Habilitar zoom y selección de texto (accesibilidad).
-- 🟠 Limpiar dependencias de AI Studio y renombrar el paquete.
-- 🟠 PWA: `manifest.webmanifest`, íconos, service worker.
-- 🟠 Conectar subdominio en Vercel + DNS en Hostinger (`05-guia-despliegue.md`).
+## Etapa 1 — Portal informativo (cerrar)
+- 🔴 Revisar la vista previa de Vercel de la rama `etapa-1-portal-informativo` y hacer el merge a `main`.
+- 🔴 Agregar el CNAME `portal` en Hostinger (valor que muestra Vercel, ver `05-guia-despliegue.md`).
+- 🟠 **Aprobación clínica** del aviso de urgencias en Contacto (911, 135, (011) 5275-1135). Mismo pendiente que el bot.
+- 🟠 Logo oficial en SVG para reemplazar la "H" provisoria (`src/components/Marca.tsx`, `public/icons/`).
+- 🟢 Confirmar que las descripciones de Caja Eureka y la Fundación en Recursos son correctas.
+- ✅ Marco de teléfono quitado, layout responsive, contenido real, WhatsApp único, identidad HPC, PWA, accesibilidad, limpieza de dependencias.
 
 ## Bot
-- 🟠 Corregir `cajaureka.com.ar` → `cajaeureka.com.ar` en `lib/textos.js` (verificar).
+- 🟠 Corregir `cajaureka.com.ar` → `cajaeureka.com.ar` en `lib/textos.js`.
+- 🟠 Mensajes que llegan desde el portal: hoy muestran el menú igual. A futuro, detectar "(Escribo desde el portal web)" + el motivo y saltear el menú.
 - 🟠 Derivación a una persona: pausar el bot cuando responde alguien del equipo.
+- 🟠 Verificar con Meta la **coexistencia** (mismo número en la app WhatsApp Business y en la Cloud API) antes de migrar el número del equipo.
 - 🟠 Canal monitoreado para alertas de riesgo (plantilla aprobada).
+
+## v2 — Acceso para profesionales
+- 🔴 D-04: elegir backend (propuesta: Supabase).
+- 🔴 D-08: ¿sección del portal o app aparte en otro subdominio?
+- 🟠 Modelo de datos: profesionales, zonas, cupos, derivaciones, roles.
+- 🟠 Migrar la Ficha Profesional (hoy HTML + Apps Script) a la base.
+
+## Mercado Pago
+- 🟠 Definir con la Fundación qué se cobra primero (admisión DBT, formaciones, membresía…).
+- 🟠 Precios en la base como única fuente (bot, app y pagos leen de ahí).
+- 🟢 Checkout Pro para cobros puntuales; suscripciones para cuotas mensuales.
 
 ## Más adelante
 - 🟢 Panel de admisión sobre la hoja 'Demanda' / Supabase.
-- 🟢 Portal del profesional + migrar la Ficha Profesional.
 - 🟢 Triage asistido (zona, modalidad, edad, temática, exclusiones).
 - 🟢 Empaquetar con Capacitor para Play Store / App Store.
-- 🟢 Completar `03-manual-de-uso.md`.
+- 🟢 Completar `03-manual-de-uso.md` a medida que haya funciones reales.

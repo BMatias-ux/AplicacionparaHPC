@@ -8,9 +8,9 @@ paciente ↔ equipo ↔ profesional, integrada con el bot de WhatsApp.
 | Repo de la app | `github.com/BMatias-ux/AplicacionparaHPC` (público) |
 | Repo del bot | `github.com/BMatias-ux/bot-hpc` (privado) |
 | Deploy actual | `app-hpc.vercel.app` (Vercel, equipo `bmatias-ux`, plan Pro) |
-| Dominio objetivo | `app.habilidadesparaelcambio.com.ar` (subdominio, a confirmar el nombre) |
+| Dominio | `portal.habilidadesparaelcambio.com.ar` |
 | Carpeta local | `C:\Proyectos\app-hpc` |
-| Stack | React 19 + Vite 6 + TypeScript + Tailwind 4 (generado en Google AI Studio) |
+| Stack | React 19 + Vite 6 + TypeScript + Tailwind 4 · PWA (origen: maqueta de Google AI Studio) |
 
 ## Mapa de esta carpeta
 

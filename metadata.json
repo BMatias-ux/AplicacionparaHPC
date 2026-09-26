@@ -1,6 +1,0 @@
-{
-  "name": "Habilidades para el Cambio - Portal del Paciente",
-  "description": "Aplicación clínica y portal de pacientes para Fundación Habilidades para el Cambio con gestión de turnos, actividades y perfil.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
