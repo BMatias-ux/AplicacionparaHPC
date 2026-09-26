@@ -55,3 +55,12 @@ Estimados los cambios en el bot (endpoint y cabecera de envío + manejo de echoe
 cuando responde un asesor desde la app; plan Builder USD 25/mes. El costo es rehacer el bot dentro de Jelou (Brain Studio /
 Functions) porque no reenvía los mensajes a un webhook externo. Comparación con 360dialog en el archivo de la etapa 2.
 **Pendiente:** consultar a Jelou (Argentina, plan, verificación del portafolio) y decidir plataforma.
+
+## 26/09/2026 (4) — Decisión final y plan de trabajo
+
+**Decisión de Matías:** 360dialog con coexistencia (Vapi descartado: es sólo voz; Jelou descartado: obliga a rehacer el bot).
+**Pedido:** plan por fases con tiempos y costos para proyectárselo a Laura; cuándo pagar 360dialog; cuándo configurar el
+dominio; base de pacientes y profesionales; recordatorios de turno; fichas por especialidad; acceso de profesionales.
+**Hecho:** `07-plan-de-trabajo.md` con 6 fases (0 a 5), pasos, responsables, esperas, costos mensuales y riesgos. D-04
+(Supabase) pasa a propuesta firme; D-11 recordatorios por WhatsApp. El dominio se configura en la Fase 0, ahora.
+360dialog se paga al crear el canal, en la ventana de corte de la Fase 1.

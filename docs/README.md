@@ -23,5 +23,6 @@ paciente ↔ equipo ↔ profesional, integrada con el bot de WhatsApp.
 | `04-pendientes.md` | Lo que falta, priorizado |
 | `05-guia-despliegue.md` | Cómo publicar en el subdominio, paso a paso |
 | `06-guia-cuentas.md` | Servicios, cuentas y variables de entorno (sin secretos) |
+| `07-plan-de-trabajo.md` | Fases, pasos, tiempos y costos del proyecto completo (portal + bot) |
 | `etapas/` | Un archivo por etapa de desarrollo: objetivo, cambios, por qué |
 | `historico/` | Prompts y pedidos originales, textuales, con fecha |
