@@ -14,7 +14,9 @@ Prioridad: 🔴 bloquea · 🟠 importante · 🟢 mejora · ✅ hecho
 - 🟠 Corregir `cajaureka.com.ar` → `cajaeureka.com.ar` en `lib/textos.js`.
 - 🟠 Mensajes que llegan desde el portal: hoy muestran el menú igual. A futuro, detectar "(Escribo desde el portal web)" + el motivo y saltear el menú.
 - 🟠 Derivación a una persona: pausar el bot cuando responde alguien del equipo.
-- 🟠 Verificar con Meta la **coexistencia** (mismo número en la app WhatsApp Business y en la Cloud API) antes de migrar el número del equipo.
+- 🔴 Coexistencia verificada (ver `etapas/etapa-02-bot-coexistencia.md`): requiere Tech Provider o un proveedor (BSP). **Decidir camino A o B.**
+- 🟠 Pedir alta de Tech Provider en Meta para M Digital y cotización a 2 proveedores con coexistencia.
+- 🟠 Implementar en el bot la escucha de `smb_message_echoes` → pausa automática cuando responde una persona.
 - 🟠 Canal monitoreado para alertas de riesgo (plantilla aprobada).
 
 ## v2 — Acceso para profesionales

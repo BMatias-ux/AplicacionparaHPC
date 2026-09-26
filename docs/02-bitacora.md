@@ -27,3 +27,15 @@ Proyecciones de profesionales y Mercado Pago en `01-especificacion.md`. Decision
 Se agregó `.gitattributes` (LF) en `main`.
 
 **Quedó pendiente:** merge a `main`, CNAME en Hostinger, aprobación clínica del aviso de urgencias, logo oficial.
+
+## 26/09/2026 — Coexistencia del bot con el equipo
+
+**Pedido:** aclarar que el bot debe convivir con los agentes que hoy usan el WhatsApp del equipo; traer el proyecto
+del bot que está en Drive. Pregunta: ¿seguir por dominio o por diseño?
+
+**Hecho:** localizado el documento de Drive y resumido en `etapas/etapa-02-bot-coexistencia.md`, junto con lo
+verificado en la documentación de Meta: la coexistencia existe pero sólo la habilitan Tech Providers o proveedores
+(BSP) vía Embedded Signup; el webhook `smb_message_echoes` permite pausar el bot cuando responde una persona.
+Tres caminos planteados (A Tech Provider, B proveedor, C sin coexistencia).
+
+**Quedó pendiente:** decidir A o B; merge del PR #1; CNAME `portal`.
