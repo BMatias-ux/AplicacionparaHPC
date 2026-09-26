@@ -106,3 +106,50 @@ celular no se cobran.
 - Meta for Developers, "Onboard WhatsApp Business app users" (coexistence):
   https://developers.facebook.com/documentation/business-messaging/whatsapp/embedded-signup/onboarding-business-app-users
 - 360dialog, "Coexistence": https://docs.360dialog.com/docs/resources/phone-numbers/coexistence
+
+## Alternativa evaluada: Jelou (26/09/2026)
+
+Matías tiene cuenta en **Jelou** (apps.jelou.ai, organización "M Digital", sin canales creados). Se revisó la
+plataforma con la sesión abierta y su documentación pública.
+
+**Coexistencia: sí, y es nativa.** `docs.jelou.ai/connect/configuraciones/coexistencia`: "Cuando un asesor humano
+responde manualmente desde la app, Jelou pausa automáticamente el workflow del bot". La pausa se configura
+(15 min a 4 h; modo dinámico, que se reinicia con cada mensaje del asesor, o tiempo fijo) y hasta 5 palabras
+clave devuelven la conversación al bot. Es exactamente el comportamiento pedido, sin programarlo.
+
+**Precio (jelou.ai/pricing):** Free $0 (125 ejecuciones, 1 canal, 1 asiento) · **Builder USD 25/mes** (1.000
+ejecuciones, 2 asientos, +USD 0,019 por ejecución extra, +USD 25 por asiento) · Growth USD 299 · Enterprise.
+La tabla comparativa marca "Co-exist with WhatsApp Business App" como disponible en los planes. Las tarifas de
+Meta por conversación van aparte, como siempre.
+
+**Requisitos que muestra el alta del canal:** "Un Portafolio de Negocios en Meta, activo y verificado" (la
+documentación dice "de preferencia verificado") y "un número de teléfono disponible sin una cuenta de WhatsApp".
+Para el número del equipo, que ya tiene WhatsApp, el camino es la opción de coexistencia, que se activa en
+Connect → Configuraciones → Coexistencia sobre un canal productivo (no sandbox).
+
+**El costo real: la lógica del bot se muda a Jelou.** Jelou es el dueño del canal: no ofrece "reenviar cada
+mensaje de WhatsApp a mi webhook externo" (su *canal personalizado* es para lo inverso: que una app externa use
+los flujos de Jelou). El bot de `bot-hpc` (menú, tres flujos, riesgo, horario, Redis, hoja 'Demanda') se
+reconstruiría en **Brain Studio** (workflows visuales) y/o **Functions** (JavaScript serverless dentro de Jelou).
+Lo que se conserva: todos los textos (`lib/textos.js`), las reglas y la hoja 'Demanda' (se puede seguir escribiendo
+vía Apps Script desde una Function). Lo que se pierde: el código Node en Vercel y Redis, que dejan de hacer falta.
+
+### Comparación 360dialog vs. Jelou
+
+| | 360dialog (proveedor puro) | Jelou (plataforma) |
+|---|---|---|
+| Coexistencia | Sí (QR desde la app) | Sí, con pausa automática y palabras clave incluidas |
+| Bot actual en Vercel | Se conserva casi entero | Se reconstruye dentro de Jelou |
+| Bandeja para el equipo | No incluida en plan Regular (extra en Premium) | Incluida (Connect), con métricas de operadores |
+| Precio base | €49/mes por número | USD 25/mes (Builder) |
+| Dependencia | Baja: sólo el canal | Alta: canal + lógica + bandeja |
+| Esfuerzo hasta convivir | 1–2 días (cambiar endpoint + escuchar echoes) | 3–5 días (rehacer flujos) + pruebas |
+
+**Recomendación:** si el objetivo inmediato es que el bot conviva con el equipo con el menor costo mensual y con
+herramienta ya conocida por Matías, **Jelou** es una opción válida y más barata. Si el objetivo es conservar el
+bot propio y no atarse a una plataforma, **360dialog**. Punto a verificar con Jelou antes de decidir: si la
+coexistencia está habilitada para números de **Argentina** y en el plan **Builder** (la tabla lo sugiere; confirmar
+con soporte), y si el portafolio de Meta de HPC necesita estar verificado o alcanza con activo.
+
+Fuentes: docs.jelou.ai/guides/activacion-canales/whatsapp · docs.jelou.ai/connect/configuraciones/coexistencia ·
+jelou.ai/en/pricing · docs.jelou.ai/api/canal-personalizado/introduccion

@@ -14,7 +14,8 @@ Prioridad: 🔴 bloquea · 🟠 importante · 🟢 mejora · ✅ hecho
 - 🟠 Corregir `cajaureka.com.ar` → `cajaeureka.com.ar` en `lib/textos.js`.
 - 🟠 Mensajes que llegan desde el portal: hoy muestran el menú igual. A futuro, detectar "(Escribo desde el portal web)" + el motivo y saltear el menú.
 - 🟠 Derivación a una persona: pausar el bot cuando responde alguien del equipo.
-- 🔴 D-10 camino B: pedir cotización a 360dialog y a un segundo proveedor con coexistencia (texto en `historico/2026-09-26-pedido-cotizacion-bsp.md`).
+- 🔴 D-10 camino B: elegir entre **Jelou** (coexistencia nativa, USD 25/mes, rehacer el bot adentro) y **360dialog** (€49/mes, bot actual casi intacto). Comparación en `etapas/etapa-02-bot-coexistencia.md`.
+- 🔴 Preguntar a soporte de Jelou: coexistencia para números de Argentina en plan Builder, y si el portafolio de Meta debe estar verificado.
 - 🔴 Confirmar que el Business Portfolio de Meta de HPC existe a nombre de la Fundación y tiene datos completos.
 - 🟠 Adaptar `enviar()` del bot al endpoint del proveedor (2 líneas + 2 variables).
 - 🟠 Implementar en el bot la escucha de `smb_message_echoes` → pausa automática cuando responde una persona.

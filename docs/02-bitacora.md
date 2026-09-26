@@ -47,3 +47,11 @@ Tres caminos planteados (A Tech Provider, B proveedor, C sin coexistencia).
 completos, app abierta cada 13 días, €49/mes por número + Meta sin recargo, webhook propio con `smb_message_echoes`).
 Estimados los cambios en el bot (endpoint y cabecera de envío + manejo de echoes). Redactado el pedido de cotización.
 **Pendiente:** enviar cotizaciones; confirmar Business Portfolio de HPC; merge PR #1; CNAME `portal`.
+
+## 26/09/2026 (3) — Evaluación de Jelou
+
+**Pedido:** revisar la cuenta de Jelou de Matías (apps.jelou.ai) y su documentación para ver si sirve para la convivencia bot + equipo.
+**Hecho:** revisada la cuenta (sin canales) y la documentación. Jelou tiene coexistencia nativa con pausa automática del bot
+cuando responde un asesor desde la app; plan Builder USD 25/mes. El costo es rehacer el bot dentro de Jelou (Brain Studio /
+Functions) porque no reenvía los mensajes a un webhook externo. Comparación con 360dialog en el archivo de la etapa 2.
+**Pendiente:** consultar a Jelou (Argentina, plan, verificación del portafolio) y decidir plataforma.
