@@ -11,12 +11,15 @@ export const EMAIL_CONSULTAS = 'consultas@habilidadesparaelcambio.com.ar';
 
 /**
  * Responsable de la base de datos (Ley 25.326, art. 6: hay que informar identidad y domicilio).
- * ⚠️ PENDIENTE: completar `domicilio` con el domicilio legal de la Fundación. Mientras esté
- * vacío, el aviso de privacidad no muestra la línea del domicilio.
+ * Datos tomados de la política de privacidad institucional (vigente desde el 02/09/2026):
+ * https://habilidadesparaelcambio.com.ar/politica-de-privacidad/
+ * Si cambian allá, se actualizan acá.
  */
 export const RESPONSABLE_DATOS = {
-  nombre: 'Fundación Habilidades para el Cambio',
-  domicilio: '',
+  nombre: 'Fundación para la Salud Mental — Habilidades para el Cambio',
+  domicilio: 'Las Heras 335, Neuquén, Provincia del Neuquén',
+  cuit: '30-71881628-5',
+  politicaInstitucional: 'https://habilidadesparaelcambio.com.ar/politica-de-privacidad/',
 } as const;
 
 export const HORARIO_ATENCION = 'Lunes a viernes de 9 a 18 hs';

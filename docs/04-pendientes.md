@@ -32,10 +32,11 @@ Prioridad: 🔴 bloquea · 🟠 importante · 🟢 mejora · ✅ hecho
 - 🟢 Borrar la carpeta local `datos\` cuando ya no haga falta (tiene datos personales; está fuera de git).
 - ✅ Paso 2.5: el bot guarda cada consulta en Supabase (y en la hoja, como respaldo). Probado en real el 28/09.
 - ✅ Paso 2.6: aviso de privacidad en `#privacidad` y consentimiento con botones en el bot (28/09).
-- 🔴 **Revisión legal** del aviso de privacidad por la asesoría de la Fundación (texto en `src/screens/Privacidad.tsx`; el aviso corto del bot en `bot-hpc/lib/consentimiento.js` tiene que coincidir).
-- 🔴 **Domicilio legal** de la Fundación para el aviso (Ley 25.326, art. 6): completar `RESPONSABLE_DATOS.domicilio` en `src/config.ts`.
+- 🟠 **Revisión legal** del aviso de privacidad (ya alineado con la política institucional del 02/09/2026) por la asesoría de la Fundación (texto en `src/screens/Privacidad.tsx`; el aviso corto del bot en `bot-hpc/lib/consentimiento.js` tiene que coincidir).
+- ✅ Domicilio legal, razón social y CUIT cargados en el aviso, tomados de la política institucional (28/09).
 - 🟠 **Inscribir la base de datos** en el Registro Nacional de Bases de Datos de la AAIP (Ley 25.326, art. 21). Lo hace la Fundación como responsable.
 - 🟢 Agregar la columna `consentimiento` a la hoja 'Demanda' (array `COLUMNAS` del Apps Script) si se quiere la constancia también en la planilla.
+- 🟠 **Brechas del bot con la política institucional (punto 5):** el asistente no se presenta como automático en el primer mensaje y no hay un comando para pedir hablar con una persona (hoy sólo ocurre si alguien del equipo responde). Ajustar `bot-hpc/lib/textos.js`.
 - 🟢 Consentimiento de profesionales: hoy se toma de la columna de autorización de la Ficha 2026; en la Fase 3 se pide en el alta de la app.
 
 ## Fase 3 — Acceso para profesionales

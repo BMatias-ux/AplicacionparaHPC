@@ -10,7 +10,9 @@
 //   - Disposición DNPDP 10/2008: las dos leyendas del final (derecho de acceso y órgano de
 //     control). El órgano de control hoy es la Agencia de Acceso a la Información Pública (AAIP).
 //
-// ⚠️ Texto redactado como borrador técnico: la Fundación lo revisa con su asesoría legal.
+// Es el aviso ESPECÍFICO del portal y del asistente de WhatsApp. Complementa la política de
+// privacidad institucional (RESPONSABLE_DATOS.politicaInstitucional) y no puede contradecirla:
+// plazos, responsable y datos legales salen de ahí.
 // Si se cambia algo acá, revisar que el aviso corto del bot siga coincidiendo.
 
 import { ShieldCheck, Mail, MessageCircle, ExternalLink } from 'lucide-react';
@@ -57,8 +59,8 @@ const BLOQUES: Bloque[] = [
     id: 'salud',
     titulo: '3. Datos de salud',
     parrafos: [
-      'El motivo de consulta y la pregunta sobre riesgo son datos de salud, que la ley considera datos sensibles. Los tratamos con secreto profesional y sólo los ven el equipo de admisión y el profesional al que se deriva tu consulta.',
-      'Nadie está obligado a darnos datos sensibles. Si preferís no contar el motivo por escrito, podés responder que preferís hablarlo en la entrevista y lo conversás directamente con el profesional.',
+      'El motivo de consulta y la pregunta sobre riesgo son datos de salud, que la ley considera datos sensibles (Ley 25.326, art. 2). Sólo los ven el equipo de admisión y el profesional al que se deriva tu consulta, alcanzados por el secreto profesional y por las Leyes 26.529 de Derechos del Paciente y 26.657 de Salud Mental.',
+      'Nadie está obligado a darnos datos sensibles. Si preferís no contar el motivo por escrito, podés responder que preferís hablarlo en la entrevista y lo conversás directamente con el profesional. Puede demorar o limitar la derivación, pero nunca te va a dejar sin respuesta.',
       'Si en la conversación aparecen señales de que tu vida o la de otra persona puede estar en riesgo, el equipo recibe un aviso prioritario para poder contactarte, aunque todavía no hayas aceptado este aviso. Lo hacemos únicamente para protegerte.',
     ],
   },
@@ -106,12 +108,25 @@ const BLOQUES: Bloque[] = [
     id: 'plazo',
     titulo: '8. Cuánto tiempo los guardamos',
     parrafos: [
-      'Guardamos los datos de tu consulta mientras sean necesarios para gestionarla y para tu atención. Podés pedir que los borremos en cualquier momento, salvo que una ley nos obligue a conservarlos. La memoria temporal de la conversación se borra sola a las 24 horas.',
+      'Los mismos plazos de nuestra política institucional:',
+    ],
+    lista: [
+      'Consultas que no derivaron en tratamiento: hasta veinticuatro meses, por si volvés a escribirnos y para no pedirte los mismos datos otra vez.',
+      'Historias clínicas, si iniciás tratamiento: diez años desde la última actuación, como exige la Ley 26.529.',
+      'Memoria temporal de la conversación con el asistente: se borra sola a las 24 horas.',
+      'Cumplidos esos plazos, la información se elimina o se anonimiza. Podés pedir antes que borremos tus datos, salvo los que una ley nos obliga a conservar.',
+    ],
+  },
+  {
+    id: 'menores',
+    titulo: '9. Menores de edad',
+    parrafos: [
+      'Para atender a personas menores de 18 años se requiere el consentimiento de quien ejerza la responsabilidad parental o la tutela, sin perjuicio del derecho del adolescente a ser oído y a participar en las decisiones sobre su salud. Si sos menor de 18 años y nos escribís, vamos a pedirte que un adulto responsable participe de la coordinación del turno.',
     ],
   },
   {
     id: 'portal',
-    titulo: '9. Este portal',
+    titulo: '10. Este portal',
     parrafos: [
       'El portal no te pide datos personales, no tiene formularios y no usa cookies de publicidad ni de seguimiento. Para mostrar las tipografías, tu navegador descarga fuentes de Google Fonts, lo que le informa a Google tu dirección IP. Cuando tocás un botón de WhatsApp, se abre la aplicación con un mensaje ya escrito y rigen las condiciones de este aviso.',
       'Las fichas del equipo muestran sólo la información que cada profesional autorizó a publicar.',
@@ -135,11 +150,21 @@ export function Privacidad() {
           <section aria-labelledby="responsable" className="space-y-3">
             <h2 id="responsable" className="text-xl font-semibold text-hpc">1. Quién es responsable de tus datos</h2>
             <p>
-              El responsable de la base de datos es la <strong>{RESPONSABLE_DATOS.nombre}</strong>
-              {RESPONSABLE_DATOS.domicilio && <>, con domicilio en {RESPONSABLE_DATOS.domicilio}</>}.
-              Para cualquier consulta sobre tus datos, escribinos a{' '}
-              <CorreoConsultas />{' '}
-              o por WhatsApp al {WHATSAPP_VISIBLE}.
+              El responsable de la base de datos es la <strong>{RESPONSABLE_DATOS.nombre}</strong>, con domicilio
+              legal en {RESPONSABLE_DATOS.domicilio}, CUIT {RESPONSABLE_DATOS.cuit}. Para cualquier consulta sobre
+              tus datos, escribinos a <CorreoConsultas /> o por WhatsApp al {WHATSAPP_VISIBLE}.
+            </p>
+            <p>
+              Este aviso explica en detalle cómo funcionan el portal y el asistente de WhatsApp. Complementa nuestra{' '}
+              <a
+                href={RESPONSABLE_DATOS.politicaInstitucional}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline decoration-dorado/50 underline-offset-4"
+              >
+                Política de Privacidad institucional
+              </a>
+              , que rige para todos los canales de la Fundación.
             </p>
           </section>
 
@@ -160,7 +185,7 @@ export function Privacidad() {
           ))}
 
           <section aria-labelledby="derechos" className="space-y-3">
-            <h2 id="derechos" className="text-xl font-semibold text-hpc">10. Tus derechos</h2>
+            <h2 id="derechos" className="text-xl font-semibold text-hpc">11. Tus derechos</h2>
             <p>En cualquier momento podés pedirnos:</p>
             <ul className="list-disc pl-5 space-y-2">
               <li>
@@ -185,7 +210,7 @@ export function Privacidad() {
           </section>
 
           <section aria-labelledby="cambios" className="space-y-3">
-            <h2 id="cambios" className="text-xl font-semibold text-hpc">11. Cambios en este aviso</h2>
+            <h2 id="cambios" className="text-xl font-semibold text-hpc">12. Cambios en este aviso</h2>
             <p>
               Si cambiamos este aviso, publicamos la nueva versión en esta página con su fecha. Si el cambio afecta
               cómo usamos datos que ya nos diste, te vamos a pedir un nuevo consentimiento.
@@ -231,6 +256,15 @@ export function Privacidad() {
               <MessageCircle className="text-whatsapp shrink-0" size={18} aria-hidden="true" />
               {WHATSAPP_VISIBLE}
             </p>
+            <a
+              href={RESPONSABLE_DATOS.politicaInstitucional}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 text-hpc underline underline-offset-4"
+            >
+              Política de Privacidad institucional
+              <ExternalLink size={14} aria-hidden="true" />
+            </a>
             <a
               href="https://www.argentina.gob.ar/aaip/datospersonales"
               target="_blank"

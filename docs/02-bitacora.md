@@ -155,3 +155,13 @@ una sola fila: `canal = portal`, `opcion = cursos`, nombre correcto, estado `nue
 no quedó ninguna fila. "Acepto" en Programa DBT → flujo clínico completo; una sola fila nueva con
 `consentimiento_at` (10:34:19), edad, zona, motivo y riesgo "no". **Paso 2.6 cerrado en lo técnico**; queda la
 revisión legal de la Fundación.
+
+## 28/09/2026 (9) — Aviso alineado con la política institucional
+
+**Fuente (Matías):** https://habilidadesparaelcambio.com.ar/politica-de-privacidad/ (vigente desde el 02/09/2026).
+**Hecho:** responsable "Fundación para la Salud Mental — Habilidades para el Cambio", domicilio legal Las Heras 335,
+Neuquén, CUIT 30-71881628-5 (en `src/config.ts`). Plazos iguales a los institucionales (24 meses consultas sin
+tratamiento, 10 años historia clínica), mención de las Leyes 26.529 y 26.657, sección de menores y enlace a la política
+institucional, que rige para todos los canales.
+**Encontrado:** la política institucional promete que el asistente se identifica como automático y que se puede pedir
+hablar con una persona; el bot todavía no hace ninguna de las dos cosas (pendiente anotado).
