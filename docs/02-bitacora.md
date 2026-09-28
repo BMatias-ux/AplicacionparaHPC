@@ -98,3 +98,15 @@ del repo, idénticas a las de la rama). Verificado: 9 zonas, 3 especialidades, 7
 28 políticas, vista pública. Prueba de permisos con la clave pública y dos fichas temporales: la vista mostró sólo la
 autorizada y sin foto; tablas privadas y consultas, 0 filas. Datos de prueba borrados. Variables cargadas en Vercel.
 **Pendiente:** merge del PR #2, importar la planilla de fichas, guardar la contraseña de la base.
+
+## 28/09/2026 (5) — Fichas importadas (Fase 2.3)
+
+**Hecho (Matías):** merge del PR #2 (deploy de producción `b41e303` en READY), exportación de la planilla "HPC · Fichas
+Profesionales 2026" a CSV, `node scripts/importar-fichas.mjs` (33 profesionales tras deduplicar por correo) y ejecución
+de `datos/importacion.sql` en el SQL Editor ("Success").
+**Verificado (Claude, con la clave pública):** 30 fichas visibles (las 3 restantes marcaron "No publicar"): 28 de
+Psicología y 2 de Psiquiatría; todas con presentación, temáticas y población; ninguna con foto (las fotos pasan a
+Storage en la Fase 3). Por zona: Córdoba 10, CABA 4, Tucumán 4, Santa Fe 3, Neuquén 2, Salta 2, Buenos Aires Sur 1,
+Oeste 1, Norte 1, sin zona 2 ("Otra / a definir"). Tablas privadas (`profesionales`, `profesionales_privado`,
+exclusiones, pacientes, consultas): 0 filas con la clave pública.
+**A revisar con Laura:** Córdoba aparece con 10 fichas cuando históricamente eran 1–2; las 2 fichas sin zona.
