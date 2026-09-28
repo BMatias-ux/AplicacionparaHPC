@@ -37,7 +37,7 @@ Prioridad: 🔴 bloquea · 🟠 importante · 🟢 mejora · ✅ hecho
 - 🟠 **Inscribir la base de datos** en el Registro Nacional de Bases de Datos de la AAIP (Ley 25.326, art. 21). Lo hace la Fundación como responsable.
 - 🟢 Agregar la columna `consentimiento` a la hoja 'Demanda' (array `COLUMNAS` del Apps Script) si se quiere la constancia también en la planilla.
 - ✅ El bot se presenta como asistente virtual y "persona" / "hablar con alguien" pasa la conversación al equipo (28/09).
-- 🔴 **Configurar `NUMERO_ALERTAS`** en Vercel (`bot-hpc`): celular personal de quien reciba las alertas de riesgo y los pedidos de "persona". Hoy no está, así que ambos avisos quedan sólo en los logs.
+- 🟠 `NUMERO_ALERTAS` configurado con el celular de Matías **para pruebas** (28/09). Acepta varios números separados por coma. Definir con Laura quién(es) lo reciben en producción; opción: el número actual del bot (+54 9 387 637-6370) cuando quede libre después del corte.
 - 🟠 Plantilla de utilidad aprobada por Meta para las alertas al equipo (sin ella, sólo llegan si ese celular le escribió al bot en las últimas 24 hs).
 - 🟢 Consentimiento de profesionales: hoy se toma de la columna de autorización de la Ficha 2026; en la Fase 3 se pide en el alta de la app.
 
