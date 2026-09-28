@@ -5,7 +5,16 @@
 GitHub (`AplicacionparaHPC`, rama `main`) → Vercel (proyecto `app-hpc`) despliega solo en cada `git push`.
 URL actual: `app-hpc.vercel.app`.
 
-## Conectar el subdominio
+## Estado actual (28/09/2026)
+
+| Registro | Tipo | Valor |
+|---|---|---|
+| `portal` en `habilidadesparaelcambio.com.ar` (Hostinger) | CNAME | `1d47bbe66a4308d1.vercel-dns-017.com` (TTL 14400) |
+
+Vercel muestra "Valid Configuration" y el certificado HTTPS lo renueva solo. Si algún día hay que rehacerlo,
+el valor exacto está en Vercel → app-hpc → Settings → Domains.
+
+## Conectar el subdominio (procedimiento)
 
 > Mismo mecanismo que un subdominio de Caja Eureka: el dominio sigue en Hostinger y solo un registro DNS apunta a Vercel.
 > **No se toca el dominio raíz** (`habilidadesparaelcambio.com.ar` es el WordPress).

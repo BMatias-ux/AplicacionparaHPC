@@ -72,3 +72,10 @@ automática por echo (`smb_message_echoes`), comando `#bot`, atajos del portal, 
 mesa (`npm test`, 13 comprobaciones OK). Compatible hacia atrás: sin `D360_API_KEY` funciona como hoy.
 Se detectó que el merge del PR #1 se hizo antes de los últimos 4 commits de docs de la rama; se incorporaron a `main` hoy.
 **Pendiente:** dominio `portal` (0.3–0.4), Business Portfolio de HPC (1.1), cuenta 360dialog (1.2), merge PR #7.
+
+## 28/09/2026 (2) — Dominio `portal` en producción (Fase 0.3 y 0.4)
+
+**Hecho:** dominio agregado al proyecto `app-hpc` en Vercel (verificado sin TXT). Matías creó el CNAME `portal` en
+Hostinger apuntando a `1d47bbe66a4308d1.vercel-dns-017.com`. Comprobado: DNS resuelve, Vercel "Valid Configuration",
+`/`, `/manifest.webmanifest`, `/sw.js` e íconos responden 200 por HTTPS.
+**Pendiente de Fase 0:** 0.5 prueba de instalación en celular, 0.6 envío a Laura con el aviso de urgencias.

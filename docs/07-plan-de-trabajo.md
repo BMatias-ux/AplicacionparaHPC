@@ -43,9 +43,9 @@ Objetivo: que `portal.habilidadesparaelcambio.com.ar` esté en el aire con la v1
 | Paso | Qué | Quién | Detalle |
 |---|---|---|---|
 | 0.1 | Revisar la vista previa del PR #1 en celular y computadora | Matías | Anotar cambios de texto o diseño |
-| 0.2 | Merge del PR #1 a `main` | Matías | Vercel publica solo |
-| 0.3 | Agregar `portal.habilidadesparaelcambio.com.ar` en Vercel | Matías | Settings → Domains |
-| 0.4 | CNAME `portal` en Hostinger | Matías (cuenta de Laura) | `05-guia-despliegue.md` |
+| 0.2 | ✅ Merge del PR #1 a `main` | Matías | Hecho 28/09 |
+| 0.3 | ✅ Agregar `portal.habilidadesparaelcambio.com.ar` en Vercel | Claude | Hecho 28/09 |
+| 0.4 | ✅ CNAME `portal` en Hostinger | Matías | Hecho 28/09 |
 | 0.5 | Verificar HTTPS y que la PWA se instale | Claude | Captura desde el celular |
 | 0.6 | Enviar el enlace a Laura con el aviso de urgencias marcado para su aprobación | Matías | ⏳ aprobación clínica |
 

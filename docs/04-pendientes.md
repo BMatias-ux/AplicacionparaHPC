@@ -2,9 +2,10 @@
 
 Prioridad: 🔴 bloquea · 🟠 importante · 🟢 mejora · ✅ hecho
 
-## Etapa 1 — Portal informativo (cerrar)
+## Fase 0 / Etapa 1 — Portal informativo
 - ✅ PR #1 mergeado a `main` (28/09).
-- 🔴 Agregar el CNAME `portal` en Hostinger (valor que muestra Vercel, ver `05-guia-despliegue.md`).
+- ✅ Dominio `portal.habilidadesparaelcambio.com.ar` en producción (28/09): CNAME en Hostinger → `1d47bbe66a4308d1.vercel-dns-017.com`, Vercel "Valid Configuration".
+- 🟠 Enviar el enlace a Laura con el aviso de urgencias para su aprobación (Fase 0.6).
 - 🟠 **Aprobación clínica** del aviso de urgencias en Contacto (911, 135, (011) 5275-1135). Mismo pendiente que el bot.
 - 🟠 Logo oficial en SVG para reemplazar la "H" provisoria (`src/components/Marca.tsx`, `public/icons/`).
 - 🟢 Confirmar que las descripciones de Caja Eureka y la Fundación en Recursos son correctas.
