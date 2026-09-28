@@ -85,7 +85,7 @@ menos apto para consultas cruzadas de zona/especialidad/cupos) y seguir en Googl
 | 2.2 | ✅ Políticas de acceso (RLS) | Público: sólo campos de ficha publicada. Profesional: su fila. Admisión: consultas y derivaciones. Coordinación: su zona. Admin: todo |
 | 2.3 | ✅ Migración inicial de fichas (28/09) | 30 fichas públicas cargadas. La hoja 'Demanda' se incorpora en el paso 2.5 |
 | 2.4 | ✅ Fichas públicas en el portal (en producción) | Nueva sección "Equipo": listado por especialidad y zona, ficha con foto, formación, modalidad, población que atiende. Sólo lo que el profesional marcó como público |
-| 2.5 | El bot escribe en Supabase además de la hoja (código listo 28/09, falta la clave en Vercel) | La hoja 'Demanda' queda como respaldo un tiempo |
+| 2.5 | ✅ El bot escribe en Supabase además de la hoja (28/09) | La hoja 'Demanda' queda como respaldo un tiempo |
 | 2.6 | Consentimiento y aviso de privacidad | Texto para pacientes y profesionales (Ley 25.326). ⏳ revisión de la Fundación |
 
 ## Fase 3 · Acceso de profesionales (6–8 días)
