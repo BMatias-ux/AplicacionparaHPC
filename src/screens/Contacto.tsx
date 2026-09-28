@@ -37,6 +37,13 @@ export function Contacto() {
           <p className="text-xs text-tinta/60">
             Fuera de horario podés dejar tu consulta: te respondemos a primera hora del próximo día hábil.
           </p>
+          <p className="text-xs text-tinta/60">
+            Antes de pedirte datos, el asistente te pide tu consentimiento.{' '}
+            <a href="#privacidad" className="underline underline-offset-4 hover:text-hpc">
+              Cómo cuidamos tus datos
+            </a>
+            .
+          </p>
         </div>
 
         {/* ⚠️ Texto pendiente de aprobación clínica (mismo criterio que el bot). Ver docs/04-pendientes.md */}

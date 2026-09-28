@@ -13,6 +13,7 @@ import { Equipo } from './screens/Equipo';
 import { Formacion } from './screens/Formacion';
 import { Recursos } from './screens/Recursos';
 import { Contacto } from './screens/Contacto';
+import { Privacidad } from './screens/Privacidad';
 
 const PANTALLAS: Record<Seccion, () => React.JSX.Element> = {
   inicio: Inicio,
@@ -21,6 +22,7 @@ const PANTALLAS: Record<Seccion, () => React.JSX.Element> = {
   formacion: Formacion,
   recursos: Recursos,
   contacto: Contacto,
+  privacidad: Privacidad,
 };
 
 export default function App() {
@@ -44,12 +46,17 @@ export default function App() {
       <BarraLateral activa={seccion} />
       <div className="flex-1 min-w-0">
         <EncabezadoMovil />
-        {/* pb-28 en celular deja lugar a la barra inferior y al botón flotante */}
-        <main className="mx-auto max-w-6xl px-4 py-6 pb-28 md:px-10 md:py-10 md:pb-12">
+        <main className="mx-auto max-w-6xl px-4 py-6 md:px-10 md:py-10">
           <Pantalla />
         </main>
-        <footer className="hidden md:block mx-auto max-w-6xl px-10 pb-8 text-xs text-tinta/50">
-          © {new Date().getFullYear()} Fundación Habilidades para el Cambio
+        {/* Pie visible también en celular: el enlace al aviso de privacidad tiene que estar
+            siempre a mano (Disposición DNPDP 10/2008: "en lugar visible").
+            pb-28 en celular deja lugar a la barra inferior y al botón flotante. */}
+        <footer className="mx-auto max-w-6xl px-4 pb-28 md:px-10 md:pb-8 flex flex-wrap gap-x-4 gap-y-1 text-xs text-tinta/60">
+          <span>© {new Date().getFullYear()} Fundación Habilidades para el Cambio</span>
+          <a href="#privacidad" className="underline underline-offset-4 hover:text-hpc">
+            Aviso de privacidad y datos personales
+          </a>
         </footer>
       </div>
       <BarraInferior activa={seccion} />

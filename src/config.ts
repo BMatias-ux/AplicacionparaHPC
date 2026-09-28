@@ -9,6 +9,16 @@ export const WHATSAPP_VISIBLE = '+54 9 387 523-3693';
 
 export const EMAIL_CONSULTAS = 'consultas@habilidadesparaelcambio.com.ar';
 
+/**
+ * Responsable de la base de datos (Ley 25.326, art. 6: hay que informar identidad y domicilio).
+ * ⚠️ PENDIENTE: completar `domicilio` con el domicilio legal de la Fundación. Mientras esté
+ * vacío, el aviso de privacidad no muestra la línea del domicilio.
+ */
+export const RESPONSABLE_DATOS = {
+  nombre: 'Fundación Habilidades para el Cambio',
+  domicilio: '',
+} as const;
+
 export const HORARIO_ATENCION = 'Lunes a viernes de 9 a 18 hs';
 
 /** Sitios de la red. */

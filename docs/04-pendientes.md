@@ -31,7 +31,12 @@ Prioridad: 🔴 bloquea · 🟠 importante · 🟢 mejora · ✅ hecho
 - 🟠 Revisar con Laura las zonas: Córdoba figura con 10 fichas (históricamente 1–2) y 2 fichas tienen zona "Otra / a definir" (salen sin zona).
 - 🟢 Borrar la carpeta local `datos\` cuando ya no haga falta (tiene datos personales; está fuera de git).
 - ✅ Paso 2.5: el bot guarda cada consulta en Supabase (y en la hoja, como respaldo). Probado en real el 28/09.
-- 🟠 Paso 2.6: aviso de privacidad y consentimiento (pacientes y profesionales).
+- ✅ Paso 2.6: aviso de privacidad en `#privacidad` y consentimiento con botones en el bot (28/09).
+- 🔴 **Revisión legal** del aviso de privacidad por la asesoría de la Fundación (texto en `src/screens/Privacidad.tsx`; el aviso corto del bot en `bot-hpc/lib/consentimiento.js` tiene que coincidir).
+- 🔴 **Domicilio legal** de la Fundación para el aviso (Ley 25.326, art. 6): completar `RESPONSABLE_DATOS.domicilio` en `src/config.ts`.
+- 🟠 **Inscribir la base de datos** en el Registro Nacional de Bases de Datos de la AAIP (Ley 25.326, art. 21). Lo hace la Fundación como responsable.
+- 🟢 Agregar la columna `consentimiento` a la hoja 'Demanda' (array `COLUMNAS` del Apps Script) si se quiere la constancia también en la planilla.
+- 🟢 Consentimiento de profesionales: hoy se toma de la columna de autorización de la Ficha 2026; en la Fase 3 se pide en el alta de la app.
 
 ## Fase 3 — Acceso para profesionales
 - ✅ D-04: Supabase (28/09).

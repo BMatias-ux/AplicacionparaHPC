@@ -118,3 +118,8 @@ formaciones anuales y membresía.
 Datos de salud = datos sensibles (Ley 25.326 de Protección de Datos Personales; Ley 26.529 de Derechos del Paciente).
 Implica: consentimiento informado, acceso restringido por rol, no guardar datos clínicos en el dispositivo sin protección,
 no mandar datos clínicos a plataformas de anuncios. No es asesoramiento legal: validar con quien corresponda en la Fundación.
+
+### D-14 · Consentimiento antes de pedir datos (28/09/2026)
+El bot pide "Acepto / No acepto" antes de la primera pregunta, en todos los flujos (clínico y comercial). Sin
+"Acepto" no se registra nada. El aviso completo vive en el portal (`#privacidad`) y el bot lo enlaza. Excepción: el
+protocolo de riesgo registra la alerta aunque no haya consentimiento, para proteger la vida; está dicho en el aviso.

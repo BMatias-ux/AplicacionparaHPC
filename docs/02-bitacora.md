@@ -135,3 +135,19 @@ nueva que falla sin el arreglo y pasa con él.
 la ventana de corte (Fase 1.6). Hasta entonces, lo que llega del portal lo responde una persona.
 **Reprueba con el arreglo en producción:** flujo abierto + mensaje del portal → el bot fue directo a Cursos y guardó
 una sola fila: `canal = portal`, `opcion = cursos`, nombre correcto, estado `nueva`. **Paso 2.5 cerrado.**
+
+## 28/09/2026 (8) — Paso 2.6: aviso de privacidad y consentimiento
+
+**Pedido de Matías:** armar el borrador completo y dejarlo visible y funcionando.
+**Hecho (Claude):**
+- Portal: nueva sección `#privacidad` (no aparece en el menú; se llega por el pie de página, que ahora se ve también
+  en celular, y por Contacto). Cubre el art. 6 de la Ley 25.326 (responsable, qué datos, finalidad, destinatarios,
+  proveedores, transferencia internacional, plazo, derechos) y el art. 7/8 (datos de salud), más las dos leyendas de la
+  Disposición DNPDP 10/2008 con el órgano de control actual (AAIP).
+- Bot (`bot-hpc`, rama `fase-2-6-consentimiento`): antes de pedir cualquier dato, aviso corto con botones
+  **Acepto / No acepto** y enlace al aviso completo. Acepto guarda la fecha; No acepto no registra nada y ofrece el
+  número del equipo. 11 pruebas nuevas (30 en total).
+- Migración `20260928000004_consentimiento.sql`: `consultas.consentimiento_at`. Aplicada en Supabase antes del deploy.
+**Fuentes:** Ley 25.326 (Infoleg), Disposición DNPDP 10/2008, página de datos personales de la AAIP.
+**Pendiente (Fundación):** revisión legal del texto, domicilio legal del responsable (`src/config.ts`,
+`RESPONSABLE_DATOS.domicilio`), inscripción de la base en el Registro Nacional de Bases de Datos de la AAIP.
