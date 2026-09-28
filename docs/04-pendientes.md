@@ -32,9 +32,9 @@ Prioridad: 🔴 bloquea · 🟠 importante · 🟢 mejora · ✅ hecho
 - 🟢 Borrar la carpeta local `datos\` cuando ya no haga falta (tiene datos personales; está fuera de git).
 - ✅ Paso 2.5: el bot guarda cada consulta en Supabase (y en la hoja, como respaldo). Probado en real el 28/09.
 - ✅ Paso 2.6: aviso de privacidad en `#privacidad` y consentimiento con botones en el bot (28/09).
-- 🟠 **Revisión legal** del aviso de privacidad (ya alineado con la política institucional del 02/09/2026) por la asesoría de la Fundación (texto en `src/screens/Privacidad.tsx`; el aviso corto del bot en `bot-hpc/lib/consentimiento.js` tiene que coincidir).
+- ✅ Revisión del aviso de privacidad (28/09, confirmada por Matías) por la asesoría de la Fundación (texto en `src/screens/Privacidad.tsx`; el aviso corto del bot en `bot-hpc/lib/consentimiento.js` tiene que coincidir).
 - ✅ Domicilio legal, razón social y CUIT cargados en el aviso, tomados de la política institucional (28/09).
-- 🟠 **Inscribir la base de datos** en el Registro Nacional de Bases de Datos de la AAIP (Ley 25.326, art. 21). Lo hace la Fundación como responsable.
+- 🟠 **Inscribir la base de datos** en la AAIP (Ley 25.326, art. 21): instructivo en `docs/08-instructivo-aaip.md`. Lo hace la Fundación con su clave fiscal.
 - 🟢 Agregar la columna `consentimiento` a la hoja 'Demanda' (array `COLUMNAS` del Apps Script) si se quiere la constancia también en la planilla.
 - ✅ El bot se presenta como asistente virtual y "persona" / "hablar con alguien" pasa la conversación al equipo (28/09).
 - ✅ `NUMERO_ALERTAS` con tres números (28/09): Matías, Laura Flynn y el 011 de la Fundación (+54 9 11 2386-4196). Se cambia desde Vercel; separados por coma. Probado: alerta de riesgo y pedido de persona llegan.
