@@ -21,8 +21,16 @@ Prioridad: 🔴 bloquea · 🟠 importante · 🟢 mejora · ✅ hecho
 - ✅ Bot adaptado a 360dialog + pausa por humano + `#bot` + atajos del portal: `bot-hpc` PR #7 (28/09). Falta merge.
 - 🟠 Canal monitoreado para alertas de riesgo (plantilla aprobada).
 
-## v2 — Acceso para profesionales
-- 🔴 D-04: elegir backend (propuesta: Supabase).
+## Fase 2 — Base de datos y fichas
+- ✅ Esquema, permisos, importador y sección Equipo: PR `etapa-2-supabase-fichas` (28/09).
+- 🔴 Crear el proyecto de Supabase (¿cuenta de M Digital o de HPC?) y ejecutar las 2 migraciones.
+- 🔴 Cargar `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY` en Vercel.
+- 🟠 Exportar la planilla de fichas a CSV, correr el importador y cargar.
+- 🟠 Paso 2.5: que el bot escriba las consultas en Supabase además de la hoja.
+- 🟠 Paso 2.6: aviso de privacidad y consentimiento (pacientes y profesionales).
+
+## Fase 3 — Acceso para profesionales
+- ✅ D-04: Supabase (28/09).
 - 🔴 D-08: ¿sección del portal o app aparte en otro subdominio?
 - 🟠 Modelo de datos: profesionales, zonas, cupos, derivaciones, roles.
 - 🟠 Migrar la Ficha Profesional (hoy HTML + Apps Script) a la base.

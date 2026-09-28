@@ -2,12 +2,13 @@
 // Pantalla de entrada: qué es HPC y un acceso rápido según lo que la persona busca.
 // Los accesos replican el menú del bot, así la experiencia es la misma en la app y en WhatsApp.
 
-import { ArrowRight, HeartHandshake, GraduationCap, UserCheck, Wind } from 'lucide-react';
+import { ArrowRight, HeartHandshake, GraduationCap, UserCheck, Users, Wind } from 'lucide-react';
 import { BotonWhatsApp } from '../components/BotonWhatsApp';
 import { enlacePorMotivo } from '../lib/whatsapp';
 
 const ACCESOS = [
   { href: '#servicios', icono: HeartHandshake, titulo: 'Busco tratamiento', texto: 'Terapia individual, programa DBT y talleres.' },
+  { href: '#equipo', icono: Users, titulo: 'Conocé al equipo', texto: 'Psicólogos y psiquiatras por especialidad y zona.' },
   { href: '#formacion', icono: GraduationCap, titulo: 'Soy profesional', texto: 'Formaciones, cursos, membresía y equipo.' },
   { href: '#recursos', icono: Wind, titulo: 'Recursos', texto: 'Un ejercicio de respiración y material gratuito.' },
 ] as const;
@@ -40,7 +41,7 @@ export function Inicio() {
 
       <section aria-labelledby="que-buscas">
         <h2 id="que-buscas" className="text-2xl font-semibold text-hpc">¿Qué estás buscando?</h2>
-        <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {ACCESOS.map(({ href, icono: Icono, titulo, texto }) => (
             <a
               key={href}
