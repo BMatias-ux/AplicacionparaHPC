@@ -81,7 +81,8 @@ export function Equipo() {
         bajada="Psicólogos y psiquiatras formados en terapias basadas en la evidencia. Si no sabés a quién elegir, escribinos: el equipo de admisión te ayuda a encontrar a la persona indicada."
       />
 
-      {!supabaseConfigurado || estado.tipo === 'error' ? (
+      {/* Sin conexión, con error, o todavía sin fichas cargadas: mensaje de respaldo con WhatsApp. */}
+      {!supabaseConfigurado || estado.tipo === 'error' || (estado.tipo === 'listo' && estado.fichas.length === 0) ? (
         <SinDatos />
       ) : estado.tipo === 'cargando' ? (
         <p className="text-tinta/60" aria-live="polite">Cargando el equipo…</p>
