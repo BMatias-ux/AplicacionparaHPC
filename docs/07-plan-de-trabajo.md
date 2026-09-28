@@ -83,8 +83,8 @@ menos apto para consultas cruzadas de zona/especialidad/cupos) y seguir en Googl
 |---|---|---|
 | 2.1 | ✅ Modelo de datos | Tablas: `profesionales`, `especialidades`, `zonas`, `profesional_zona`, `pacientes`, `consultas` (lo que hoy es la hoja 'Demanda'), `turnos`, `usuarios_roles`. Datos clínicos separados de los datos de contacto |
 | 2.2 | ✅ Políticas de acceso (RLS) | Público: sólo campos de ficha publicada. Profesional: su fila. Admisión: consultas y derivaciones. Coordinación: su zona. Admin: todo |
-| 2.3 | Migración inicial (importador listo) | Importar la hoja "HPC · Fichas Profesionales 2026" y la hoja 'Demanda' |
-| 2.4 | ✅ Fichas públicas en el portal (falta conectar) | Nueva sección "Equipo": listado por especialidad y zona, ficha con foto, formación, modalidad, población que atiende. Sólo lo que el profesional marcó como público |
+| 2.3 | ✅ Migración inicial de fichas (28/09) | 30 fichas públicas cargadas. La hoja 'Demanda' se incorpora en el paso 2.5 |
+| 2.4 | ✅ Fichas públicas en el portal (en producción) | Nueva sección "Equipo": listado por especialidad y zona, ficha con foto, formación, modalidad, población que atiende. Sólo lo que el profesional marcó como público |
 | 2.5 | El bot escribe en Supabase además de la hoja | La hoja 'Demanda' queda como respaldo un tiempo |
 | 2.6 | Consentimiento y aviso de privacidad | Texto para pacientes y profesionales (Ley 25.326). ⏳ revisión de la Fundación |
 
