@@ -4,7 +4,7 @@
 // - Computadora (>= 768 px, prefijo "md:" de Tailwind): barra lateral a la izquierda.
 // Es la misma lista de secciones (navegacion.ts), así nunca quedan desincronizadas.
 
-import { SECCIONES, type Seccion } from '../navegacion';
+import { SECCIONES_MENU, type Seccion } from '../navegacion';
 import { Marca } from './Marca';
 import { enlacePorMotivo } from '../lib/whatsapp';
 import { MessageCircle } from 'lucide-react';
@@ -18,7 +18,7 @@ export function BarraLateral({ activa }: Props) {
     <aside className="hidden md:flex md:flex-col w-64 shrink-0 bg-hpc text-crema min-h-screen sticky top-0 h-screen p-6">
       <Marca claro />
       <nav aria-label="Secciones" className="mt-10 flex flex-col gap-1">
-        {SECCIONES.map(({ id, etiqueta, icono: Icono }) => (
+        {SECCIONES_MENU.map(({ id, etiqueta, icono: Icono }) => (
           <a
             key={id}
             href={`#${id}`}
@@ -51,7 +51,7 @@ export function BarraInferior({ activa }: Props) {
       aria-label="Secciones"
       className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-hpc/10 grid grid-cols-5 pb-[env(safe-area-inset-bottom)]"
     >
-      {SECCIONES.filter((s) => s.movil).map(({ id, etiqueta, icono: Icono }) => (
+      {SECCIONES_MENU.filter((s) => s.movil).map(({ id, etiqueta, icono: Icono }) => (
         <a
           key={id}
           href={`#${id}`}
