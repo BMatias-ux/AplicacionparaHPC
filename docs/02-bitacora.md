@@ -165,3 +165,12 @@ tratamiento, 10 años historia clínica), mención de las Leyes 26.529 y 26.657,
 institucional, que rige para todos los canales.
 **Encontrado:** la política institucional promete que el asistente se identifica como automático y que se puede pedir
 hablar con una persona; el bot todavía no hace ninguna de las dos cosas (pendiente anotado).
+
+## 28/09/2026 (10) — "Hablar con una persona"
+
+**Pedido de Matías:** que el bot hable de forma cálida y que "persona", "humano" o "hablar con alguien" lo haga dejar
+de responder y avise al equipo. **Hecho** (`bot-hpc`, 40 pruebas): pausa la conversación con el mismo estado de la
+coexistencia (`#bot` la devuelve), registra lo que haya si ya aceptó el aviso (prioridad `pide persona`), confirma a la
+persona y avisa a `NUMERO_ALERTAS`. El saludo presenta al bot como "asistente virtual" y ofrece escribir *persona*,
+porque la política institucional (punto 5) promete que el asistente no simula ser una persona.
+**Encontrado:** `NUMERO_ALERTAS` no está configurado en Vercel: las alertas de riesgo y los pedidos quedan sólo en logs.

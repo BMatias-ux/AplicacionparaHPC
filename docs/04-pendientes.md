@@ -36,7 +36,9 @@ Prioridad: 🔴 bloquea · 🟠 importante · 🟢 mejora · ✅ hecho
 - ✅ Domicilio legal, razón social y CUIT cargados en el aviso, tomados de la política institucional (28/09).
 - 🟠 **Inscribir la base de datos** en el Registro Nacional de Bases de Datos de la AAIP (Ley 25.326, art. 21). Lo hace la Fundación como responsable.
 - 🟢 Agregar la columna `consentimiento` a la hoja 'Demanda' (array `COLUMNAS` del Apps Script) si se quiere la constancia también en la planilla.
-- 🟠 **Brechas del bot con la política institucional (punto 5):** el asistente no se presenta como automático en el primer mensaje y no hay un comando para pedir hablar con una persona (hoy sólo ocurre si alguien del equipo responde). Ajustar `bot-hpc/lib/textos.js`.
+- ✅ El bot se presenta como asistente virtual y "persona" / "hablar con alguien" pasa la conversación al equipo (28/09).
+- 🔴 **Configurar `NUMERO_ALERTAS`** en Vercel (`bot-hpc`): celular personal de quien reciba las alertas de riesgo y los pedidos de "persona". Hoy no está, así que ambos avisos quedan sólo en los logs.
+- 🟠 Plantilla de utilidad aprobada por Meta para las alertas al equipo (sin ella, sólo llegan si ese celular le escribió al bot en las últimas 24 hs).
 - 🟢 Consentimiento de profesionales: hoy se toma de la columna de autorización de la Ficha 2026; en la Fase 3 se pide en el alta de la app.
 
 ## Fase 3 — Acceso para profesionales
