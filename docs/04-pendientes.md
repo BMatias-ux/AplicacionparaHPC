@@ -32,7 +32,7 @@ Prioridad: 🔴 bloquea · 🟠 importante · 🟢 mejora · ✅ hecho
 - 🟢 Borrar la carpeta local `datos\` cuando ya no haga falta (tiene datos personales; está fuera de git).
 - ✅ Paso 2.5: el bot guarda cada consulta en Supabase (y en la hoja, como respaldo). Probado en real el 28/09.
 - ✅ Paso 2.6: aviso de privacidad en `#privacidad` y consentimiento con botones en el bot (28/09).
-- ✅ Revisión del aviso de privacidad (28/09, confirmada por Matías) por la asesoría de la Fundación (texto en `src/screens/Privacidad.tsx`; el aviso corto del bot en `bot-hpc/lib/consentimiento.js` tiene que coincidir).
+- ✅ Revisión del aviso de privacidad (28/09, confirmada por Matías). Si cambia el texto (`src/screens/Privacidad.tsx`), revisar que coincida el aviso corto del bot (`bot-hpc/lib/consentimiento.js`).
 - ✅ Domicilio legal, razón social y CUIT cargados en el aviso, tomados de la política institucional (28/09).
 - 🟠 **Inscribir la base de datos** en la AAIP (Ley 25.326, art. 21): instructivo en `docs/08-instructivo-aaip.md`. Lo hace la Fundación con su clave fiscal.
 - 🟢 Agregar la columna `consentimiento` a la hoja 'Demanda' (array `COLUMNAS` del Apps Script) si se quiere la constancia también en la planilla.
