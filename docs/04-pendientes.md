@@ -30,7 +30,7 @@ Prioridad: 🔴 bloquea · 🟠 importante · 🟢 mejora · ✅ hecho
 - ✅ Planilla de fichas importada: 30 fichas públicas, 3 sin publicar (28/09).
 - 🟠 Revisar con Laura las zonas: Córdoba figura con 10 fichas (históricamente 1–2) y 2 fichas tienen zona "Otra / a definir" (salen sin zona).
 - 🟢 Borrar la carpeta local `datos\` cuando ya no haga falta (tiene datos personales; está fuera de git).
-- 🟠 Paso 2.5: código listo y migración aplicada (28/09). Falta: `SUPABASE_SECRET_KEY` en Vercel (`bot-hpc`), merge de `fase-2-5-consultas-supabase` (bot) y `fase-2-5-consultas-contacto` (portal), prueba real.
+- ✅ Paso 2.5: el bot guarda cada consulta en Supabase (y en la hoja, como respaldo). Probado en real el 28/09.
 - 🟠 Paso 2.6: aviso de privacidad y consentimiento (pacientes y profesionales).
 
 ## Fase 3 — Acceso para profesionales

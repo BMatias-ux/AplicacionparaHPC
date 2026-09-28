@@ -133,3 +133,5 @@ donde un mensaje del portal siempre arranca una consulta nueva (salvo pausa por 
 nueva que falla sin el arreglo y pasa con él.
 **Aclaración:** el portal apunta al número del equipo (+54 9 387 523-3693); el bot sigue en +54 9 387 637-6370 hasta
 la ventana de corte (Fase 1.6). Hasta entonces, lo que llega del portal lo responde una persona.
+**Reprueba con el arreglo en producción:** flujo abierto + mensaje del portal → el bot fue directo a Cursos y guardó
+una sola fila: `canal = portal`, `opcion = cursos`, nombre correcto, estado `nueva`. **Paso 2.5 cerrado.**
