@@ -3,7 +3,7 @@
 Prioridad: 🔴 bloquea · 🟠 importante · 🟢 mejora · ✅ hecho
 
 ## Etapa 1 — Portal informativo (cerrar)
-- 🔴 Revisar la vista previa de Vercel de la rama `etapa-1-portal-informativo` y hacer el merge a `main`.
+- ✅ PR #1 mergeado a `main` (28/09).
 - 🔴 Agregar el CNAME `portal` en Hostinger (valor que muestra Vercel, ver `05-guia-despliegue.md`).
 - 🟠 **Aprobación clínica** del aviso de urgencias en Contacto (911, 135, (011) 5275-1135). Mismo pendiente que el bot.
 - 🟠 Logo oficial en SVG para reemplazar la "H" provisoria (`src/components/Marca.tsx`, `public/icons/`).
@@ -11,9 +11,8 @@ Prioridad: 🔴 bloquea · 🟠 importante · 🟢 mejora · ✅ hecho
 - ✅ Marco de teléfono quitado, layout responsive, contenido real, WhatsApp único, identidad HPC, PWA, accesibilidad, limpieza de dependencias.
 
 ## Bot
-- 🟠 Corregir `cajaureka.com.ar` → `cajaeureka.com.ar` en `lib/textos.js`.
-- 🟠 Mensajes que llegan desde el portal: hoy muestran el menú igual. A futuro, detectar "(Escribo desde el portal web)" + el motivo y saltear el menú.
-- 🟠 Derivación a una persona: pausar el bot cuando responde alguien del equipo.
+- ✅ `cajaeureka` corregido (PR #7).
+- ✅ Mensajes del portal saltan el menú (PR #7).
 - 🟠 Verificar con Meta la **coexistencia** (mismo número en la app WhatsApp Business y en la Cloud API) antes de migrar el número del equipo.
 - 🟠 Canal monitoreado para alertas de riesgo (plantilla aprobada).
 

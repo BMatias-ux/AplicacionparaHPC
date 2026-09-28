@@ -27,3 +27,10 @@ Proyecciones de profesionales y Mercado Pago en `01-especificacion.md`. Decision
 Se agregó `.gitattributes` (LF) en `main`.
 
 **Quedó pendiente:** merge a `main`, CNAME en Hostinger, aprobación clínica del aviso de urgencias, logo oficial.
+
+## 28/09/2026 — Fase 0 cerrada (merge) y Fase 1 paso 1.3 (bot)
+
+**Hecho:** PR #1 del portal mergeado a `main` (Fase 0.2). En `bot-hpc`, PR #7 con soporte 360dialog, pausa
+automática por echo (`smb_message_echoes`), comando `#bot`, atajos del portal, corrección `cajaeureka` y prueba de
+mesa (`npm test`, 13 comprobaciones OK). Compatible hacia atrás: sin `D360_API_KEY` funciona como hoy.
+**Pendiente:** dominio `portal` (0.3–0.4), Business Portfolio de HPC (1.1), cuenta 360dialog (1.2), merge PR #7.
