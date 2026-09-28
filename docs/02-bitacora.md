@@ -123,3 +123,13 @@ exclusiones, pacientes, consultas): 0 filas con la clave pública.
 - Variable `SUPABASE_URL` cargada en Vercel (`bot-hpc`).
 **Pendiente (Matías):** cargar `SUPABASE_SECRET_KEY` en Vercel (`bot-hpc`, marcada como Sensitive), merge de las dos
 ramas y prueba real desde el celular.
+
+## 28/09/2026 (7) — Prueba real del paso 2.5 y corrección
+
+**Resultado:** la consulta de prueba (Cursos, entrada directa) llegó a Supabase con canal, opción, correo y teléfono de
+contacto. **Error encontrado:** con el flujo abierto en "nombre", el mensaje del portal se guardó como nombre, porque
+el atajo del portal sólo actuaba sin flujo abierto. **Corrección:** `bot-hpc` rama `fix-portal-con-flujo-abierto`,
+donde un mensaje del portal siempre arranca una consulta nueva (salvo pausa por riesgo o atención humana). Prueba
+nueva que falla sin el arreglo y pasa con él.
+**Aclaración:** el portal apunta al número del equipo (+54 9 387 523-3693); el bot sigue en +54 9 387 637-6370 hasta
+la ventana de corte (Fase 1.6). Hasta entonces, lo que llega del portal lo responde una persona.
