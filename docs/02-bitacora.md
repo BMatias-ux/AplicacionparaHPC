@@ -88,3 +88,13 @@ Profesionales 2026" (sin datos personales en git) y sección "Equipo" en el port
 `etapas/etapa-03-base-de-datos-y-fichas.md`. Se corrigieron dos problemas encontrados al probar: la clave de
 `usuarios_roles` no admitía roles sin zona, y un profesional podía darse de baja a sí mismo.
 **Pendiente:** crear el proyecto de Supabase, variables en Vercel, importar la planilla.
+
+## 28/09/2026 (4) — Supabase en producción
+
+**Decisión de Matías:** usar su cuenta personal de Supabase (HPC no tiene). Se creó una organización aparte (D-13).
+**Hecho (Claude, desde el navegador de Matías):** organización "Fundación HPC" (Free), proyecto `hpc` en São Paulo con
+contraseña generada por Supabase y "Enable automatic RLS" activado; migraciones ejecutadas en el SQL Editor (bajadas
+del repo, idénticas a las de la rama). Verificado: 9 zonas, 3 especialidades, 7 poblaciones, 15 tablas todas con RLS,
+28 políticas, vista pública. Prueba de permisos con la clave pública y dos fichas temporales: la vista mostró sólo la
+autorizada y sin foto; tablas privadas y consultas, 0 filas. Datos de prueba borrados. Variables cargadas en Vercel.
+**Pendiente:** merge del PR #2, importar la planilla de fichas, guardar la contraseña de la base.

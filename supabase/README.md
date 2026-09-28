@@ -18,7 +18,12 @@
 - `usuarios_roles`: admin, admisión, coordinación (por zona), profesional.
 - `fichas_publicas` (vista): lo único que ve el portal sin login. Aplica la autorización de cada profesional.
 
-## Poner en marcha (una sola vez)
+## Estado (28/09/2026)
+
+Proyecto `hpc` (ref `hflkgvufvczqkhipicuf`, São Paulo) en la organización **Fundación HPC**. Las dos migraciones ya
+están aplicadas. URL: `https://hflkgvufvczqkhipicuf.supabase.co`.
+
+## Poner en marcha (procedimiento, por si hay que rehacerlo)
 
 1. Crear el proyecto en supabase.com (región São Paulo, la más cercana).
 2. SQL Editor → pegar y ejecutar `migrations/...01_esquema_inicial.sql`, después `...02_catalogos.sql`.

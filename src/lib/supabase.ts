@@ -13,7 +13,7 @@
 //
 // Variables (Vercel → Settings → Environment Variables, y .env.local para desarrollo):
 //   VITE_SUPABASE_URL       https://xxxxx.supabase.co
-//   VITE_SUPABASE_ANON_KEY  eyJ...
+//   VITE_SUPABASE_ANON_KEY  sb_publishable_...  (la "publishable key"; en proyectos viejos era la anon key eyJ...)
 // El prefijo VITE_ es obligatorio: Vite sólo expone al navegador las variables que lo tienen.
 
 export interface FichaPublica {

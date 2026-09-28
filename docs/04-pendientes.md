@@ -23,8 +23,10 @@ Prioridad: 🔴 bloquea · 🟠 importante · 🟢 mejora · ✅ hecho
 
 ## Fase 2 — Base de datos y fichas
 - ✅ Esquema, permisos, importador y sección Equipo: PR `etapa-2-supabase-fichas` (28/09).
-- 🔴 Crear el proyecto de Supabase (¿cuenta de M Digital o de HPC?) y ejecutar las 2 migraciones.
-- 🔴 Cargar `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY` en Vercel.
+- ✅ Proyecto Supabase `hpc` creado en la organización **Fundación HPC** (Free, São Paulo), migraciones aplicadas y verificadas; variables en Vercel (28/09). D-13.
+- 🔴 Merge del PR #2 para publicar la sección Equipo.
+- 🟠 Guardar la contraseña de la base en el gestor de contraseñas (si no se copió al crear, resetearla en Settings → Database).
+- 🟢 Pasar la organización a plan Pro (~USD 25/mes) antes de cargar datos de pacientes (Fase 4): backups diarios y sin pausa por inactividad.
 - 🟠 Exportar la planilla de fichas a CSV, correr el importador y cargar.
 - 🟠 Paso 2.5: que el bot escriba las consultas en Supabase además de la hoja.
 - 🟠 Paso 2.6: aviso de privacidad y consentimiento (pacientes y profesionales).
