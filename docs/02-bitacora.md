@@ -110,3 +110,16 @@ Storage en la Fase 3). Por zona: Córdoba 10, CABA 4, Tucumán 4, Santa Fe 3, Ne
 Oeste 1, Norte 1, sin zona 2 ("Otra / a definir"). Tablas privadas (`profesionales`, `profesionales_privado`,
 exclusiones, pacientes, consultas): 0 filas con la clave pública.
 **A revisar con Laura:** Córdoba aparece con 10 fichas cuando históricamente eran 1–2; las 2 fichas sin zona.
+
+## 28/09/2026 (6) — Paso 2.5: el bot guarda las consultas en Supabase
+
+**Hecho (Matías):** merge del PR #7 de `bot-hpc` (360dialog + coexistencia); `npm test` en "Todo OK".
+**Hecho (Claude):**
+- `bot-hpc`, rama `fase-2-5-consultas-supabase`: `lib/supabase.js` guarda cada consulta en `consultas` con la
+  secret key (fetch a la API REST, sin SDK). La hoja 'Demanda' se sigue escribiendo en paralelo como respaldo.
+  Nuevo campo `canal` (`whatsapp` | `portal`). 6 pruebas nuevas (19 en total, todas OK).
+- Migración `20260928000003_consultas_contacto.sql`: columnas `correo` y `telefono_contacto`, y restricción de
+  valores de `canal`. Probada en Postgres local y **aplicada en Supabase** (verificado).
+- Variable `SUPABASE_URL` cargada en Vercel (`bot-hpc`).
+**Pendiente (Matías):** cargar `SUPABASE_SECRET_KEY` en Vercel (`bot-hpc`, marcada como Sensitive), merge de las dos
+ramas y prueba real desde el celular.
