@@ -18,7 +18,7 @@ Prioridad: 🔴 bloquea · 🟠 importante · 🟢 mejora · ✅ hecho
 - 🔴 Fase 1.1: confirmar Business Portfolio de Meta de HPC (a nombre de la Fundación, datos completos).
 - 🔴 Fase 1.2: enviar cotización / crear cuenta en 360dialog (sin pagar hasta la ventana de corte).
 - 🔴 Confirmar que el Business Portfolio de Meta de HPC existe a nombre de la Fundación y tiene datos completos.
-- ✅ Bot adaptado a 360dialog + pausa por humano + `#bot` + atajos del portal: `bot-hpc` PR #7 (28/09). Falta merge.
+- ✅ Bot adaptado a 360dialog + pausa por humano + `#bot` + atajos del portal: `bot-hpc` PR #7 mergeado (28/09).
 - 🟠 Canal monitoreado para alertas de riesgo (plantilla aprobada).
 
 ## Fase 2 — Base de datos y fichas
@@ -30,7 +30,7 @@ Prioridad: 🔴 bloquea · 🟠 importante · 🟢 mejora · ✅ hecho
 - ✅ Planilla de fichas importada: 30 fichas públicas, 3 sin publicar (28/09).
 - 🟠 Revisar con Laura las zonas: Córdoba figura con 10 fichas (históricamente 1–2) y 2 fichas tienen zona "Otra / a definir" (salen sin zona).
 - 🟢 Borrar la carpeta local `datos\` cuando ya no haga falta (tiene datos personales; está fuera de git).
-- 🟠 Paso 2.5: que el bot escriba las consultas en Supabase además de la hoja.
+- 🟠 Paso 2.5: código listo y migración aplicada (28/09). Falta: `SUPABASE_SECRET_KEY` en Vercel (`bot-hpc`), merge de `fase-2-5-consultas-supabase` (bot) y `fase-2-5-consultas-contacto` (portal), prueba real.
 - 🟠 Paso 2.6: aviso de privacidad y consentimiento (pacientes y profesionales).
 
 ## Fase 3 — Acceso para profesionales
