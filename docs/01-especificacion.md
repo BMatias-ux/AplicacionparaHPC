@@ -17,6 +17,8 @@ por la app; el equipo deriva; el profesional recibe el caso.
 
 ## Módulos y hoja de ruta
 
+> El plan detallado por fases, con tiempos y costos, está en `07-plan-de-trabajo.md`.
+
 | Versión | Módulo | Estado |
 |---|---|---|
 | v1 | **Portal informativo** + contacto por WhatsApp (sin registro ni datos) | Etapa 1, en revisión |
@@ -100,12 +102,14 @@ formaciones anuales y membresía.
 | D-01 | 25/09/2026 | Web app (PWA) primero; tiendas después con Capacitor | Sin revisión de tiendas, cambios al instante, profesionales usan computadora, mismo código sirve para empaquetar | Aprobada |
 | D-02 | 25/09/2026 | Publicar en **`portal.habilidadesparaelcambio.com.ar`** | El raíz es el WordPress del sitio institucional | Aprobada |
 | D-03 | 25/09/2026 | Quitar el marco de teléfono y el selector Móvil/Expandido; layout responsive real | Es un simulador de presentación de AI Studio, no una app | Hecha (Etapa 1) |
-| D-04 | — | Backend y autenticación (Supabase u otro) | Requisito para v2 (profesionales) y pagos | Pendiente |
+| D-04 | 26/09/2026 | Backend y autenticación: **Supabase** (propuesta firme) | Postgres + Auth + RLS, gratis al inicio, ya usado en GEMA. Requisito para pacientes, profesionales, turnos y pagos | Propuesta; se confirma al cerrar Fase 1 |
 | D-05 | 25/09/2026 | Número único de WhatsApp: **+54 9 387 523-3693** (el del bot) | Unifica bot, app y equipo | Aprobada; la coexistencia con la app Business sigue a verificar con Meta |
 | D-06 | 25/09/2026 | La app **no muestra precios**; se informan por WhatsApp | Cambian seguido y ya viven en el bot: dos copias = una desactualizada | Hecha (Etapa 1) |
 | D-07 | 25/09/2026 | No listar presencial en **Zona Norte ni Salta** | Sin profesionales cargados al corte de sept. 2026 y hubo reclamo por publicidad de Salta | Hecha; revisar al sumar equipo |
 | D-08 | — | Acceso de profesionales: ¿dentro del portal o app aparte? | Ver *Proyección* | Pendiente |
 | D-09 | 25/09/2026 | v1 = información + WhatsApp, sin registro ni datos personales | Decisión de Matías; evita guardar datos de salud sin backend | Aprobada |
+| D-10 | 26/09/2026 | Coexistencia del bot con el equipo a través de **360dialog** (proveedor), no como Tech Provider ni con Jelou | M Digital no tiene verificación de negocio en Meta; 360dialog conserva el bot propio en Vercel (Jelou obligaba a rehacerlo adentro; Vapi es sólo voz) | Aprobada |
+| D-11 | 26/09/2026 | Recordatorios de turno por **WhatsApp (plantilla de utilidad)** como canal principal; Web Push como refuerzo | En iPhone el push sólo funciona con la PWA instalada; WhatsApp llega siempre | Propuesta |
 
 ## Marco legal a tener presente
 

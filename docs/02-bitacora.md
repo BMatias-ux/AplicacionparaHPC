@@ -28,9 +28,47 @@ Se agregó `.gitattributes` (LF) en `main`.
 
 **Quedó pendiente:** merge a `main`, CNAME en Hostinger, aprobación clínica del aviso de urgencias, logo oficial.
 
+## 26/09/2026 — Coexistencia del bot con el equipo
+
+**Pedido:** aclarar que el bot debe convivir con los agentes que hoy usan el WhatsApp del equipo; traer el proyecto
+del bot que está en Drive. Pregunta: ¿seguir por dominio o por diseño?
+
+**Hecho:** localizado el documento de Drive y resumido en `etapas/etapa-02-bot-coexistencia.md`, junto con lo
+verificado en la documentación de Meta: la coexistencia existe pero sólo la habilitan Tech Providers o proveedores
+(BSP) vía Embedded Signup; el webhook `smb_message_echoes` permite pausar el bot cuando responde una persona.
+Tres caminos planteados (A Tech Provider, B proveedor, C sin coexistencia).
+
+**Quedó pendiente:** decidir A o B; merge del PR #1; CNAME `portal`.
+
+## 26/09/2026 (2) — Decisión: camino B (proveedor)
+
+**Decisión de Matías:** camino B; M Digital no tiene verificación de negocio en Meta (D-10).
+**Hecho:** verificado el alta con coexistencia en 360dialog (QR desde la app, Business Portfolio de HPC con datos
+completos, app abierta cada 13 días, €49/mes por número + Meta sin recargo, webhook propio con `smb_message_echoes`).
+Estimados los cambios en el bot (endpoint y cabecera de envío + manejo de echoes). Redactado el pedido de cotización.
+**Pendiente:** enviar cotizaciones; confirmar Business Portfolio de HPC; merge PR #1; CNAME `portal`.
+
+## 26/09/2026 (3) — Evaluación de Jelou
+
+**Pedido:** revisar la cuenta de Jelou de Matías (apps.jelou.ai) y su documentación para ver si sirve para la convivencia bot + equipo.
+**Hecho:** revisada la cuenta (sin canales) y la documentación. Jelou tiene coexistencia nativa con pausa automática del bot
+cuando responde un asesor desde la app; plan Builder USD 25/mes. El costo es rehacer el bot dentro de Jelou (Brain Studio /
+Functions) porque no reenvía los mensajes a un webhook externo. Comparación con 360dialog en el archivo de la etapa 2.
+**Pendiente:** consultar a Jelou (Argentina, plan, verificación del portafolio) y decidir plataforma.
+
+## 26/09/2026 (4) — Decisión final y plan de trabajo
+
+**Decisión de Matías:** 360dialog con coexistencia (Vapi descartado: es sólo voz; Jelou descartado: obliga a rehacer el bot).
+**Pedido:** plan por fases con tiempos y costos para proyectárselo a Laura; cuándo pagar 360dialog; cuándo configurar el
+dominio; base de pacientes y profesionales; recordatorios de turno; fichas por especialidad; acceso de profesionales.
+**Hecho:** `07-plan-de-trabajo.md` con 6 fases (0 a 5), pasos, responsables, esperas, costos mensuales y riesgos. D-04
+(Supabase) pasa a propuesta firme; D-11 recordatorios por WhatsApp. El dominio se configura en la Fase 0, ahora.
+360dialog se paga al crear el canal, en la ventana de corte de la Fase 1.
+
 ## 28/09/2026 — Fase 0 cerrada (merge) y Fase 1 paso 1.3 (bot)
 
 **Hecho:** PR #1 del portal mergeado a `main` (Fase 0.2). En `bot-hpc`, PR #7 con soporte 360dialog, pausa
 automática por echo (`smb_message_echoes`), comando `#bot`, atajos del portal, corrección `cajaeureka` y prueba de
 mesa (`npm test`, 13 comprobaciones OK). Compatible hacia atrás: sin `D360_API_KEY` funciona como hoy.
+Se detectó que el merge del PR #1 se hizo antes de los últimos 4 commits de docs de la rama; se incorporaron a `main` hoy.
 **Pendiente:** dominio `portal` (0.3–0.4), Business Portfolio de HPC (1.1), cuenta 360dialog (1.2), merge PR #7.

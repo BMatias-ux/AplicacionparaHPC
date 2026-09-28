@@ -13,7 +13,11 @@ Prioridad: 🔴 bloquea · 🟠 importante · 🟢 mejora · ✅ hecho
 ## Bot
 - ✅ `cajaeureka` corregido (PR #7).
 - ✅ Mensajes del portal saltan el menú (PR #7).
-- 🟠 Verificar con Meta la **coexistencia** (mismo número en la app WhatsApp Business y en la Cloud API) antes de migrar el número del equipo.
+- ✅ D-10 decidido: **360dialog con coexistencia**. Plan en `07-plan-de-trabajo.md` (Fase 1).
+- 🔴 Fase 1.1: confirmar Business Portfolio de Meta de HPC (a nombre de la Fundación, datos completos).
+- 🔴 Fase 1.2: enviar cotización / crear cuenta en 360dialog (sin pagar hasta la ventana de corte).
+- 🔴 Confirmar que el Business Portfolio de Meta de HPC existe a nombre de la Fundación y tiene datos completos.
+- ✅ Bot adaptado a 360dialog + pausa por humano + `#bot` + atajos del portal: `bot-hpc` PR #7 (28/09). Falta merge.
 - 🟠 Canal monitoreado para alertas de riesgo (plantilla aprobada).
 
 ## v2 — Acceso para profesionales
