@@ -151,3 +151,7 @@ una sola fila: `canal = portal`, `opcion = cursos`, nombre correcto, estado `nue
 **Fuentes:** Ley 25.326 (Infoleg), Disposición DNPDP 10/2008, página de datos personales de la AAIP.
 **Pendiente (Fundación):** revisión legal del texto, domicilio legal del responsable (`src/config.ts`,
 `RESPONSABLE_DATOS.domicilio`), inscripción de la base en el Registro Nacional de Bases de Datos de la AAIP.
+**Prueba real en producción (10:33):** "No acepto" → el bot confirma que no guarda datos y da el número del equipo;
+no quedó ninguna fila. "Acepto" en Programa DBT → flujo clínico completo; una sola fila nueva con
+`consentimiento_at` (10:34:19), edad, zona, motivo y riesgo "no". **Paso 2.6 cerrado en lo técnico**; queda la
+revisión legal de la Fundación.
