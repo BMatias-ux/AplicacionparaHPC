@@ -180,3 +180,11 @@ porque la política institucional (punto 5) promete que el asistente no simula s
 Desde el número del equipo (+54 9 387 523-3693) se le escribió "Quiero hablar con una persona" al bot: el bot confirmó
 el pase y a los segundos llegó al celular de Matías (`NUMERO_ALERTAS`) el aviso "🙋 Pide hablar con una persona" con el
 WhatsApp de quien lo pidió. `NUMERO_ALERTAS` acepta varios números separados por coma y se cambia desde Vercel.
+
+## 28/09/2026 (12) — Plantilla de avisos al equipo
+
+**Aprobado por Matías:** texto de la plantilla. **Hecho (Claude, desde el navegador):** plantilla `alerta_equipo`
+(Utilidad, Spanish ARG, validez 12 hs en lugar de los 10 minutos por defecto) enviada a revisión en el Administrador de
+WhatsApp de la cuenta actual del bot. El bot (`bot-hpc`, 44 pruebas) manda los avisos de riesgo y de "persona" con la
+plantilla y, si Meta la rechaza, como texto. `NUMERO_ALERTAS`: Matías, Laura Flynn y el 011 de la Fundación.
+**Primera consulta real de riesgo** (12:03) avisada a tiempo; el equipo la contactó.

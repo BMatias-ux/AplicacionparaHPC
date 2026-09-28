@@ -38,7 +38,7 @@ Prioridad: 🔴 bloquea · 🟠 importante · 🟢 mejora · ✅ hecho
 - 🟢 Agregar la columna `consentimiento` a la hoja 'Demanda' (array `COLUMNAS` del Apps Script) si se quiere la constancia también en la planilla.
 - ✅ El bot se presenta como asistente virtual y "persona" / "hablar con alguien" pasa la conversación al equipo (28/09).
 - ✅ `NUMERO_ALERTAS` con tres números (28/09): Matías, Laura Flynn y el 011 de la Fundación (+54 9 11 2386-4196). Se cambia desde Vercel; separados por coma. Probado: alerta de riesgo y pedido de persona llegan.
-- 🟠 Plantilla de utilidad aprobada por Meta para las alertas al equipo (sin ella, sólo llegan si ese celular le escribió al bot en las últimas 24 hs).
+- 🟠 Plantilla `alerta_equipo` enviada a revisión de Meta (28/09, Utilidad, es_AR, validez 12 hs). El bot ya la usa y, mientras no esté aprobada, manda los avisos como texto. **En el corte a 360dialog: crearla igual en la cuenta nueva.**
 - 🟢 Consentimiento de profesionales: hoy se toma de la columna de autorización de la Ficha 2026; en la Fase 3 se pide en el alta de la app.
 
 ## Fase 3 — Acceso para profesionales
