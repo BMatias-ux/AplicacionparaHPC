@@ -37,7 +37,7 @@ Prioridad: 🔴 bloquea · 🟠 importante · 🟢 mejora · ✅ hecho
 - 🟠 **Inscribir la base de datos** en el Registro Nacional de Bases de Datos de la AAIP (Ley 25.326, art. 21). Lo hace la Fundación como responsable.
 - 🟢 Agregar la columna `consentimiento` a la hoja 'Demanda' (array `COLUMNAS` del Apps Script) si se quiere la constancia también en la planilla.
 - ✅ El bot se presenta como asistente virtual y "persona" / "hablar con alguien" pasa la conversación al equipo (28/09).
-- 🟠 `NUMERO_ALERTAS` configurado con el celular de Matías **para pruebas** (28/09). Acepta varios números separados por coma. Definir con Laura quién(es) lo reciben en producción; opción: el número actual del bot (+54 9 387 637-6370) cuando quede libre después del corte.
+- ✅ `NUMERO_ALERTAS` con tres números (28/09): Matías, Laura Flynn y el 011 de la Fundación (+54 9 11 2386-4196). Se cambia desde Vercel; separados por coma. Probado: alerta de riesgo y pedido de persona llegan.
 - 🟠 Plantilla de utilidad aprobada por Meta para las alertas al equipo (sin ella, sólo llegan si ese celular le escribió al bot en las últimas 24 hs).
 - 🟢 Consentimiento de profesionales: hoy se toma de la columna de autorización de la Ficha 2026; en la Fase 3 se pide en el alta de la app.
 
