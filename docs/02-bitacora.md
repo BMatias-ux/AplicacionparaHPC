@@ -79,3 +79,22 @@ Se detectó que el merge del PR #1 se hizo antes de los últimos 4 commits de do
 Hostinger apuntando a `1d47bbe66a4308d1.vercel-dns-017.com`. Comprobado: DNS resuelve, Vercel "Valid Configuration",
 `/`, `/manifest.webmanifest`, `/sw.js` e íconos responden 200 por HTTPS.
 **Pendiente de Fase 0:** 0.5 prueba de instalación en celular, 0.6 envío a Laura con el aviso de urgencias.
+
+## 28/09/2026 (3) — Fase 2: base de datos y fichas
+
+**Hecho:** esquema de Supabase con permisos por fila, vista pública que aplica la autorización de cada profesional,
+trigger de campos protegidos, pruebas de permisos en Postgres local, importador de la planilla "HPC · Fichas
+Profesionales 2026" (sin datos personales en git) y sección "Equipo" en el portal con filtros. Detalle en
+`etapas/etapa-03-base-de-datos-y-fichas.md`. Se corrigieron dos problemas encontrados al probar: la clave de
+`usuarios_roles` no admitía roles sin zona, y un profesional podía darse de baja a sí mismo.
+**Pendiente:** crear el proyecto de Supabase, variables en Vercel, importar la planilla.
+
+## 28/09/2026 (4) — Supabase en producción
+
+**Decisión de Matías:** usar su cuenta personal de Supabase (HPC no tiene). Se creó una organización aparte (D-13).
+**Hecho (Claude, desde el navegador de Matías):** organización "Fundación HPC" (Free), proyecto `hpc` en São Paulo con
+contraseña generada por Supabase y "Enable automatic RLS" activado; migraciones ejecutadas en el SQL Editor (bajadas
+del repo, idénticas a las de la rama). Verificado: 9 zonas, 3 especialidades, 7 poblaciones, 15 tablas todas con RLS,
+28 políticas, vista pública. Prueba de permisos con la clave pública y dos fichas temporales: la vista mostró sólo la
+autorizada y sin foto; tablas privadas y consultas, 0 filas. Datos de prueba borrados. Variables cargadas en Vercel.
+**Pendiente:** merge del PR #2, importar la planilla de fichas, guardar la contraseña de la base.

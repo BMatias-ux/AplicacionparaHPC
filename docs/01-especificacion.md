@@ -102,7 +102,9 @@ formaciones anuales y membresía.
 | D-01 | 25/09/2026 | Web app (PWA) primero; tiendas después con Capacitor | Sin revisión de tiendas, cambios al instante, profesionales usan computadora, mismo código sirve para empaquetar | Aprobada |
 | D-02 | 25/09/2026 | Publicar en **`portal.habilidadesparaelcambio.com.ar`** | El raíz es el WordPress del sitio institucional | Aprobada |
 | D-03 | 25/09/2026 | Quitar el marco de teléfono y el selector Móvil/Expandido; layout responsive real | Es un simulador de presentación de AI Studio, no una app | Hecha (Etapa 1) |
-| D-04 | 26/09/2026 | Backend y autenticación: **Supabase** (propuesta firme) | Postgres + Auth + RLS, gratis al inicio, ya usado en GEMA. Requisito para pacientes, profesionales, turnos y pagos | Propuesta; se confirma al cerrar Fase 1 |
+| D-04 | 28/09/2026 | Backend y autenticación: **Supabase** | Postgres + Auth + RLS, gratis al inicio, ya usado en GEMA. Esquema en `supabase/` | Aprobada (Fase 2 en curso) |
+| D-13 | 28/09/2026 | Supabase en una **organización propia "Fundación HPC"** dentro de la cuenta de Matías, plan Free | HPC no tiene cuenta; facturación separada para trasladar el costo; el proyecto se puede transferir a una cuenta de HPC sin cambiar URL ni claves | Aprobada |
+| D-12 | 28/09/2026 | Fichas públicas salen de la planilla del formulario nuevo, filtradas por la autorización de cada profesional; la vista de la base aplica esa regla | Único origen con consentimiento explícito | Aprobada |
 | D-05 | 25/09/2026 | Número único de WhatsApp: **+54 9 387 523-3693** (el del bot) | Unifica bot, app y equipo | Aprobada; la coexistencia con la app Business sigue a verificar con Meta |
 | D-06 | 25/09/2026 | La app **no muestra precios**; se informan por WhatsApp | Cambian seguido y ya viven en el bot: dos copias = una desactualizada | Hecha (Etapa 1) |
 | D-07 | 25/09/2026 | No listar presencial en **Zona Norte ni Salta** | Sin profesionales cargados al corte de sept. 2026 y hubo reclamo por publicidad de Salta | Hecha; revisar al sumar equipo |

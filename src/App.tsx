@@ -9,6 +9,7 @@ import { BarraLateral, BarraInferior, EncabezadoMovil } from './components/Naveg
 import { WhatsAppFlotante } from './components/BotonWhatsApp';
 import { Inicio } from './screens/Inicio';
 import { Servicios } from './screens/Servicios';
+import { Equipo } from './screens/Equipo';
 import { Formacion } from './screens/Formacion';
 import { Recursos } from './screens/Recursos';
 import { Contacto } from './screens/Contacto';
@@ -16,6 +17,7 @@ import { Contacto } from './screens/Contacto';
 const PANTALLAS: Record<Seccion, () => React.JSX.Element> = {
   inicio: Inicio,
   servicios: Servicios,
+  equipo: Equipo,
   formacion: Formacion,
   recursos: Recursos,
   contacto: Contacto,

@@ -51,7 +51,7 @@ export function BarraInferior({ activa }: Props) {
       aria-label="Secciones"
       className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-hpc/10 grid grid-cols-5 pb-[env(safe-area-inset-bottom)]"
     >
-      {SECCIONES.map(({ id, etiqueta, icono: Icono }) => (
+      {SECCIONES.filter((s) => s.movil).map(({ id, etiqueta, icono: Icono }) => (
         <a
           key={id}
           href={`#${id}`}
