@@ -188,3 +188,12 @@ WhatsApp de quien lo pidió. `NUMERO_ALERTAS` acepta varios números separados p
 WhatsApp de la cuenta actual del bot. El bot (`bot-hpc`, 44 pruebas) manda los avisos de riesgo y de "persona" con la
 plantilla y, si Meta la rechaza, como texto. `NUMERO_ALERTAS`: Matías, Laura Flynn y el 011 de la Fundación.
 **Primera consulta real de riesgo** (12:03) avisada a tiempo; el equipo la contactó.
+
+## 29/09/2026 — Novedades en el portal (banner del curso "Criar con límites")
+
+**Pedido de Matías:** que el portal sea un canal de comunicación del ecosistema: un aviso al entrar que lleve al
+nuevo curso de cursosdepsicologia.com.ar. **Hecho:** `src/novedades.ts` (lista editable de avisos, con activar/
+desactivar y fechas desde/hasta) y `src/components/Novedades.tsx` (banner con el estilo de los banners de
+cursosdepsicologia.com.ar, se puede cerrar y se recuerda en el navegador). Enlaces externos con UTM
+(`utm_source=portal-hpc&utm_medium=banner&utm_campaign=...`) para medir las visitas. Queda preparado, desactivado, el
+aviso "asistente de WhatsApp" para prender el día del corte. Segundo aviso: promo de Formaciones Anuales (50% off en las primeras tres cuotas y matrícula bonificada), en variante clara. Publicado primero como vista previa para el equipo.

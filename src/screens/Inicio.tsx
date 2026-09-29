@@ -5,6 +5,7 @@
 import { ArrowRight, HeartHandshake, GraduationCap, UserCheck, Users, Wind } from 'lucide-react';
 import { BotonWhatsApp } from '../components/BotonWhatsApp';
 import { enlacePorMotivo } from '../lib/whatsapp';
+import { Novedades } from '../components/Novedades';
 
 const ACCESOS = [
   { href: '#servicios', icono: HeartHandshake, titulo: 'Busco tratamiento', texto: 'Terapia individual, programa DBT y talleres.' },
@@ -16,6 +17,9 @@ const ACCESOS = [
 export function Inicio() {
   return (
     <div className="space-y-8">
+      {/* Avisos del ecosistema (cursos, formaciones, novedades). Se editan en src/novedades.ts */}
+      <Novedades />
+
       <section className="relative overflow-hidden rounded-3xl bg-hpc text-crema p-7 md:p-10">
         <div aria-hidden="true" className="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-dorado/20" />
         <p className="relative text-xs font-semibold uppercase tracking-[0.16em] text-dorado">
