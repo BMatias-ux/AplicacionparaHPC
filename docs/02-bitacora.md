@@ -196,4 +196,4 @@ nuevo curso de cursosdepsicologia.com.ar. **Hecho:** `src/novedades.ts` (lista e
 desactivar y fechas desde/hasta) y `src/components/Novedades.tsx` (banner con el estilo de los banners de
 cursosdepsicologia.com.ar, se puede cerrar y se recuerda en el navegador). Enlaces externos con UTM
 (`utm_source=portal-hpc&utm_medium=banner&utm_campaign=...`) para medir las visitas. Queda preparado, desactivado, el
-aviso "asistente de WhatsApp" para prender el día del corte. Publicado primero como vista previa para el equipo.
+aviso "asistente de WhatsApp" para prender el día del corte. Segundo aviso: promo de Formaciones Anuales (50% off en las primeras tres cuotas y matrícula bonificada), en variante clara. Publicado primero como vista previa para el equipo.

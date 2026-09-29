@@ -21,6 +21,7 @@ export interface Novedad {
   externo: boolean; // true = abre en otra pestaña (otro sitio del ecosistema)
   campania?: string; // nombre para utm_campaign (sólo enlaces externos)
   activa: boolean;
+  estilo?: 'oscuro' | 'claro'; // 'oscuro' (verde HPC, por defecto) o 'claro' (blanco con borde dorado)
   desde?: string; // AAAA-MM-DD inclusive
   hasta?: string; // AAAA-MM-DD inclusive
 }
@@ -37,6 +38,19 @@ export const NOVEDADES: Novedad[] = [
     externo: true,
     campania: 'criar-con-limites',
     activa: true,
+  },
+  {
+    id: 'formaciones-anuales-promo',
+    etiqueta: 'Últimos días de inscripción · Para profesionales',
+    titulo: 'Formaciones Anuales en Psicoterapias Basadas en la Evidencia',
+    texto: '50% off en las primeras tres cuotas y matrícula bonificada. 100% virtual, con certificación de Habilidades para el Cambio.',
+    cta: 'Quiero inscribirme',
+    url: 'https://habilidadesparaelcambio.com.ar/formaciones-anuales-agosto-2026/',
+    externo: true,
+    campania: 'formaciones-anuales-promo',
+    estilo: 'claro',
+    activa: true,
+    // hasta: 'AAAA-MM-DD', // ← poner la fecha de cierre de la promo y se apaga sola
   },
   {
     // Activar el día del corte a 360dialog, cuando el asistente atienda en el número del equipo.
