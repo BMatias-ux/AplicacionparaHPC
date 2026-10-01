@@ -7,7 +7,7 @@
 // Cuando cambies algo importante de este archivo, subí la versión de CACHE para que el
 // navegador descarte la copia anterior.
 
-const CACHE = 'hpc-portal-v2'; // v2: logo oficial + manifest con screenshots
+const CACHE = 'hpc-portal-v3'; // v3: aviso de instalación
 
 self.addEventListener('install', () => {
   // Activar la versión nueva sin esperar a que se cierren todas las pestañas.

@@ -1,6 +1,8 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
+// Se importa antes de dibujar la app para no perder el evento de instalación (ver el archivo).
+import './lib/instalacion';
 import './index.css';
 
 createRoot(document.getElementById('root')!).render(

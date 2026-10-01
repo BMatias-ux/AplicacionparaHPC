@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { seccionDesdeHash, type Seccion } from './navegacion';
 import { BarraLateral, BarraInferior, EncabezadoMovil } from './components/Navegacion';
 import { WhatsAppFlotante } from './components/BotonWhatsApp';
+import { InvitacionInstalar } from './components/InvitacionInstalar';
 import { Inicio } from './screens/Inicio';
 import { Servicios } from './screens/Servicios';
 import { Equipo } from './screens/Equipo';
@@ -61,6 +62,7 @@ export default function App() {
       </div>
       <BarraInferior activa={seccion} />
       <WhatsAppFlotante />
+      <InvitacionInstalar />
     </div>
   );
 }
