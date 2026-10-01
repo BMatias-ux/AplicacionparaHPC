@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 // Se importa antes de dibujar la app para no perder el evento de instalación (ver el archivo).
 import './lib/instalacion';
+// Antes de dibujar: si se llegó desde el enlace del correo, guarda la sesión y deja la URL en #profesionales.
+import './lib/enlaceCorreo';
 import './index.css';
 
 createRoot(document.getElementById('root')!).render(

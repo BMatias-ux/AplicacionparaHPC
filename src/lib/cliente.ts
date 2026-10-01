@@ -14,6 +14,7 @@
 // lo garantizan las políticas RLS de la base (migración 20261001000005), no este código.
 
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import { tomarTokensDeCorreo } from './enlaceCorreo';
 
 const URL_BASE = import.meta.env.VITE_SUPABASE_URL as string | undefined;
 const ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
@@ -25,10 +26,19 @@ export function obtenerCliente(): SupabaseClient | null {
   if (!URL_BASE || !ANON_KEY) return null;
   if (!cliente) {
     cliente = createClient(URL_BASE, ANON_KEY, {
-      auth: { persistSession: true, autoRefreshToken: true, storageKey: 'hpc-portal-sesion' },
+      // detectSessionInUrl: false -> la sesión del enlace del correo la toma enlaceCorreo.ts (ver ese archivo).
+      auth: { persistSession: true, autoRefreshToken: true, storageKey: 'hpc-portal-sesion', detectSessionInUrl: false },
     });
   }
   return cliente;
+}
+
+/** Si se llegó desde el enlace del correo, abre esa sesión. Llamar antes de getSession(). */
+export async function aplicarSesionDeCorreo(c: SupabaseClient): Promise<string | null> {
+  const t = tomarTokensDeCorreo();
+  if (!t) return null;
+  const { error } = await c.auth.setSession(t);
+  return error ? 'El enlace del correo venció o ya fue usado. Pedí un código nuevo.' : null;
 }
 
 /** Traduce los errores de Supabase a mensajes que una persona entiende. */

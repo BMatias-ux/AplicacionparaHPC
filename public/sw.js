@@ -7,7 +7,7 @@
 // Cuando cambies algo importante de este archivo, subí la versión de CACHE para que el
 // navegador descarte la copia anterior.
 
-const CACHE = 'hpc-portal-v5'; // v5: ingreso con contraseña
+const CACHE = 'hpc-portal-v6'; // v6: ingreso desde el enlace del correo
 
 self.addEventListener('install', () => {
   // Activar la versión nueva sin esperar a que se cierren todas las pestañas.

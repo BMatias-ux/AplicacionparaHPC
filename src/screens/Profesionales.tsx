@@ -15,8 +15,10 @@ import type { Session } from '@supabase/supabase-js';
 import { LogOut, Mail, KeyRound, Plus, Trash2, Save, CheckCircle2, AlertCircle, Camera, Loader2 } from 'lucide-react';
 import { EncabezadoSeccion } from '../components/EncabezadoSeccion';
 import { PanelAccesos } from '../components/PanelAccesos';
+import { tomarErrorDeEnlace } from '../lib/enlaceCorreo';
 import {
   obtenerCliente,
+  aplicarSesionDeCorreo,
   mensajeDeError,
   type Ficha,
   type FichaPrivada,
@@ -43,14 +45,19 @@ export function Profesionales() {
   const cliente = obtenerCliente();
   const [sesion, setSesion] = useState<Session | null>(null);
   const [cargando, setCargando] = useState(true);
+  const [errorEnlace, setErrorEnlace] = useState('');
 
   useEffect(() => {
     if (!cliente) return;
     // Sesión guardada de una visita anterior (si la hay).
-    cliente.auth.getSession().then(({ data }) => {
+    (async () => {
+      // Primero, la sesión del enlace del correo (si se llegó por ahí); después, la guardada.
+      const errorEnlace = (await aplicarSesionDeCorreo(cliente)) ?? tomarErrorDeEnlace();
+      if (errorEnlace) setErrorEnlace(errorEnlace);
+      const { data } = await cliente.auth.getSession();
       setSesion(data.session);
       setCargando(false);
-    });
+    })();
     // Se dispara al ingresar, al salir y cuando la sesión se renueva sola.
     const { data } = cliente.auth.onAuthStateChange((_evento, nueva) => setSesion(nueva));
     return () => data.subscription.unsubscribe();
@@ -70,7 +77,10 @@ export function Profesionales() {
       ) : sesion ? (
         <ZonaConSesion email={sesion.user.email ?? ''} usuarioId={sesion.user.id} tieneContrasena={Boolean(sesion.user.user_metadata?.tiene_contrasena)} />
       ) : (
-        <Ingreso />
+        <div className="space-y-4">
+          {errorEnlace && <Aviso tipo="error">{errorEnlace}</Aviso>}
+          <Ingreso />
+        </div>
       )}
     </div>
   );
@@ -104,6 +114,7 @@ function ZonaConSesion({ email, usuarioId, tieneContrasena }: { email: string; u
       {contrasenaCreada && <Aviso tipo="ok">Listo: la próxima vez ingresá con tu correo y tu contraseña.</Aviso>}
       {mostrarContrasena && (
         <TarjetaContrasena
+          email={email}
           obligatoria={!tieneContrasena && !contrasenaCreada}
           onListo={() => {
             setMostrarContrasena(false);
@@ -277,7 +288,7 @@ function Ingreso() {
 // Contraseña: se crea después del primer ingreso con código, y se puede cambiar
 // ============================================================================
 
-function TarjetaContrasena({ obligatoria, onListo }: { obligatoria: boolean; onListo: () => void }) {
+function TarjetaContrasena({ email, obligatoria, onListo }: { email: string; obligatoria: boolean; onListo: () => void }) {
   const cliente = obtenerCliente()!;
   const [nueva, setNueva] = useState('');
   const [repetida, setRepetida] = useState('');
@@ -308,6 +319,9 @@ function TarjetaContrasena({ obligatoria, onListo }: { obligatoria: boolean; onL
             : 'Mínimo 8 caracteres.'}
         </p>
       </div>
+      {/* Correo oculto: le indica al administrador de contraseñas del celular/navegador a qué cuenta
+          pertenece, para que ofrezca guardarla y la complete sola la próxima vez. */}
+      <input type="email" name="username" autoComplete="username" value={email} readOnly hidden />
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block">
           <span className="text-sm font-medium text-tinta">Nueva contraseña</span>
