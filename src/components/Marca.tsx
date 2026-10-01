@@ -1,17 +1,22 @@
 // src/components/Marca.tsx
-// Logo provisorio de texto. Cuando la Fundación pase el logo oficial (SVG), se reemplaza acá
-// y en public/icons.
+// Marca del portal con el isologo oficial de la Fundación (public/logo.png).
+//
+// El isologo original viene sobre fondo blanco, así que lo mostramos dentro de un
+// "chip" blanco redondeado (como un ícono de app): se ve bien tanto sobre la barra
+// lateral teal (claro) como sobre el encabezado crema del celular.
+// Al lado va el nombre tipografiado (Fraunces + dorado), que reproduce el logo
+// rectangular y se adapta de color según el fondo.
 
 export function Marca({ claro = false }: { claro?: boolean }) {
   return (
     <div className="flex items-center gap-3">
       <div
-        aria-hidden="true"
-        className={`w-10 h-10 rounded-xl flex items-center justify-center font-display font-semibold text-lg ${
-          claro ? 'bg-crema text-hpc' : 'bg-hpc text-crema'
+        className={`w-10 h-10 rounded-xl bg-white flex items-center justify-center overflow-hidden shrink-0 ${
+          claro ? '' : 'ring-1 ring-hpc/10'
         }`}
       >
-        H
+        {/* alt vacío: el nombre ya está escrito al lado; repetirlo sería redundante para lectores de pantalla */}
+        <img src="/logo.png" alt="" width={40} height={40} className="w-9 h-9 object-contain" />
       </div>
       <div className="leading-tight">
         <p className={`font-display font-semibold text-base ${claro ? 'text-crema' : 'text-hpc'}`}>
