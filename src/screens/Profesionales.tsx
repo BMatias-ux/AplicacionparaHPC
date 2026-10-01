@@ -536,14 +536,16 @@ function EditorFicha({ email, usuarioId }: { email: string; usuarioId: string })
   }
 
   // ---------- Foto ----------
-  async function subirFoto(archivo: File) {
+  async function subirFoto(original: File) {
     if (!ficha) return;
-    if (archivo.size > 3 * 1024 * 1024) {
-      return setMensaje({ tipo: 'error', texto: 'La foto pesa más de 3 MB. Probá con una más liviana.' });
-    }
     setSubiendoFoto(true);
     setMensaje(null);
     try {
+      // Las fotos de celular suelen pesar 3-8 MB: las achicamos en el navegador antes de subir.
+      const archivo = await achicarFoto(original);
+      if (archivo.size > 3 * 1024 * 1024) {
+        throw new Error('La foto pesa más de 3 MB. Probá con una más liviana.');
+      }
       const extension = archivo.type === 'image/png' ? 'png' : archivo.type === 'image/webp' ? 'webp' : 'jpg';
       // La carpeta tiene que ser el id de la ficha: así lo exige la política de Storage.
       const ruta = `${ficha.id}/foto.${extension}`;
@@ -609,7 +611,7 @@ function EditorFicha({ email, usuarioId }: { email: string; usuarioId: string })
               {subiendoFoto ? 'Subiendo…' : ficha.foto_url ? 'Cambiar foto' : 'Subir foto'}
               <input
                 type="file"
-                accept="image/jpeg,image/png,image/webp"
+                accept="image/*"
                 className="sr-only"
                 disabled={subiendoFoto}
                 onChange={(e) => e.target.files?.[0] && subirFoto(e.target.files[0])}
@@ -987,4 +989,27 @@ function Cargando() {
       Cargando…
     </p>
   );
+}
+
+// Achica una foto a un máximo de 1200 px por lado y la convierte a JPEG (calidad 0,85).
+// Así una foto de celular de varios MB queda en unos 200-400 KB, que es lo que se ve en la ficha.
+// Si el navegador no puede leer la imagen (por ejemplo, un formato raro), devuelve el original
+// y la validación de tamaño/tipo de Storage decide.
+async function achicarFoto(archivo: File): Promise<File> {
+  const LADO_MAX = 1200;
+  if (archivo.size < 500 * 1024 && ['image/jpeg', 'image/png', 'image/webp'].includes(archivo.type)) {
+    return archivo; // ya es liviana: no la tocamos
+  }
+  try {
+    const imagen = await createImageBitmap(archivo);
+    const escala = Math.min(1, LADO_MAX / Math.max(imagen.width, imagen.height));
+    const lienzo = document.createElement('canvas');
+    lienzo.width = Math.round(imagen.width * escala);
+    lienzo.height = Math.round(imagen.height * escala);
+    lienzo.getContext('2d')!.drawImage(imagen, 0, 0, lienzo.width, lienzo.height);
+    const blob = await new Promise<Blob | null>((ok) => lienzo.toBlob(ok, 'image/jpeg', 0.85));
+    return blob ? new File([blob], 'foto.jpg', { type: 'image/jpeg' }) : archivo;
+  } catch {
+    return archivo;
+  }
 }
