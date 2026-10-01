@@ -7,7 +7,7 @@
 import { SECCIONES_MENU, type Seccion } from '../navegacion';
 import { Marca } from './Marca';
 import { enlacePorMotivo } from '../lib/whatsapp';
-import { MessageCircle } from 'lucide-react';
+import { MessageCircle, UserRoundPen } from 'lucide-react';
 
 interface Props {
   activa: Seccion;
@@ -68,11 +68,26 @@ export function BarraInferior({ activa }: Props) {
   );
 }
 
-/** Encabezado sólo para celular (en computadora la marca está en la barra lateral). */
-export function EncabezadoMovil() {
+/** Encabezado sólo para celular (en computadora la marca está en la barra lateral).
+ *  A la derecha, el acceso del equipo profesional: en la barra inferior sólo entran 5
+ *  secciones, y así "Mi ficha" queda siempre a un toque (también en la app instalada). */
+export function EncabezadoMovil({ activa }: Props) {
+  const enProfesionales = activa === 'profesionales';
   return (
-    <header className="md:hidden sticky top-0 z-30 bg-crema/95 backdrop-blur border-b border-hpc/10 px-4 py-3">
-      <Marca />
+    <header className="md:hidden sticky top-0 z-30 bg-crema/95 backdrop-blur border-b border-hpc/10 px-4 py-3 flex items-center justify-between gap-3">
+      <a href="#inicio" aria-label="Ir al inicio">
+        <Marca />
+      </a>
+      <a
+        href="#profesionales"
+        aria-current={enProfesionales ? 'page' : undefined}
+        className={`flex items-center gap-1.5 rounded-full border px-3 py-2 text-xs font-semibold ${
+          enProfesionales ? 'bg-hpc text-crema border-hpc' : 'border-hpc/25 text-hpc'
+        }`}
+      >
+        <UserRoundPen size={16} aria-hidden="true" />
+        Profesionales
+      </a>
     </header>
   );
 }

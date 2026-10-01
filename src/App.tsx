@@ -51,7 +51,7 @@ export default function App() {
     <div className="min-h-screen md:flex">
       <BarraLateral activa={seccion} />
       <div className="flex-1 min-w-0">
-        <EncabezadoMovil />
+        <EncabezadoMovil activa={seccion} />
         <main className="mx-auto max-w-6xl px-4 py-6 md:px-10 md:py-10">
           <Suspense fallback={<p className="text-tinta/60">Cargando…</p>}>
             <Pantalla />
