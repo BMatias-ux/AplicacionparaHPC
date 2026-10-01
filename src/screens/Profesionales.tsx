@@ -29,6 +29,23 @@ import {
   type Modalidad,
 } from '../lib/cliente';
 
+// Título y bajada de la pantalla según la pestaña elegida.
+type Vista = 'ficha' | 'derivar' | 'accesos';
+const ENCABEZADOS: Record<Vista, { titulo: string; bajada: string }> = {
+  ficha: {
+    titulo: 'Mi ficha',
+    bajada: 'Mantené actualizada tu información: es lo que usa admisión para derivarte pacientes y lo que se publica en el portal según lo que autorices.',
+  },
+  derivar: {
+    titulo: 'Derivar',
+    bajada: 'Encontrá al profesional indicado para cada paciente según zona, modalidad, población, temática y agenda.',
+  },
+  accesos: {
+    titulo: 'Administrar accesos',
+    bajada: 'Quién puede entrar al portal y quién aparece en el directorio público.',
+  },
+};
+
 const DIAS = ['', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 
 const AUTORIZACIONES: { valor: Autorizacion; texto: string; detalle: string }[] = [
@@ -47,6 +64,7 @@ export function Profesionales() {
   const [sesion, setSesion] = useState<Session | null>(null);
   const [cargando, setCargando] = useState(true);
   const [errorEnlace, setErrorEnlace] = useState('');
+  const [vista, setVista] = useState<Vista>('ficha'); // pestaña elegida: define el título
 
   useEffect(() => {
     if (!cliente) return;
@@ -66,17 +84,13 @@ export function Profesionales() {
 
   return (
     <div className="space-y-8">
-      <EncabezadoSeccion
-        antetitulo="Equipo profesional"
-        titulo="Mi ficha"
-        bajada="Mantené actualizada tu información: es lo que usa admisión para derivarte pacientes y lo que se publica en el portal según lo que autorices."
-      />
+      <EncabezadoSeccion antetitulo="Equipo profesional" titulo={ENCABEZADOS[sesion ? vista : 'ficha'].titulo} bajada={ENCABEZADOS[sesion ? vista : 'ficha'].bajada} />
       {!cliente ? (
         <Aviso tipo="error">El acceso de profesionales todavía no está configurado. Avisá a coordinación.</Aviso>
       ) : cargando ? (
         <Cargando />
       ) : sesion ? (
-        <ZonaConSesion email={sesion.user.email ?? ''} usuarioId={sesion.user.id} tieneContrasena={Boolean(sesion.user.user_metadata?.tiene_contrasena)} />
+        <ZonaConSesion email={sesion.user.email ?? ''} usuarioId={sesion.user.id} tieneContrasena={Boolean(sesion.user.user_metadata?.tiene_contrasena)} onCambiarVista={setVista} />
       ) : (
         <div className="space-y-4">
           {errorEnlace && <Aviso tipo="error">{errorEnlace}</Aviso>}
@@ -92,14 +106,19 @@ export function Profesionales() {
 // (admin, admisión, coordinación) + "Administrar accesos" sólo para administradores
 // ============================================================================
 
-function ZonaConSesion({ email, usuarioId, tieneContrasena }: { email: string; usuarioId: string; tieneContrasena: boolean }) {
+function ZonaConSesion({ email, usuarioId, tieneContrasena, onCambiarVista }: { email: string; usuarioId: string; tieneContrasena: boolean; onCambiarVista: (v: Vista) => void }) {
   const cliente = obtenerCliente()!;
   const [esAdmin, setEsAdmin] = useState(false);
   const [esEquipo, setEsEquipo] = useState(false); // admin, admisión o coordinación: ve "Derivar"
   // Sin contraseña todavía: se la pedimos arriba de todo. Con contraseña: se puede cambiar desde la barra de sesión.
   const [mostrarContrasena, setMostrarContrasena] = useState(!tieneContrasena);
   const [contrasenaCreada, setContrasenaCreada] = useState(false);
-  const [pestana, setPestana] = useState<'ficha' | 'derivar' | 'accesos'>('ficha');
+  const [pestana, setPestanaLocal] = useState<Vista>('ficha');
+  // Cambia la pestaña y avisa a la pantalla para que actualice el título.
+  const setPestana = (v: Vista) => {
+    setPestanaLocal(v);
+    onCambiarVista(v);
+  };
 
   useEffect(() => {
     // La política "ver mis roles" deja leer sólo los roles propios. Ocultar la pestaña es

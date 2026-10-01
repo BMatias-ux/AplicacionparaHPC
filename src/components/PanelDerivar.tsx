@@ -83,6 +83,16 @@ interface Catalogos {
   exclusiones: ItemCatalogo[];
 }
 
+// Arma el número para wa.me: sólo dígitos, con código de país. Los celulares argentinos
+// cargados sin prefijo (ej.: 1158142817) necesitan "549" adelante para que WhatsApp los encuentre.
+function enlaceWhatsApp(telefono: string | null | undefined): string {
+  let d = (telefono ?? '').replace(/\D/g, '');
+  if (!d) return '';
+  if (d.startsWith('0')) d = d.slice(1); // 011... -> 11...
+  if (d.startsWith('54')) return d.startsWith('549') ? d : `549${d.slice(2)}`;
+  return `549${d}`;
+}
+
 const normalizar = (t: string) => t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 const hora = (t: string) => t.slice(0, 5);
 // Agrupa filas "relación" (profesional_id, x_id) en un mapa profesional -> lista de ids.
@@ -374,7 +384,7 @@ function TarjetaProfesional({ p, catalogos, abierta, onAlternar }: { p: Profesio
   const nombres = (catalogo: ItemCatalogo[], ids: (string | number)[]) =>
     ids.map((id) => catalogo.find((c) => String(c.id) === String(id))?.nombre).filter((x): x is string => Boolean(x));
   const pv = p.privado;
-  const telefono = pv?.telefono?.replace(/\D/g, '') ?? '';
+  const telefono = enlaceWhatsApp(pv?.telefono);
   const noToma = nombres(catalogos.exclusiones, p.exclusiones);
   const edades =
     p.edadMinima !== null || p.edadMaxima !== null
@@ -402,9 +412,13 @@ function TarjetaProfesional({ p, catalogos, abierta, onAlternar }: { p: Profesio
               {p.horarios.map((h) => `${DIAS_CORTOS[h.dia]} ${h.desde}–${h.hasta} (${h.modalidad === 'online' ? 'online' : 'presencial'})`).join(' · ')}
             </p>
           ) : (
-            <p className="flex items-center gap-1.5 text-sm text-amber-800">
-              <TriangleAlert size={14} aria-hidden="true" /> Todavía no cargó su agenda en el portal
-            </p>
+            <div className="space-y-0.5 text-sm">
+              {/* Sin agenda en el portal: mostramos lo que declaró en el formulario de inscripción. */}
+              {pv?.cupos_texto && <p className="text-tinta/75">Disponibilidad (formulario): {pv.cupos_texto}</p>}
+              <p className="flex items-center gap-1.5 text-amber-800">
+                <TriangleAlert size={14} aria-hidden="true" /> Todavía no cargó su agenda en el portal
+              </p>
+            </div>
           )}
         </div>
         <ChevronDown size={20} className={`mt-1 shrink-0 text-hpc transition-transform ${abierta ? 'rotate-180' : ''}`} aria-hidden="true" />
@@ -417,7 +431,7 @@ function TarjetaProfesional({ p, catalogos, abierta, onAlternar }: { p: Profesio
             {telefono && (
               <p className="flex items-center gap-1.5">
                 <Phone size={14} aria-hidden="true" />
-                <a href={`https://wa.me/${telefono}`} target="_blank" rel="noreferrer" className="text-hpc underline underline-offset-4">{pv?.telefono}</a>
+                <a href={`https://wa.me/${telefono}`} title="Abrir en WhatsApp" target="_blank" rel="noreferrer" className="text-hpc underline underline-offset-4">{pv?.telefono}</a>
               </p>
             )}
             {pv?.email && (
