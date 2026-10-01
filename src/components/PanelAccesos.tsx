@@ -7,7 +7,10 @@
 //     Desactivar corta el acceso aunque ya haya ingresado antes: deja de ver y editar su ficha.
 //   - Mostrar u ocultar la ficha en el PORTAL PÚBLICO (profesionales.activo). Sirve cuando
 //     alguien deja la Fundación: se le quita el acceso y además desaparece del directorio.
-//   - Agregar un correo nuevo (queda habilitado al guardarlo).
+//     Si el profesional eligió "no publicar" en su ficha, el interruptor queda bloqueado y
+//     lo dice: así cada "Sí" del panel aparece en Equipo y cada "No" no aparece.
+//   - Agregar un correo nuevo con su especialidad (queda habilitado al guardarlo). La
+//     especialidad es obligatoria: la vista pública excluye fichas sin especialidad.
 //   - Anotar por qué se habilitó o no (columna notas).
 //
 // Seguridad: todo esto lo autoriza la base con RLS (política "admin gestiona accesos" y
@@ -27,15 +30,19 @@ interface Acceso {
   primer_ingreso: string | null;
   profesional_id: string | null;
   // Ficha vinculada (PostgREST la trae embebida por la clave foránea profesional_id).
-  profesionales: { activo: boolean } | null;
+  profesionales: { activo: boolean; autorizacion: string } | null;
 }
 
 type Filtro = 'todos' | 'habilitados' | 'deshabilitados';
+
+// true si el profesional eligió en su ficha que NO se publique (la vista pública lo excluye).
+const noAutorizo = (a: Acceso) => a.profesionales?.autorizacion === 'no_publicar';
 
 export function PanelAccesos() {
   const cliente = obtenerCliente()!;
   const [accesos, setAccesos] = useState<Acceso[]>([]);
   const [zonas, setZonas] = useState<ItemCatalogo[]>([]);
+  const [especialidades, setEspecialidades] = useState<ItemCatalogo[]>([]);
   const [cargando, setCargando] = useState(true);
   const [busqueda, setBusqueda] = useState('');
   const [filtro, setFiltro] = useState<Filtro>('todos');
@@ -43,16 +50,18 @@ export function PanelAccesos() {
   const [mensaje, setMensaje] = useState<{ tipo: 'ok' | 'error'; texto: string } | null>(null);
 
   async function cargar() {
-    const [a, z] = await Promise.all([
+    const [a, z, e] = await Promise.all([
       cliente
         .from('accesos_profesionales')
-        .select('email, nombre, zona_id, habilitado, notas, primer_ingreso, profesional_id, profesionales(activo)')
+        .select('email, nombre, zona_id, habilitado, notas, primer_ingreso, profesional_id, profesionales(activo, autorizacion)')
         .order('nombre'),
       cliente.from('zonas').select('id, nombre').order('orden'),
+      cliente.from('especialidades').select('id, nombre').order('nombre'),
     ]);
     if (a.error) setMensaje({ tipo: 'error', texto: mensajeDeError(a.error) });
     setAccesos((a.data ?? []) as unknown as Acceso[]);
     setZonas(z.data ?? []);
+    setEspecialidades(e.data ?? []);
     setCargando(false);
   }
 
@@ -93,7 +102,7 @@ export function PanelAccesos() {
     const { error } = await cliente.from('profesionales').update({ activo }).eq('id', a.profesional_id);
     setGuardandoEmail(null);
     if (error) return setMensaje({ tipo: 'error', texto: mensajeDeError(error) });
-    setAccesos((lista) => lista.map((x) => (x.email === a.email ? { ...x, profesionales: { activo } } : x)));
+    setAccesos((lista) => lista.map((x) => (x.email === a.email ? { ...x, profesionales: { activo, autorizacion: x.profesionales?.autorizacion ?? '' } } : x)));
     setMensaje({ tipo: 'ok', texto: `${a.nombre ?? a.email}: ${activo ? 'visible' : 'oculta'} en el portal.` });
   }
 
@@ -114,7 +123,7 @@ export function PanelAccesos() {
 
   return (
     <div className="space-y-6">
-      <FormularioNuevo zonas={zonas} onAgregado={(texto) => { setMensaje({ tipo: 'ok', texto }); cargar(); }} onError={(texto) => setMensaje({ tipo: 'error', texto })} />
+      <FormularioNuevo zonas={zonas} especialidades={especialidades} onAgregado={(texto) => { setMensaje({ tipo: 'ok', texto }); cargar(); }} onError={(texto) => setMensaje({ tipo: 'error', texto })} />
 
       <section className="bg-white rounded-2xl border border-hpc/10 p-5 md:p-7 space-y-4">
         <div className="flex flex-wrap items-end justify-between gap-3">
@@ -186,10 +195,12 @@ export function PanelAccesos() {
                 />
                 <Interruptor
                   etiqueta="En el portal"
-                  activo={a.profesionales?.activo ?? false}
+                  // Se ve "Sí" sólo si de verdad aparece: encendido por administración
+                  // Y autorizado por el profesional. Si pidió no publicar, queda bloqueado.
+                  activo={(a.profesionales?.activo ?? false) && !noAutorizo(a)}
                   ocupado={guardandoEmail === a.email}
-                  deshabilitado={!a.profesional_id}
-                  ayuda={!a.profesional_id ? 'Sin ficha todavía' : undefined}
+                  deshabilitado={!a.profesional_id || noAutorizo(a)}
+                  ayuda={!a.profesional_id ? 'Sin ficha todavía' : noAutorizo(a) ? 'No autorizó publicar' : undefined}
                   onCambiar={(v) => cambiarVisibilidad(a, v)}
                 />
               </div>
@@ -204,11 +215,12 @@ export function PanelAccesos() {
 
 // ---------- Alta de un correo nuevo ----------
 
-function FormularioNuevo({ zonas, onAgregado, onError }: { zonas: ItemCatalogo[]; onAgregado: (t: string) => void; onError: (t: string) => void }) {
+function FormularioNuevo({ zonas, especialidades, onAgregado, onError }: { zonas: ItemCatalogo[]; especialidades: ItemCatalogo[]; onAgregado: (t: string) => void; onError: (t: string) => void }) {
   const cliente = obtenerCliente()!;
   const [email, setEmail] = useState('');
   const [nombre, setNombre] = useState('');
   const [zona, setZona] = useState('');
+  const [especialidad, setEspecialidad] = useState('');
   const [guardando, setGuardando] = useState(false);
 
   async function agregar(e: FormEvent) {
@@ -217,7 +229,7 @@ function FormularioNuevo({ zonas, onAgregado, onError }: { zonas: ItemCatalogo[]
     const correo = email.trim().toLowerCase(); // la base exige minúsculas
     const { error } = await cliente
       .from('accesos_profesionales')
-      .insert({ email: correo, nombre: nombre.trim() || null, zona_id: zona || null, habilitado: true });
+      .insert({ email: correo, nombre: nombre.trim() || null, zona_id: zona || null, especialidad_id: especialidad, habilitado: true });
     setGuardando(false);
     if (error) {
       // 23505 = clave duplicada: ese correo ya estaba cargado.
@@ -226,6 +238,7 @@ function FormularioNuevo({ zonas, onAgregado, onError }: { zonas: ItemCatalogo[]
     setEmail('');
     setNombre('');
     setZona('');
+    setEspecialidad('');
     onAgregado(`${correo} agregado con acceso. Ya puede entrar a #profesionales con su correo.`);
   }
 
@@ -235,7 +248,7 @@ function FormularioNuevo({ zonas, onAgregado, onError }: { zonas: ItemCatalogo[]
         <h2 className="text-xl font-semibold text-hpc">Agregar profesional</h2>
         <p className="text-sm text-tinta/65">Queda con acceso apenas lo guardás. La ficha se crea sola cuando ingresa por primera vez.</p>
       </div>
-      <div className="grid gap-3 md:grid-cols-[1.3fr_1.3fr_1fr_auto] md:items-end">
+      <div className="grid gap-3 md:grid-cols-[1.3fr_1.3fr_1fr_1fr_auto] md:items-end">
         <label className="block">
           <span className="text-sm font-medium">Correo</span>
           <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="mt-1 block w-full rounded-lg border border-hpc/20 px-3 py-2.5 text-[15px] focus:border-hpc focus:outline-none focus:ring-2 focus:ring-hpc/20" />
@@ -250,6 +263,16 @@ function FormularioNuevo({ zonas, onAgregado, onError }: { zonas: ItemCatalogo[]
             <option value="">Sin zona / online</option>
             {zonas.map((z) => (
               <option key={z.id} value={z.id}>{z.nombre}</option>
+            ))}
+          </select>
+        </label>
+        <label className="block">
+          <span className="text-sm font-medium">Especialidad</span>
+          {/* Obligatoria: sin especialidad la ficha nunca aparece en Equipo. */}
+          <select required value={especialidad} onChange={(e) => setEspecialidad(e.target.value)} className="mt-1 block w-full rounded-lg border border-hpc/20 bg-white px-3 py-2.5 text-[15px]">
+            <option value="" disabled>Elegí…</option>
+            {especialidades.map((x) => (
+              <option key={x.id} value={x.id}>{x.nombre}</option>
             ))}
           </select>
         </label>
