@@ -3,7 +3,7 @@
 // y en el medio la sección activa. Ya no hay marco de teléfono simulado: la app ocupa la
 // pantalla real del dispositivo.
 
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { seccionDesdeHash, type Seccion } from './navegacion';
 import { BarraLateral, BarraInferior, EncabezadoMovil } from './components/Navegacion';
 import { WhatsAppFlotante } from './components/BotonWhatsApp';
@@ -16,7 +16,11 @@ import { Recursos } from './screens/Recursos';
 import { Contacto } from './screens/Contacto';
 import { Privacidad } from './screens/Privacidad';
 
-const PANTALLAS: Record<Seccion, () => React.JSX.Element> = {
+// Carga diferida: el código del acceso de profesionales (incluye el cliente de Supabase,
+// ~50 KB) se descarga sólo cuando alguien abre esa sección. El público no lo paga.
+const Profesionales = lazy(() => import('./screens/Profesionales').then((m) => ({ default: m.Profesionales })));
+
+const PANTALLAS: Record<Seccion, React.ComponentType> = {
   inicio: Inicio,
   servicios: Servicios,
   equipo: Equipo,
@@ -24,6 +28,7 @@ const PANTALLAS: Record<Seccion, () => React.JSX.Element> = {
   recursos: Recursos,
   contacto: Contacto,
   privacidad: Privacidad,
+  profesionales: Profesionales,
 };
 
 export default function App() {
@@ -48,7 +53,9 @@ export default function App() {
       <div className="flex-1 min-w-0">
         <EncabezadoMovil />
         <main className="mx-auto max-w-6xl px-4 py-6 md:px-10 md:py-10">
-          <Pantalla />
+          <Suspense fallback={<p className="text-tinta/60">Cargando…</p>}>
+            <Pantalla />
+          </Suspense>
         </main>
         {/* Pie visible también en celular: el enlace al aviso de privacidad tiene que estar
             siempre a mano (Disposición DNPDP 10/2008: "en lugar visible").
@@ -57,6 +64,9 @@ export default function App() {
           <span>© {new Date().getFullYear()} Fundación Habilidades para el Cambio</span>
           <a href="#privacidad" className="underline underline-offset-4 hover:text-hpc">
             Aviso de privacidad y datos personales
+          </a>
+          <a href="#profesionales" className="underline underline-offset-4 hover:text-hpc">
+            Acceso profesionales
           </a>
         </footer>
       </div>

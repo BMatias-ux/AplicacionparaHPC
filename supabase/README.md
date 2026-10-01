@@ -57,3 +57,31 @@ psql -U postgres -d hpc_prueba -f supabase/tests/10_prueba_permisos.sql
 ```
 
 Cada consulta de la prueba dice en su título el resultado esperado.
+
+## Acceso de profesionales — "Mi ficha" (01/10/2026)
+
+Migración `20261001000005_acceso_profesionales.sql` + pantalla `src/screens/Profesionales.tsx`.
+Enlace para compartir: **https://portal.habilidadesparaelcambio.com.ar/#profesionales**
+
+- Ingreso sin contraseña: correo → código de 6 dígitos (Supabase Auth, OTP por email).
+- **Sólo entran los correos de `accesos_profesionales`** (trigger `hpc_validar_correo` sobre `auth.users`).
+  Al primer ingreso se vincula la ficha existente (por correo) o se crea una vacía con `no_publicar`.
+- Cada profesional edita sólo lo suyo (RLS): ficha, datos privados, temáticas, enfoques, poblaciones,
+  exclusiones, foto (bucket `fotos-profesionales`) y **agenda por día/franja con modalidad** (`profesional_horarios`).
+- Pruebas: `tests/20_prueba_acceso_profesionales.sql` (correr después de las migraciones, como las otras).
+
+### Habilitar correos
+
+```sql
+insert into accesos_profesionales (email, nombre, zona_id) values
+  ('nombre@ejemplo.com', 'Lic. Nombre Apellido', 'salta')
+on conflict (email) do nothing;
+```
+El correo va en minúsculas. `zona_id`: caba, ba_norte, ba_oeste, ba_sur, salta, tucuman, neuquen, santa_fe, cordoba.
+
+### Configuración de Auth (una sola vez, en el panel de Supabase)
+
+1. Authentication → Emails → SMTP Settings: casilla de Hostinger (smtp.hostinger.com, puerto 465).
+   Sin SMTP propio, Supabase sólo envía correos a miembros de la organización.
+2. Authentication → Emails → Templates → Magic Link: el cuerpo tiene que incluir `{{ .Token }}` (el código).
+3. Authentication → URL Configuration → Site URL: `https://portal.habilidadesparaelcambio.com.ar`.

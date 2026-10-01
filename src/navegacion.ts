@@ -8,9 +8,9 @@
 // `menu: false` = no aparece en ningún menú; se llega por enlace (ej. el aviso de privacidad,
 // enlazado desde el pie de página, Contacto y el bot de WhatsApp).
 
-import { Home, HeartHandshake, Users, GraduationCap, Wind, Phone, ShieldCheck, type LucideIcon } from 'lucide-react';
+import { Home, HeartHandshake, Users, GraduationCap, Wind, Phone, ShieldCheck, UserRoundPen, type LucideIcon } from 'lucide-react';
 
-export type Seccion = 'inicio' | 'servicios' | 'equipo' | 'formacion' | 'recursos' | 'contacto' | 'privacidad';
+export type Seccion = 'inicio' | 'servicios' | 'equipo' | 'formacion' | 'recursos' | 'contacto' | 'privacidad' | 'profesionales';
 
 export const SECCIONES: { id: Seccion; etiqueta: string; icono: LucideIcon; movil: boolean; menu?: boolean }[] = [
   { id: 'inicio', etiqueta: 'Inicio', icono: Home, movil: true },
@@ -20,6 +20,9 @@ export const SECCIONES: { id: Seccion; etiqueta: string; icono: LucideIcon; movi
   { id: 'recursos', etiqueta: 'Recursos', icono: Wind, movil: false },
   { id: 'contacto', etiqueta: 'Contacto', icono: Phone, movil: true },
   { id: 'privacidad', etiqueta: 'Privacidad', icono: ShieldCheck, movil: false, menu: false },
+  // Acceso del equipo profesional (Mi ficha). Sólo en la barra lateral de la computadora;
+  // en el celular se llega por el enlace que se comparte (#profesionales) o desde el pie.
+  { id: 'profesionales', etiqueta: 'Profesionales', icono: UserRoundPen, movil: false },
 ];
 
 /** Las secciones que se muestran en los menús (todas menos las de `menu: false`). */
