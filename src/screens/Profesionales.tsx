@@ -68,7 +68,7 @@ export function Profesionales() {
       ) : cargando ? (
         <Cargando />
       ) : sesion ? (
-        <ZonaConSesion email={sesion.user.email ?? ''} usuarioId={sesion.user.id} />
+        <ZonaConSesion email={sesion.user.email ?? ''} usuarioId={sesion.user.id} tieneContrasena={Boolean(sesion.user.user_metadata?.tiene_contrasena)} />
       ) : (
         <Ingreso />
       )}
@@ -80,9 +80,12 @@ export function Profesionales() {
 // Con sesión: "Mi ficha" para todos + "Administrar accesos" para administradores
 // ============================================================================
 
-function ZonaConSesion({ email, usuarioId }: { email: string; usuarioId: string }) {
+function ZonaConSesion({ email, usuarioId, tieneContrasena }: { email: string; usuarioId: string; tieneContrasena: boolean }) {
   const cliente = obtenerCliente()!;
   const [esAdmin, setEsAdmin] = useState(false);
+  // Sin contraseña todavía: se la pedimos arriba de todo. Con contraseña: se puede cambiar desde la barra de sesión.
+  const [mostrarContrasena, setMostrarContrasena] = useState(!tieneContrasena);
+  const [contrasenaCreada, setContrasenaCreada] = useState(false);
   const [pestana, setPestana] = useState<'ficha' | 'accesos'>('ficha');
 
   useEffect(() => {
@@ -98,6 +101,21 @@ function ZonaConSesion({ email, usuarioId }: { email: string; usuarioId: string 
 
   return (
     <div className="space-y-6">
+      {contrasenaCreada && <Aviso tipo="ok">Listo: la próxima vez ingresá con tu correo y tu contraseña.</Aviso>}
+      {mostrarContrasena && (
+        <TarjetaContrasena
+          obligatoria={!tieneContrasena && !contrasenaCreada}
+          onListo={() => {
+            setMostrarContrasena(false);
+            setContrasenaCreada(true);
+          }}
+        />
+      )}
+      {!mostrarContrasena && (
+        <button type="button" onClick={() => { setMostrarContrasena(true); setContrasenaCreada(false); }} className="text-sm text-hpc underline underline-offset-4">
+          Cambiar mi contraseña
+        </button>
+      )}
       {esAdmin && (
         <div role="tablist" aria-label="Opciones" className="inline-flex rounded-xl bg-hpc-claro p-1">
           {([['ficha', 'Mi ficha'], ['accesos', 'Administrar accesos']] as const).map(([id, texto]) => (
@@ -125,18 +143,38 @@ function ZonaConSesion({ email, usuarioId }: { email: string; usuarioId: string 
 
 function Ingreso() {
   const cliente = obtenerCliente()!;
-  const [paso, setPaso] = useState<'correo' | 'codigo'>('correo');
+  // 'contrasena' = correo + contraseña (lo habitual una vez creada)
+  // 'correo' / 'codigo' = primer ingreso, o si se olvidó la contraseña
+  const [paso, setPaso] = useState<'contrasena' | 'correo' | 'codigo'>('contrasena');
   const [email, setEmail] = useState('');
+  const [contrasena, setContrasena] = useState('');
   const [codigo, setCodigo] = useState('');
   const [enviando, setEnviando] = useState(false);
   const [error, setError] = useState('');
+
+  const correo = () => email.trim().toLowerCase();
+  const irA = (nuevo: typeof paso) => {
+    setPaso(nuevo);
+    setError('');
+    setCodigo('');
+  };
+
+  async function entrarConContrasena(e: FormEvent) {
+    e.preventDefault();
+    setError('');
+    setEnviando(true);
+    const { error } = await cliente.auth.signInWithPassword({ email: correo(), password: contrasena });
+    setEnviando(false);
+    if (error) setError(mensajeDeError(error));
+    // Si salió bien, onAuthStateChange (en el contenedor) muestra la ficha.
+  }
 
   async function pedirCodigo(e: FormEvent) {
     e.preventDefault();
     setError('');
     setEnviando(true);
     const { error } = await cliente.auth.signInWithOtp({
-      email: email.trim().toLowerCase(),
+      email: correo(),
       // shouldCreateUser: true -> el primer ingreso crea el usuario. La base rechaza los
       // correos que no estén en la lista de habilitados (trigger hpc_validar_correo).
       options: { shouldCreateUser: true },
@@ -150,43 +188,60 @@ function Ingreso() {
     e.preventDefault();
     setError('');
     setEnviando(true);
-    const { error } = await cliente.auth.verifyOtp({
-      email: email.trim().toLowerCase(),
-      token: codigo.trim(),
-      type: 'email',
-    });
+    const { error } = await cliente.auth.verifyOtp({ email: correo(), token: codigo.trim(), type: 'email' });
     setEnviando(false);
     if (error) setError(mensajeDeError(error));
-    // Si salió bien, onAuthStateChange (en el contenedor) muestra el editor.
   }
+
+  const campoCorreo = (
+    <label className="block">
+      <span className="text-sm font-medium text-tinta">Correo electrónico</span>
+      <input type="email" required autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} className={claseInput} placeholder="nombre@ejemplo.com" />
+    </label>
+  );
 
   return (
     <div className="max-w-md bg-white rounded-2xl border border-hpc/10 p-6 md:p-8">
-      {paso === 'correo' ? (
-        <form onSubmit={pedirCodigo} className="space-y-4">
-          <h2 className="text-xl font-semibold text-hpc">Ingresá con tu correo</h2>
-          <p className="text-sm text-tinta/70">
-            Te mandamos un código por correo. No hace falta contraseña. Usá el correo con el que te registraste en la
-            Fundación.
-          </p>
+      {paso === 'contrasena' && (
+        <form onSubmit={entrarConContrasena} className="space-y-4">
+          <h2 className="text-xl font-semibold text-hpc">Ingresá a tu ficha</h2>
+          {campoCorreo}
           <label className="block">
-            <span className="text-sm font-medium text-tinta">Correo electrónico</span>
-            <input
-              type="email"
-              required
-              autoComplete="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className={claseInput}
-              placeholder="nombre@ejemplo.com"
-            />
+            <span className="text-sm font-medium text-tinta">Contraseña</span>
+            <input type="password" required autoComplete="current-password" value={contrasena} onChange={(e) => setContrasena(e.target.value)} className={claseInput} />
           </label>
+          {error && <Aviso tipo="error">{error}</Aviso>}
+          <Boton cargando={enviando} icono={<KeyRound size={18} aria-hidden="true" />}>
+            Ingresar
+          </Boton>
+          <div className="rounded-xl bg-hpc-claro px-4 py-3 text-sm text-hpc">
+            <strong>¿Es tu primera vez o te olvidaste la contraseña?</strong>
+            <button type="button" onClick={() => irA('correo')} className="mt-1 block underline underline-offset-4 font-medium">
+              Ingresá con un código por correo
+            </button>
+          </div>
+        </form>
+      )}
+
+      {paso === 'correo' && (
+        <form onSubmit={pedirCodigo} className="space-y-4">
+          <h2 className="text-xl font-semibold text-hpc">Ingresá con un código</h2>
+          <p className="text-sm text-tinta/70">
+            Te mandamos un código desde consultas@habilidadesparaelcambio.com.ar. Usá el correo con el que te registraste en
+            la Fundación. Después vas a poder crear tu contraseña.
+          </p>
+          {campoCorreo}
           {error && <Aviso tipo="error">{error}</Aviso>}
           <Boton cargando={enviando} icono={<Mail size={18} aria-hidden="true" />}>
             Enviarme el código
           </Boton>
+          <button type="button" onClick={() => irA('contrasena')} className="w-full text-sm text-hpc underline underline-offset-4">
+            Ya tengo contraseña
+          </button>
         </form>
-      ) : (
+      )}
+
+      {paso === 'codigo' && (
         <form onSubmit={verificar} className="space-y-4">
           <h2 className="text-xl font-semibold text-hpc">Revisá tu correo</h2>
           <p className="text-sm text-tinta/70">
@@ -209,20 +264,74 @@ function Ingreso() {
           <Boton cargando={enviando} icono={<KeyRound size={18} aria-hidden="true" />}>
             Ingresar
           </Boton>
-          <button
-            type="button"
-            onClick={() => {
-              setPaso('correo');
-              setCodigo('');
-              setError('');
-            }}
-            className="w-full text-sm text-hpc underline underline-offset-4"
-          >
+          <button type="button" onClick={() => irA('correo')} className="w-full text-sm text-hpc underline underline-offset-4">
             Usar otro correo o pedir un código nuevo
           </button>
         </form>
       )}
     </div>
+  );
+}
+
+// ============================================================================
+// Contraseña: se crea después del primer ingreso con código, y se puede cambiar
+// ============================================================================
+
+function TarjetaContrasena({ obligatoria, onListo }: { obligatoria: boolean; onListo: () => void }) {
+  const cliente = obtenerCliente()!;
+  const [nueva, setNueva] = useState('');
+  const [repetida, setRepetida] = useState('');
+  const [guardando, setGuardando] = useState(false);
+  const [error, setError] = useState('');
+
+  async function guardar(e: FormEvent) {
+    e.preventDefault();
+    setError('');
+    if (nueva.length < 8) return setError('La contraseña tiene que tener al menos 8 caracteres.');
+    if (nueva !== repetida) return setError('Las dos contraseñas no coinciden.');
+    setGuardando(true);
+    // updateUser cambia la contraseña del usuario conectado. En "data" guardamos una marca
+    // (user_metadata) para saber que ya la creó y no volver a pedírsela.
+    const { error } = await cliente.auth.updateUser({ password: nueva, data: { tiene_contrasena: true } });
+    setGuardando(false);
+    if (error) return setError(mensajeDeError(error));
+    onListo();
+  }
+
+  return (
+    <form onSubmit={guardar} className="rounded-2xl border-2 border-dorado/50 bg-white p-5 md:p-6 space-y-4">
+      <div>
+        <h2 className="text-xl font-semibold text-hpc">{obligatoria ? 'Creá tu contraseña' : 'Cambiar contraseña'}</h2>
+        <p className="mt-1 text-sm text-tinta/70">
+          {obligatoria
+            ? 'Así la próxima vez entrás con tu correo y contraseña, sin esperar un código.'
+            : 'Mínimo 8 caracteres.'}
+        </p>
+      </div>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <label className="block">
+          <span className="text-sm font-medium text-tinta">Nueva contraseña</span>
+          <input type="password" autoComplete="new-password" required minLength={8} value={nueva} onChange={(e) => setNueva(e.target.value)} className={claseInput} />
+          <span className="mt-1 block text-xs text-tinta/55">Mínimo 8 caracteres</span>
+        </label>
+        <label className="block">
+          <span className="text-sm font-medium text-tinta">Repetila</span>
+          <input type="password" autoComplete="new-password" required value={repetida} onChange={(e) => setRepetida(e.target.value)} className={claseInput} />
+        </label>
+      </div>
+      {error && <Aviso tipo="error">{error}</Aviso>}
+      <div className="flex flex-wrap items-center gap-3">
+        <button type="submit" disabled={guardando} className="inline-flex items-center gap-2 rounded-xl bg-hpc px-5 py-3 text-sm font-semibold text-crema hover:bg-hpc-oscuro disabled:opacity-60">
+          {guardando ? <Loader2 size={18} className="animate-spin" aria-hidden="true" /> : <KeyRound size={18} aria-hidden="true" />}
+          Guardar contraseña
+        </button>
+        {!obligatoria && (
+          <button type="button" onClick={onListo} className="text-sm text-hpc underline underline-offset-4">
+            Cancelar
+          </button>
+        )}
+      </div>
+    </form>
   );
 }
 
@@ -851,7 +960,7 @@ function Boton({ cargando, icono, children }: { cargando: boolean; icono: ReactN
 function Aviso({ tipo, children }: { tipo: 'error' | 'ok'; children: ReactNode }) {
   return (
     <p role="alert" className={`flex gap-2 rounded-xl px-4 py-3 text-sm ${tipo === 'error' ? 'bg-red-50 text-red-800' : 'bg-green-50 text-green-800'}`}>
-      <AlertCircle size={18} className="shrink-0 mt-0.5" aria-hidden="true" />
+      {tipo === 'ok' ? <CheckCircle2 size={18} className="shrink-0 mt-0.5" aria-hidden="true" /> : <AlertCircle size={18} className="shrink-0 mt-0.5" aria-hidden="true" />}
       <span>{children}</span>
     </p>
   );

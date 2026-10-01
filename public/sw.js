@@ -7,7 +7,7 @@
 // Cuando cambies algo importante de este archivo, subí la versión de CACHE para que el
 // navegador descarte la copia anterior.
 
-const CACHE = 'hpc-portal-v4'; // v4: acceso Profesionales en el celular
+const CACHE = 'hpc-portal-v5'; // v5: ingreso con contraseña
 
 self.addEventListener('install', () => {
   // Activar la versión nueva sin esperar a que se cierren todas las pestañas.

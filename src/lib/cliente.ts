@@ -37,6 +37,18 @@ export function mensajeDeError(error: unknown): string {
   if (/CORREO_NO_HABILITADO|Database error saving new user/i.test(texto)) {
     return 'Este correo no está habilitado. Usá el mismo correo con el que te registraste en la Fundación, o escribile a coordinación para que lo agreguen.';
   }
+  if (/Invalid login credentials/i.test(texto)) {
+    return 'Correo o contraseña incorrectos. Si todavía no creaste tu contraseña, o no la recordás, ingresá con un código por correo.';
+  }
+  if (/should be different/i.test(texto)) {
+    return 'La contraseña nueva tiene que ser distinta de la anterior.';
+  }
+  if (/Password should be|weak/i.test(texto)) {
+    return 'La contraseña es muy débil. Usá al menos 8 caracteres combinando letras y números.';
+  }
+  if (/reauthenticat/i.test(texto)) {
+    return 'Por seguridad, salí e ingresá de nuevo con un código antes de cambiar la contraseña.';
+  }
   if (/expired|invalid/i.test(texto) && /otp|token/i.test(texto)) {
     return 'El código no es correcto o ya venció. Pedí uno nuevo.';
   }
