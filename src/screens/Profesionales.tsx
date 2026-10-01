@@ -4,7 +4,7 @@
 // Enlace para compartir: https://portal.habilidadesparaelcambio.com.ar/#profesionales
 //
 // Flujo:
-//   Sin sesión  -> Ingreso (correo -> código de 6 dígitos)
+//   Sin sesión  -> Ingreso (correo -> código por correo)
 //   Con sesión  -> EditorFicha (ficha pública, agenda con modalidad, datos internos, foto)
 //
 // Qué puede editar cada uno lo decide la base (RLS, migración 20261001000005). Si alguien
@@ -122,7 +122,7 @@ function Ingreso() {
         <form onSubmit={pedirCodigo} className="space-y-4">
           <h2 className="text-xl font-semibold text-hpc">Ingresá con tu correo</h2>
           <p className="text-sm text-tinta/70">
-            Te mandamos un código de 6 dígitos. No hace falta contraseña. Usá el correo con el que te registraste en la
+            Te mandamos un código por correo. No hace falta contraseña. Usá el correo con el que te registraste en la
             Fundación.
           </p>
           <label className="block">
@@ -157,8 +157,8 @@ function Ingreso() {
               required
               value={codigo}
               onChange={(e) => setCodigo(e.target.value.replace(/\D/g, ''))}
-              className={`${claseInput} tracking-[0.4em] text-lg text-center`}
-              placeholder="······"
+              className={`${claseInput} tracking-[0.3em] text-lg text-center placeholder:tracking-normal placeholder:text-base`}
+              placeholder="Código del correo"
             />
           </label>
           {error && <Aviso tipo="error">{error}</Aviso>}
