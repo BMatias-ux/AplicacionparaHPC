@@ -15,6 +15,7 @@ import type { Session } from '@supabase/supabase-js';
 import { LogOut, Mail, KeyRound, Plus, Trash2, Save, CheckCircle2, AlertCircle, Camera, Loader2 } from 'lucide-react';
 import { EncabezadoSeccion } from '../components/EncabezadoSeccion';
 import { PanelAccesos } from '../components/PanelAccesos';
+import { PanelDerivar } from '../components/PanelDerivar';
 import { tomarErrorDeEnlace } from '../lib/enlaceCorreo';
 import {
   obtenerCliente,
@@ -87,16 +88,18 @@ export function Profesionales() {
 }
 
 // ============================================================================
-// Con sesión: "Mi ficha" para todos + "Administrar accesos" para administradores
+// Con sesión: "Mi ficha" para todos + "Derivar" para el equipo de coordinación
+// (admin, admisión, coordinación) + "Administrar accesos" sólo para administradores
 // ============================================================================
 
 function ZonaConSesion({ email, usuarioId, tieneContrasena }: { email: string; usuarioId: string; tieneContrasena: boolean }) {
   const cliente = obtenerCliente()!;
   const [esAdmin, setEsAdmin] = useState(false);
+  const [esEquipo, setEsEquipo] = useState(false); // admin, admisión o coordinación: ve "Derivar"
   // Sin contraseña todavía: se la pedimos arriba de todo. Con contraseña: se puede cambiar desde la barra de sesión.
   const [mostrarContrasena, setMostrarContrasena] = useState(!tieneContrasena);
   const [contrasenaCreada, setContrasenaCreada] = useState(false);
-  const [pestana, setPestana] = useState<'ficha' | 'accesos'>('ficha');
+  const [pestana, setPestana] = useState<'ficha' | 'derivar' | 'accesos'>('ficha');
 
   useEffect(() => {
     // La política "ver mis roles" deja leer sólo los roles propios. Ocultar la pestaña es
@@ -105,8 +108,12 @@ function ZonaConSesion({ email, usuarioId, tieneContrasena }: { email: string; u
       .from('usuarios_roles')
       .select('rol')
       .eq('usuario_id', usuarioId)
-      .eq('rol', 'admin')
-      .then(({ data }) => setEsAdmin(Boolean(data?.length)));
+      .in('rol', ['admin', 'admision', 'coordinacion'])
+      .then(({ data }) => {
+        const roles = (data ?? []).map((r) => r.rol);
+        setEsAdmin(roles.includes('admin'));
+        setEsEquipo(roles.length > 0);
+      });
   }, [cliente, usuarioId]);
 
   return (
@@ -127,9 +134,15 @@ function ZonaConSesion({ email, usuarioId, tieneContrasena }: { email: string; u
           Cambiar mi contraseña
         </button>
       )}
-      {esAdmin && (
+      {esEquipo && (
         <div role="tablist" aria-label="Opciones" className="inline-flex rounded-xl bg-hpc-claro p-1">
-          {([['ficha', 'Mi ficha'], ['accesos', 'Administrar accesos']] as const).map(([id, texto]) => (
+          {(
+            [
+              ['ficha', 'Mi ficha'],
+              ['derivar', 'Derivar'],
+              ...(esAdmin ? ([['accesos', 'Administrar accesos']] as const) : []),
+            ] as const
+          ).map(([id, texto]) => (
             <button
               key={id}
               role="tab"
@@ -143,7 +156,13 @@ function ZonaConSesion({ email, usuarioId, tieneContrasena }: { email: string; u
           ))}
         </div>
       )}
-      {esAdmin && pestana === 'accesos' ? <PanelAccesos /> : <EditorFicha email={email} usuarioId={usuarioId} />}
+      {esAdmin && pestana === 'accesos' ? (
+        <PanelAccesos />
+      ) : esEquipo && pestana === 'derivar' ? (
+        <PanelDerivar />
+      ) : (
+        <EditorFicha email={email} usuarioId={usuarioId} />
+      )}
     </div>
   );
 }
