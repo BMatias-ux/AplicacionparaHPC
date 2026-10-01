@@ -14,6 +14,7 @@ import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from 're
 import type { Session } from '@supabase/supabase-js';
 import { LogOut, Mail, KeyRound, Plus, Trash2, Save, CheckCircle2, AlertCircle, Camera, Loader2 } from 'lucide-react';
 import { EncabezadoSeccion } from '../components/EncabezadoSeccion';
+import { PanelAccesos } from '../components/PanelAccesos';
 import {
   obtenerCliente,
   mensajeDeError,
@@ -67,10 +68,53 @@ export function Profesionales() {
       ) : cargando ? (
         <Cargando />
       ) : sesion ? (
-        <EditorFicha email={sesion.user.email ?? ''} />
+        <ZonaConSesion email={sesion.user.email ?? ''} usuarioId={sesion.user.id} />
       ) : (
         <Ingreso />
       )}
+    </div>
+  );
+}
+
+// ============================================================================
+// Con sesión: "Mi ficha" para todos + "Administrar accesos" para administradores
+// ============================================================================
+
+function ZonaConSesion({ email, usuarioId }: { email: string; usuarioId: string }) {
+  const cliente = obtenerCliente()!;
+  const [esAdmin, setEsAdmin] = useState(false);
+  const [pestana, setPestana] = useState<'ficha' | 'accesos'>('ficha');
+
+  useEffect(() => {
+    // La política "ver mis roles" deja leer sólo los roles propios. Ocultar la pestaña es
+    // comodidad visual: lo que de verdad impide a otros administrar es RLS en la base.
+    cliente
+      .from('usuarios_roles')
+      .select('rol')
+      .eq('usuario_id', usuarioId)
+      .eq('rol', 'admin')
+      .then(({ data }) => setEsAdmin(Boolean(data?.length)));
+  }, [cliente, usuarioId]);
+
+  return (
+    <div className="space-y-6">
+      {esAdmin && (
+        <div role="tablist" aria-label="Opciones" className="inline-flex rounded-xl bg-hpc-claro p-1">
+          {([['ficha', 'Mi ficha'], ['accesos', 'Administrar accesos']] as const).map(([id, texto]) => (
+            <button
+              key={id}
+              role="tab"
+              type="button"
+              aria-selected={pestana === id}
+              onClick={() => setPestana(id)}
+              className={`rounded-lg px-4 py-2 text-sm font-medium ${pestana === id ? 'bg-white text-hpc shadow-sm' : 'text-hpc/70 hover:text-hpc'}`}
+            >
+              {texto}
+            </button>
+          ))}
+        </div>
+      )}
+      {esAdmin && pestana === 'accesos' ? <PanelAccesos /> : <EditorFicha email={email} usuarioId={usuarioId} />}
     </div>
   );
 }
@@ -209,7 +253,7 @@ const RELACIONES: Record<keyof Seleccion, { tabla: string; columna: string }> = 
   exclusiones: { tabla: 'profesional_exclusion', columna: 'exclusion_id' },
 };
 
-function EditorFicha({ email }: { email: string }) {
+function EditorFicha({ email, usuarioId }: { email: string; usuarioId: string }) {
   const cliente = obtenerCliente()!;
   const [ficha, setFicha] = useState<Ficha | null>(null);
   const [privado, setPrivado] = useState<FichaPrivada | null>(null);
@@ -226,7 +270,8 @@ function EditorFicha({ email }: { email: string }) {
     (async () => {
       try {
         // Gracias a RLS, "select * from profesionales" devuelve SÓLO la ficha propia.
-        const { data: f, error: e1 } = await cliente.from('profesionales').select('*').maybeSingle();
+        // Se filtra por usuario: un administrador ve TODAS las fichas (RLS), y acá sólo queremos la propia.
+        const { data: f, error: e1 } = await cliente.from('profesionales').select('*').eq('usuario_id', usuarioId).maybeSingle();
         if (e1) throw e1;
         if (!f) return setEstado('sin_ficha');
 
@@ -268,7 +313,7 @@ function EditorFicha({ email }: { email: string }) {
         setEstado('error');
       }
     })();
-  }, [cliente]);
+  }, [cliente, usuarioId]);
 
   const salir = () => cliente.auth.signOut();
 
