@@ -8,9 +8,14 @@ insert into profesionales_privado (profesional_id, nombre_completo, email) value
   ('11111111-1111-1111-1111-111111111111', 'Prueba Uno', 'Uno@Ejemplo.com'),
   ('22222222-2222-2222-2222-222222222222', 'Prueba Dos', 'dos@ejemplo.com');
 -- Simula la precarga de la migración (los datos de prueba se cargaron después).
-insert into accesos_profesionales (email, nombre, profesional_id)
-  select lower(email), nombre_completo, profesional_id from profesionales_privado on conflict do nothing;
-insert into accesos_profesionales (email, nombre, zona_id) values ('nueva@ejemplo.com', 'Lic. Nueva Persona', 'neuquen');
+insert into accesos_profesionales (email, nombre, profesional_id, habilitado)
+  select lower(email), nombre_completo, profesional_id, true from profesionales_privado on conflict do nothing;
+insert into accesos_profesionales (email, nombre, zona_id, habilitado) values ('nueva@ejemplo.com', 'Lic. Nueva Persona', 'neuquen', true);
+-- Cargado pero NO habilitado (aspirante): no debe poder ingresar.
+insert into accesos_profesionales (email, nombre) values ('aspirante@ejemplo.com', 'Aspirante');
+
+\echo '--- ESPERADO: ERROR CORREO_NO_HABILITADO (cargado pero sin habilitar)'
+insert into auth.users (email) values ('aspirante@ejemplo.com');
 
 \echo '--- ESPERADO: ERROR CORREO_NO_HABILITADO'
 insert into auth.users (email) values ('intruso@ejemplo.com');
@@ -47,4 +52,9 @@ select telefono, origen from profesionales_privado where profesional_id = '11111
 select count(*) from profesionales_privado where profesional_id = '22222222-2222-2222-2222-222222222222';
 \echo '--- ESPERADO: 0 (no ve la lista de accesos)'
 select count(*) from accesos_profesionales;
+\echo '--- ESPERADO: 0 (si se deshabilita, deja de ver su ficha)'
+reset role;
+update accesos_profesionales set habilitado = false where email = 'uno@ejemplo.com';
+set role authenticated;
+select count(*) from profesionales;
 reset role;
