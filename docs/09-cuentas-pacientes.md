@@ -95,3 +95,27 @@ para el Cambio es {{ .Token }}". No mencionar "Mi ficha".
 - 🟢 Protección contra registros automáticos (CAPTCHA de Supabase: hCaptcha o Turnstile) si aparecen cuentas basura.
 - 🟢 Pantalla para que el equipo cargue avisos sin entrar a Supabase (hoy: Table Editor → `avisos`).
 - Etapa B: turnos y prestaciones (Medexis), unir la cuenta con las consultas del bot verificando el WhatsApp.
+
+## Corrección 07/10/2026 · cuentas del equipo en Mi espacio (migración 10)
+
+**Síntoma (Matías, con su cuenta de administrador):** después de crear su espacio, al volver a la sección le pedía
+crearlo de nuevo, y el registro de ánimo daba "Algo salió mal". Las cuentas de pacientes comunes no estaban afectadas.
+
+**Causa:** el trigger `proteger_campos_paciente` de la migración 09 no aplicaba las reglas de paciente a las cuentas del
+equipo. El perfil se guardaba sin `usuario_id`, así que el portal no lo encontraba y el registro de ánimo no tenía a
+quién pertenecer. No era un problema de sesión.
+
+**Arreglo:** migración `20261007000010_perfil_propio_equipo.sql` (si la fila es del propio usuario, rigen las reglas de
+paciente aunque sea del equipo) y el portal manda `usuario_id` al crear el perfil. Pruebas en `tests/31_prueba_perfil_equipo.sql`.
+
+**Limpieza (manual):** cada intento fallido dejó una fila suelta. Para verlas y borrarlas, en el SQL Editor:
+```sql
+-- 1) Ver
+select id, nombre, email, creado from pacientes where usuario_id is null and mayor_de_edad is true;
+-- 2) Borrar (sólo esas filas; no toca pacientes del bot ni con consultas)
+delete from pacientes p
+ where p.usuario_id is null and p.mayor_de_edad is true
+   and not exists (select 1 from consultas c where c.paciente_id = p.id);
+```
+Nota: las cuentas del equipo pueden tener su espacio de paciente, pero no pueden borrarlo desde "Mis datos"
+(se dan de baja desde administración).

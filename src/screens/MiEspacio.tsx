@@ -391,6 +391,9 @@ function CompletarPerfil({
     const { data, error } = await cliente
       .from('pacientes')
       .insert({
+        // usuario_id explícito: así la base reconoce que es el perfil PROPIO también cuando quien
+        // se registra es una cuenta del equipo (migración 10). La base lo vuelve a fijar igual.
+        usuario_id: sesion.user.id,
         nombre: nombre.trim(),
         email: sesion.user.email,
         telefono_portal: telefono.trim() || null,

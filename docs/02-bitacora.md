@@ -217,3 +217,10 @@ promocionarlo en redes. Turnos y prestaciones más adelante (Etapa B, con acceso
 **Encontrado:** `consultas.opcion` es texto libre sin restricción en las migraciones del repo, así que el bot puede
 guardar `persona` / `hablar_con_persona` sin error (pendiente del 06/10 en `bot-hpc`).
 **Pendiente:** ver `09-cuentas-pacientes.md` (orden de puesta en marcha, Google, aprobación del aviso, AAIP).
+
+## 07/10/2026 (2) — Corrección: perfil de Mi espacio en cuentas del equipo
+
+**Reporte de Matías:** con su cuenta (administrador) el espacio pedía crearse de nuevo al volver y el registro de ánimo
+fallaba. **Causa:** el trigger de la migración 09 salteaba las reglas de paciente para el equipo y el perfil quedaba sin
+`usuario_id`. **Hecho:** migración 10, `usuario_id` explícito en el alta desde el portal, prueba 31 (sin errores) y
+regresión de las pruebas 20 y 30 (todo como lo esperado). Service worker v8. Limpieza de filas sueltas: ver `09-cuentas-pacientes.md`.
