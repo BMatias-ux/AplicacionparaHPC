@@ -110,6 +110,9 @@ function ZonaConSesion({ email, usuarioId, tieneContrasena, onCambiarVista }: { 
   const cliente = obtenerCliente()!;
   const [esAdmin, setEsAdmin] = useState(false);
   const [esEquipo, setEsEquipo] = useState(false); // admin, admisión o coordinación: ve "Derivar"
+  // null = todavía no se sabe. false = la cuenta no tiene ficha profesional (por ejemplo, una cuenta
+  // de paciente de "Mi espacio": comparten la sesión).
+  const [esProfesional, setEsProfesional] = useState<boolean | null>(null);
   // Sin contraseña todavía: se la pedimos arriba de todo. Con contraseña: se puede cambiar desde la barra de sesión.
   const [mostrarContrasena, setMostrarContrasena] = useState(!tieneContrasena);
   const [contrasenaCreada, setContrasenaCreada] = useState(false);
@@ -133,7 +136,23 @@ function ZonaConSesion({ email, usuarioId, tieneContrasena, onCambiarVista }: { 
         setEsAdmin(roles.includes('admin'));
         setEsEquipo(roles.length > 0);
       });
+    // mi_profesional_id() devuelve la ficha propia sólo si el acceso está habilitado.
+    cliente.rpc('mi_profesional_id').then(({ data, error }) => setEsProfesional(error ? true : Boolean(data)));
   }, [cliente, usuarioId]);
+
+  if (esProfesional === null) return <Cargando />;
+  if (!esProfesional && !esEquipo) {
+    return (
+      <div className="space-y-4 max-w-xl">
+        <p className="rounded-xl bg-hpc-claro px-4 py-3 text-sm text-hpc">
+          Esta cuenta no tiene acceso al equipo profesional. Si sos paciente, tu cuenta está en{' '}
+          <a href="#mi-espacio" className="font-semibold underline underline-offset-4">Mi espacio</a>. Si sos parte del
+          equipo y deberías entrar, escribile a coordinación para que habiliten tu correo.
+        </p>
+        <BarraSesion email={email} onSalir={() => cliente.auth.signOut()} />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -224,9 +243,11 @@ function Ingreso() {
     setEnviando(true);
     const { error } = await cliente.auth.signInWithOtp({
       email: correo(),
-      // shouldCreateUser: true -> el primer ingreso crea el usuario. La base rechaza los
-      // correos que no estén en la lista de habilitados (trigger hpc_validar_correo).
-      options: { shouldCreateUser: true },
+      // shouldCreateUser: true -> el primer ingreso crea el usuario. Con origen 'profesionales',
+      // la base rechaza los correos que no estén habilitados (trigger hpc_validar_correo). Desde la
+      // migración 09 el registro es abierto para pacientes: sin esta marca, el correo se aceptaría
+      // como cuenta de paciente.
+      options: { shouldCreateUser: true, data: { origen: 'profesionales' } },
     });
     setEnviando(false);
     if (error) return setError(mensajeDeError(error));

@@ -197,3 +197,23 @@ desactivar y fechas desde/hasta) y `src/components/Novedades.tsx` (banner con el
 cursosdepsicologia.com.ar, se puede cerrar y se recuerda en el navegador). Enlaces externos con UTM
 (`utm_source=portal-hpc&utm_medium=banner&utm_campaign=...`) para medir las visitas. Queda preparado, desactivado, el
 aviso "asistente de WhatsApp" para prender el día del corte. Segundo aviso: promo de Formaciones Anuales (50% off en las primeras tres cuotas y matrícula bonificada), en variante clara. Publicado primero como vista previa para el equipo.
+
+## 07/10/2026 — Etapa A de "Mi espacio": cuentas de pacientes
+
+**Pedido de Matías:** que el portal sea de autogestión para cada paciente: crearse una cuenta con su correo (cualquiera)
+o con Google, y tener un espacio privado con turnos, avisos, prestaciones y ejercicios. Registro abierto, para
+promocionarlo en redes. Turnos y prestaciones más adelante (Etapa B, con acceso a Medexis).
+**Hecho (Claude, rama `mi-espacio-pacientes`):**
+- Migración 09: registro abierto salvo para la sección Profesionales (`origen = 'profesionales'` sigue exigiendo correo
+  habilitado); vinculación de fichas sólo con acceso habilitado (y automática al habilitar una cuenta existente);
+  `pacientes` con permisos propios y teléfono verificado protegido; `registros_animo` privado; `avisos`; `borrar_mi_cuenta()`.
+- Pantalla `#mi-espacio`: ingreso (Google detrás de `VITE_GOOGLE_ACTIVO`, código, contraseña), completar perfil con
+  18+ y aceptación del aviso, pestañas Inicio / Ánimo / Ejercicios / Turnos (próximamente) / Mis datos.
+- "Mi espacio" ocupa en el celular el lugar de "Formación" en la barra inferior; invitación en Inicio.
+- Profesionales: el código se pide con `origen: 'profesionales'`; una cuenta sin ficha ve un aviso que la manda a Mi espacio.
+- Aviso de privacidad: punto 2 bis (cuenta) y ajustes en 3, 6, 8 y 10. Service worker v7.
+- Pruebas: `supabase/tests/30_prueba_cuentas_pacientes.sql` en Postgres 16 local, todo como lo esperado; `00_stub`
+  ahora imita `auth.users` y `storage`. Capturas en celular y computadora con datos simulados.
+**Encontrado:** `consultas.opcion` es texto libre sin restricción en las migraciones del repo, así que el bot puede
+guardar `persona` / `hablar_con_persona` sin error (pendiente del 06/10 en `bot-hpc`).
+**Pendiente:** ver `09-cuentas-pacientes.md` (orden de puesta en marcha, Google, aprobación del aviso, AAIP).

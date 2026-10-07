@@ -19,6 +19,8 @@ import { Privacidad } from './screens/Privacidad';
 // Carga diferida: el código del acceso de profesionales (incluye el cliente de Supabase,
 // ~50 KB) se descarga sólo cuando alguien abre esa sección. El público no lo paga.
 const Profesionales = lazy(() => import('./screens/Profesionales').then((m) => ({ default: m.Profesionales })));
+// Lo mismo para "Mi espacio" (cuenta del paciente): sólo lo descarga quien entra.
+const MiEspacio = lazy(() => import('./screens/MiEspacio').then((m) => ({ default: m.MiEspacio })));
 
 const PANTALLAS: Record<Seccion, React.ComponentType> = {
   inicio: Inicio,
@@ -26,6 +28,7 @@ const PANTALLAS: Record<Seccion, React.ComponentType> = {
   equipo: Equipo,
   formacion: Formacion,
   recursos: Recursos,
+  'mi-espacio': MiEspacio,
   contacto: Contacto,
   privacidad: Privacidad,
   profesionales: Profesionales,

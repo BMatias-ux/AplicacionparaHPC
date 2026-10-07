@@ -14,11 +14,13 @@ insert into accesos_profesionales (email, nombre, zona_id, habilitado) values ('
 -- Cargado pero NO habilitado (aspirante): no debe poder ingresar.
 insert into accesos_profesionales (email, nombre) values ('aspirante@ejemplo.com', 'Aspirante');
 
+-- Desde la migración 09 el registro es abierto para pacientes: el rechazo aplica sólo al
+-- ingreso desde la sección Profesionales, que manda origen = 'profesionales' en los metadatos.
 \echo '--- ESPERADO: ERROR CORREO_NO_HABILITADO (cargado pero sin habilitar)'
-insert into auth.users (email) values ('aspirante@ejemplo.com');
+insert into auth.users (email, raw_user_meta_data) values ('aspirante@ejemplo.com', '{"origen":"profesionales"}');
 
 \echo '--- ESPERADO: ERROR CORREO_NO_HABILITADO'
-insert into auth.users (email) values ('intruso@ejemplo.com');
+insert into auth.users (email, raw_user_meta_data) values ('intruso@ejemplo.com', '{"origen":"profesionales"}');
 
 \echo '--- ESPERADO: alta OK y vinculada a Prueba Uno (mayúsculas no importan)'
 insert into auth.users (id, email) values ('aaaaaaaa-0000-0000-0000-000000000001', 'uno@ejemplo.com');

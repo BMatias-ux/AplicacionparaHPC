@@ -6,9 +6,36 @@
 // o, si el enlace venció:  https://portal.../#error=access_denied&error_description=...
 //
 // El portal usa el "#" para elegir la sección (navegacion.ts), así que guardamos los tokens,
-// dejamos la dirección en #profesionales sin recargar (replaceState) y, cuando se abre esa
-// sección, cliente.ts usa estos tokens para abrir la sesión.
+// dejamos la dirección en la sección de destino sin recargar (replaceState) y, cuando se abre
+// esa sección, cliente.ts usa estos tokens para abrir la sesión.
+//
+// Lo mismo pasa al volver de "Continuar con Google": Supabase vuelve con #access_token=...
+// ¿A qué sección? Antes de salir hacia Google o de pedir el enlace, la pantalla guarda el destino
+// en sessionStorage (guardarDestino). Si no hay destino guardado, va a #profesionales, que era
+// el único ingreso que existía antes de "Mi espacio".
 // Este archivo NO importa Supabase: se ejecuta al cargar la página y no debe sumar peso.
+
+const CLAVE_DESTINO = 'hpc-destino-ingreso';
+export type DestinoIngreso = 'profesionales' | 'mi-espacio';
+
+/** Anota a qué sección volver después de ir a Google o de tocar el enlace del correo. */
+export function guardarDestino(destino: DestinoIngreso) {
+  try {
+    sessionStorage.setItem(CLAVE_DESTINO, destino);
+  } catch {
+    // Navegación privada sin sessionStorage: se vuelve a #profesionales y la persona elige.
+  }
+}
+
+function leerDestino(): DestinoIngreso {
+  try {
+    const d = sessionStorage.getItem(CLAVE_DESTINO);
+    sessionStorage.removeItem(CLAVE_DESTINO);
+    return d === 'mi-espacio' ? 'mi-espacio' : 'profesionales';
+  } catch {
+    return 'profesionales';
+  }
+}
 
 export interface TokensDeCorreo {
   access_token: string;
@@ -29,7 +56,7 @@ if (/access_token=|error_description=/.test(hash)) {
     errorDeEnlace = 'El enlace del correo venció o ya fue usado. Pedí un código nuevo.';
   }
   // Limpia los tokens de la barra de direcciones (y del historial) sin disparar "hashchange".
-  history.replaceState(null, '', `${window.location.pathname}#profesionales`);
+  history.replaceState(null, '', `${window.location.pathname}#${leerDestino()}`);
 }
 
 /** Devuelve los tokens una sola vez (después quedan descartados). */

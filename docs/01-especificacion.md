@@ -109,9 +109,11 @@ formaciones anuales y membresía.
 | D-06 | 25/09/2026 | La app **no muestra precios**; se informan por WhatsApp | Cambian seguido y ya viven en el bot: dos copias = una desactualizada | Hecha (Etapa 1) |
 | D-07 | 25/09/2026 | No listar presencial en **Zona Norte ni Salta** | Sin profesionales cargados al corte de sept. 2026 y hubo reclamo por publicidad de Salta | Hecha; revisar al sumar equipo |
 | D-08 | — | Acceso de profesionales: ¿dentro del portal o app aparte? | Ver *Proyección* | Pendiente |
-| D-09 | 25/09/2026 | v1 = información + WhatsApp, sin registro ni datos personales | Decisión de Matías; evita guardar datos de salud sin backend | Aprobada |
+| D-09 | 25/09/2026 | v1 = información + WhatsApp, sin registro ni datos personales | Decisión de Matías; evita guardar datos de salud sin backend | Reemplazada por D-15 (07/10) |
 | D-10 | 26/09/2026 | Coexistencia del bot con el equipo a través de **360dialog** (proveedor), no como Tech Provider ni con Jelou | M Digital no tiene verificación de negocio en Meta; 360dialog conserva el bot propio en Vercel (Jelou obligaba a rehacerlo adentro; Vapi es sólo voz) | Aprobada |
 | D-11 | 26/09/2026 | Recordatorios de turno por **WhatsApp (plantilla de utilidad)** como canal principal; Web Push como refuerzo | En iPhone el push sólo funciona con la PWA instalada; WhatsApp llega siempre | Propuesta |
+| D-15 | 07/10/2026 | Portal de **autogestión del paciente**: registro abierto con cualquier correo o Google; espacio privado con avisos, ánimo y ejercicios; turnos en Etapa B | Pedido de Matías para promocionar el portal en redes. Reemplaza a D-09 (v1 sin registro). Detalle en `09-cuentas-pacientes.md` | Aprobada (Etapa A hecha) |
+| D-16 | 07/10/2026 | El registro de ánimo es **privado del paciente**: sin permiso de lectura para el equipo | Es un diario personal; compartirlo con el terapeuta sería una función aparte con consentimiento | Propuesta |
 
 ## Marco legal a tener presente
 

@@ -47,6 +47,15 @@ Prioridad: 🔴 bloquea · 🟠 importante · 🟢 mejora · ✅ hecho
 - 🟠 Modelo de datos: profesionales, zonas, cupos, derivaciones, roles.
 - 🟠 Migrar la Ficha Profesional (hoy HTML + Apps Script) a la base.
 
+## Mi espacio (cuentas de pacientes) — `09-cuentas-pacientes.md`
+- ✅ Etapa A programada y probada en local (07/10, rama `mi-espacio-pacientes`).
+- 🔴 Merge del PR y, después, correr la migración 09 en Supabase (en ese orden; antes, comparar las funciones de producción).
+- 🔴 Neutralizar los textos de los correos de código (hoy pensados para profesionales).
+- 🟠 Activar Google: cliente OAuth en Google Cloud, proveedor en Supabase, Redirect URLs, `VITE_GOOGLE_ACTIVO=true`.
+- 🟠 Aprobación del aviso de privacidad actualizado por la Fundación y AAIP antes de difundir masivamente.
+- 🟢 Límites de correo (Supabase y Hostinger), CAPTCHA si hay registros basura, pantalla para cargar avisos.
+- 🟢 Etapa B: turnos/prestaciones desde Medexis y unión verificada con las consultas del bot.
+
 ## Mercado Pago
 - 🟠 Definir con la Fundación qué se cobra primero (admisión DBT, formaciones, membresía…).
 - 🟠 Precios en la base como única fuente (bot, app y pagos leen de ahí).
