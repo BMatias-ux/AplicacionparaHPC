@@ -49,7 +49,7 @@ Prioridad: 🔴 bloquea · 🟠 importante · 🟢 mejora · ✅ hecho
 
 ## Mi espacio (cuentas de pacientes) — `09-cuentas-pacientes.md`
 - ✅ Etapa A programada y probada en local (07/10, rama `mi-espacio-pacientes`).
-- 🔴 Merge del PR y, después, correr la migración 09 en Supabase (en ese orden; antes, comparar las funciones de producción).
+- ✅ PR #7 mergeado y migración 09 aplicada en Supabase (07/10, 04:42). Funciones de producción verificadas por huella md5 antes de aplicarla.
 - 🔴 Neutralizar los textos de los correos de código (hoy pensados para profesionales).
 - 🟠 Activar Google: cliente OAuth en Google Cloud, proveedor en Supabase, Redirect URLs, `VITE_GOOGLE_ACTIVO=true`.
 - 🟠 Aprobación del aviso de privacidad actualizado por la Fundación y AAIP antes de difundir masivamente.
