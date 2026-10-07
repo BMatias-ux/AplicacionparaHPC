@@ -1,6 +1,6 @@
 // src/lib/cliente.ts
 // Cliente oficial de Supabase (@supabase/supabase-js) para la parte CON LOGIN del portal
-// (sección Profesionales). La parte pública sigue usando fetch simple (lib/supabase.ts)
+// (secciones Profesionales y Mi espacio; comparten la misma sesión). La parte pública sigue usando fetch simple (lib/supabase.ts)
 // para que quien sólo mira el portal no descargue nada extra... salvo que entre a esta sección:
 // el cliente se carga recién cuando se abre (ver import() dinámico en Profesionales.tsx).
 //
@@ -47,6 +47,9 @@ export function mensajeDeError(error: unknown): string {
   if (/CORREO_NO_HABILITADO|Database error saving new user/i.test(texto)) {
     return 'Este correo no está habilitado. Usá el mismo correo con el que te registraste en la Fundación, o escribile a coordinación para que lo agreguen.';
   }
+  if (/CUENTA_DEL_EQUIPO/i.test(texto)) {
+    return 'Esta cuenta es del equipo profesional: la baja se hace desde administración. Escribile a coordinación.';
+  }
   if (/Invalid login credentials/i.test(texto)) {
     return 'Correo o contraseña incorrectos. Si todavía no creaste tu contraseña, o no la recordás, ingresá con un código por correo.';
   }
@@ -69,6 +72,36 @@ export function mensajeDeError(error: unknown): string {
     return 'No hay conexión. Revisá internet y volvé a intentar.';
   }
   return 'Algo salió mal. Volvé a intentar en un momento; si sigue pasando, avisá a coordinación.';
+}
+
+// ---------- Tipos de "Mi espacio" (pacientes) ----------
+
+/** Perfil del paciente. El teléfono verificado (de WhatsApp) no se lee ni se escribe desde acá. */
+export interface PerfilPaciente {
+  id: string;
+  nombre: string;
+  email: string | null;
+  telefono_portal: string | null;
+  zona_id: string | null;
+  creado: string;
+}
+
+export interface RegistroAnimo {
+  id: number;
+  fecha: string;
+  animo: number; // 1 = muy mal ... 5 = muy bien
+  emociones: string[];
+  nota: string | null;
+}
+
+export interface AvisoPaciente {
+  id: number;
+  titulo: string;
+  cuerpo: string | null;
+  enlace: string | null;
+  texto_enlace: string | null;
+  paciente_id: string | null;
+  desde: string;
 }
 
 // ---------- Tipos de lo que lee/escribe la pantalla ----------

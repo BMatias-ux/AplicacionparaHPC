@@ -19,7 +19,7 @@ import { ShieldCheck, Mail, MessageCircle, ExternalLink } from 'lucide-react';
 import { EncabezadoSeccion } from '../components/EncabezadoSeccion';
 import { EMAIL_CONSULTAS, WHATSAPP_VISIBLE, RESPONSABLE_DATOS } from '../config';
 
-const ULTIMA_ACTUALIZACION = '28 de septiembre de 2026';
+const ULTIMA_ACTUALIZACION = '7 de octubre de 2026';
 
 /** El correo con un punto de corte opcional después de la @ (<wbr>), para que en pantallas
  *  angostas se parta ahí y no a mitad de palabra. */
@@ -56,12 +56,27 @@ const BLOQUES: Bloque[] = [
     ],
   },
   {
+    id: 'cuenta',
+    titulo: '2 bis. Si creás una cuenta en "Mi espacio"',
+    parrafos: [
+      'Crear una cuenta es voluntario. Si la creás, guardamos:',
+    ],
+    lista: [
+      'Tu correo electrónico y, si entrás con Google, el nombre y la foto de perfil que Google nos informa. No recibimos tu contraseña de Google.',
+      'El nombre que elijas y, si querés darlos, un teléfono de WhatsApp y tu zona.',
+      'La fecha en que aceptaste este aviso y que declaraste tener 18 años o más (o ser el adulto responsable).',
+      'Tu registro de ánimo, si lo usás: cómo te sentías, las emociones que marcaste y tus notas. Es privado: el equipo no lo ve desde el portal y no se usa para tu atención salvo que vos decidas compartirlo.',
+      'Datos técnicos de la sesión (fecha de ingreso y del último acceso), para mantenerte conectada o conectado de forma segura.',
+    ],
+  },
+  {
     id: 'salud',
     titulo: '3. Datos de salud',
     parrafos: [
       'El motivo de consulta y la pregunta sobre riesgo son datos de salud, que la ley considera datos sensibles (Ley 25.326, art. 2). Sólo los ven el equipo de admisión y el profesional al que se deriva tu consulta, alcanzados por el secreto profesional y por las Leyes 26.529 de Derechos del Paciente y 26.657 de Salud Mental.',
       'Nadie está obligado a darnos datos sensibles. Si preferís no contar el motivo por escrito, podés responder que preferís hablarlo en la entrevista y lo conversás directamente con el profesional. Puede demorar o limitar la derivación, pero nunca te va a dejar sin respuesta.',
       'Si en la conversación aparecen señales de que tu vida o la de otra persona puede estar en riesgo, el equipo recibe un aviso prioritario para poder contactarte, aunque todavía no hayas aceptado este aviso. Lo hacemos únicamente para protegerte.',
+      'El registro de ánimo de "Mi espacio" también es un dato de salud. Viaja cifrado y está protegido con permisos para que, desde el portal, sólo pueda leerlo tu propia cuenta.',
     ],
   },
   {
@@ -91,7 +106,8 @@ const BLOQUES: Bloque[] = [
     ],
     lista: [
       'Meta (WhatsApp) y, cuando se active, 360dialog: transmisión de los mensajes.',
-      'Supabase: base de datos donde se guardan las consultas (servidores en San Pablo, Brasil).',
+      'Supabase: base de datos donde se guardan las consultas y las cuentas de "Mi espacio" (servidores en San Pablo, Brasil).',
+      'Google: si elegís "Continuar con Google", para confirmar tu identidad al ingresar.',
       'Vercel: servidores donde funcionan el asistente y este portal.',
       'Upstash: memoria temporal de la conversación, que se borra sola a las 24 horas.',
       'Google: planilla de respaldo de las consultas, con acceso restringido al equipo.',
@@ -114,6 +130,7 @@ const BLOQUES: Bloque[] = [
       'Consultas que no derivaron en tratamiento: hasta veinticuatro meses, por si volvés a escribirnos y para no pedirte los mismos datos otra vez.',
       'Historias clínicas, si iniciás tratamiento: diez años desde la última actuación, como exige la Ley 26.529.',
       'Memoria temporal de la conversación con el asistente: se borra sola a las 24 horas.',
+      'Cuenta de "Mi espacio": mientras la tengas. Si la borrás (desde "Mis datos"), se eliminan en el momento tu perfil, tu registro de ánimo y tus avisos.',
       'Cumplidos esos plazos, la información se elimina o se anonimiza. Podés pedir antes que borremos tus datos, salvo los que una ley nos obliga a conservar.',
     ],
   },
@@ -128,7 +145,7 @@ const BLOQUES: Bloque[] = [
     id: 'portal',
     titulo: '10. Este portal',
     parrafos: [
-      'El portal no te pide datos personales, no tiene formularios y no usa cookies de publicidad ni de seguimiento. Para mostrar las tipografías, tu navegador descarga fuentes de Google Fonts, lo que le informa a Google tu dirección IP. Cuando tocás un botón de WhatsApp, se abre la aplicación con un mensaje ya escrito y rigen las condiciones de este aviso.',
+      'Para mirar el portal no hace falta darnos ningún dato y no usamos cookies de publicidad ni de seguimiento. Sólo si creás una cuenta en "Mi espacio" guardamos los datos del punto 2 bis; tu navegador guarda la sesión para que no tengas que ingresar cada vez. Para mostrar las tipografías, tu navegador descarga fuentes de Google Fonts, lo que le informa a Google tu dirección IP. Cuando tocás un botón de WhatsApp, se abre la aplicación con un mensaje ya escrito y rigen las condiciones de este aviso.',
       'Las fichas del equipo muestran sólo la información que cada profesional autorizó a publicar.',
     ],
   },
@@ -140,7 +157,7 @@ export function Privacidad() {
       <EncabezadoSeccion
         antetitulo="Protección de datos personales"
         titulo="Aviso de privacidad"
-        bajada="Cómo cuidamos la información que nos das cuando nos escribís. Lo pedimos en WhatsApp antes de preguntarte cualquier dato."
+        bajada="Cómo cuidamos la información que nos das cuando nos escribís o creás tu cuenta. Lo pedimos en WhatsApp antes de preguntarte cualquier dato y al crear tu cuenta en Mi espacio."
       />
 
       <p className="text-xs text-tinta/60">Última actualización: {ULTIMA_ACTUALIZACION}</p>

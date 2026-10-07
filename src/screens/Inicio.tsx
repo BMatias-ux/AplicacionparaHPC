@@ -2,7 +2,7 @@
 // Pantalla de entrada: qué es HPC y un acceso rápido según lo que la persona busca.
 // Los accesos replican el menú del bot, así la experiencia es la misma en la app y en WhatsApp.
 
-import { ArrowRight, HeartHandshake, GraduationCap, UserCheck, Users, Wind } from 'lucide-react';
+import { ArrowRight, CircleUserRound, HeartHandshake, GraduationCap, UserCheck, Users, Wind } from 'lucide-react';
 import { BotonWhatsApp } from '../components/BotonWhatsApp';
 import { enlacePorMotivo } from '../lib/whatsapp';
 import { Novedades } from '../components/Novedades';
@@ -42,6 +42,23 @@ export function Inicio() {
           </a>
         </div>
       </section>
+
+      {/* Invitación a crear la cuenta de paciente (Mi espacio, desde 07/10/2026). */}
+      <a
+        href="#mi-espacio"
+        className="flex flex-col sm:flex-row sm:items-center gap-4 rounded-2xl border-2 border-dorado/40 bg-white p-5 md:p-6 hover:border-dorado"
+      >
+        <CircleUserRound className="text-dorado shrink-0" size={36} aria-hidden="true" />
+        <span className="flex-1">
+          <span className="block text-lg font-semibold text-hpc font-display">Creá tu espacio personal</span>
+          <span className="block text-sm text-tinta/70">
+            Novedades, ejercicios y tu registro de ánimo en un solo lugar. Gratis y privado.
+          </span>
+        </span>
+        <span className="inline-flex items-center gap-2 self-start sm:self-center rounded-xl bg-hpc px-4 py-2.5 text-sm font-semibold text-crema">
+          Crear mi cuenta <ArrowRight size={16} aria-hidden="true" />
+        </span>
+      </a>
 
       <section aria-labelledby="que-buscas">
         <h2 id="que-buscas" className="text-2xl font-semibold text-hpc">¿Qué estás buscando?</h2>

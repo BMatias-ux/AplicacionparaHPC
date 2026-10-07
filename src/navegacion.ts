@@ -8,16 +8,20 @@
 // `menu: false` = no aparece en ningún menú; se llega por enlace (ej. el aviso de privacidad,
 // enlazado desde el pie de página, Contacto y el bot de WhatsApp).
 
-import { Home, HeartHandshake, Users, GraduationCap, Wind, Phone, ShieldCheck, UserRoundPen, type LucideIcon } from 'lucide-react';
+import { Home, HeartHandshake, Users, GraduationCap, Wind, Phone, ShieldCheck, UserRoundPen, CircleUserRound, type LucideIcon } from 'lucide-react';
 
-export type Seccion = 'inicio' | 'servicios' | 'equipo' | 'formacion' | 'recursos' | 'contacto' | 'privacidad' | 'profesionales';
+export type Seccion = 'inicio' | 'servicios' | 'equipo' | 'formacion' | 'recursos' | 'mi-espacio' | 'contacto' | 'privacidad' | 'profesionales';
 
 export const SECCIONES: { id: Seccion; etiqueta: string; icono: LucideIcon; movil: boolean; menu?: boolean }[] = [
   { id: 'inicio', etiqueta: 'Inicio', icono: Home, movil: true },
   { id: 'servicios', etiqueta: 'Tratamientos', icono: HeartHandshake, movil: true },
   { id: 'equipo', etiqueta: 'Equipo', icono: Users, movil: true },
-  { id: 'formacion', etiqueta: 'Formación', icono: GraduationCap, movil: true },
+  // Formación es para profesionales: en el celular se llega desde Inicio ("Soy profesional") y
+  // su lugar en la barra inferior lo ocupa "Mi espacio", que es lo que se promociona a pacientes.
+  { id: 'formacion', etiqueta: 'Formación', icono: GraduationCap, movil: false },
   { id: 'recursos', etiqueta: 'Recursos', icono: Wind, movil: false },
+  // Cuenta del paciente (desde 07/10/2026): avisos, registro de ánimo, ejercicios y, más adelante, turnos.
+  { id: 'mi-espacio', etiqueta: 'Mi espacio', icono: CircleUserRound, movil: true },
   { id: 'contacto', etiqueta: 'Contacto', icono: Phone, movil: true },
   { id: 'privacidad', etiqueta: 'Privacidad', icono: ShieldCheck, movil: false, menu: false },
   // Acceso del equipo profesional (Mi ficha). Sólo en la barra lateral de la computadora;
