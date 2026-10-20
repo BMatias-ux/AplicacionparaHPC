@@ -16,6 +16,8 @@ import { LogOut, Mail, KeyRound, Plus, Trash2, Save, CheckCircle2, AlertCircle, 
 import { EncabezadoSeccion } from '../components/EncabezadoSeccion';
 import { PanelAccesos } from '../components/PanelAccesos';
 import { PanelDerivar } from '../components/PanelDerivar';
+import { PanelDocentes } from '../components/PanelDocentes';
+import { MisClases } from '../components/MisClases';
 import { tomarErrorDeEnlace } from '../lib/enlaceCorreo';
 import {
   obtenerCliente,
@@ -30,7 +32,7 @@ import {
 } from '../lib/cliente';
 
 // Título y bajada de la pantalla según la pestaña elegida.
-type Vista = 'ficha' | 'derivar' | 'accesos';
+type Vista = 'ficha' | 'derivar' | 'accesos' | 'clases' | 'docentes';
 const ENCABEZADOS: Record<Vista, { titulo: string; bajada: string }> = {
   ficha: {
     titulo: 'Mi ficha',
@@ -43,6 +45,14 @@ const ENCABEZADOS: Record<Vista, { titulo: string; bajada: string }> = {
   accesos: {
     titulo: 'Administrar accesos',
     bajada: 'Quién puede entrar al portal y quién aparece en el directorio público.',
+  },
+  clases: {
+    titulo: 'Mis clases',
+    bajada: 'Las clases que tenés asignadas en las formaciones anuales: confirmalas y cargá el material.',
+  },
+  docentes: {
+    titulo: 'Docentes',
+    bajada: 'Registro de docentes de las formaciones, cronograma de clases, cumplimiento y encuesta de los alumnos.',
   },
 };
 
@@ -113,6 +123,8 @@ function ZonaConSesion({ email, usuarioId, tieneContrasena, onCambiarVista }: { 
   // null = todavía no se sabe. false = la cuenta no tiene ficha profesional (por ejemplo, una cuenta
   // de paciente de "Mi espacio": comparten la sesión).
   const [esProfesional, setEsProfesional] = useState<boolean | null>(null);
+  // Docente de las formaciones (migración 11): ve "Mis clases". Puede no tener ficha profesional.
+  const [esDocente, setEsDocente] = useState<boolean | null>(null);
   // Sin contraseña todavía: se la pedimos arriba de todo. Con contraseña: se puede cambiar desde la barra de sesión.
   const [mostrarContrasena, setMostrarContrasena] = useState(!tieneContrasena);
   const [contrasenaCreada, setContrasenaCreada] = useState(false);
@@ -138,10 +150,18 @@ function ZonaConSesion({ email, usuarioId, tieneContrasena, onCambiarVista }: { 
       });
     // mi_profesional_id() devuelve la ficha propia sólo si el acceso está habilitado.
     cliente.rpc('mi_profesional_id').then(({ data, error }) => setEsProfesional(error ? true : Boolean(data)));
+    // Si la migración 11 todavía no está aplicada, la función no existe: se toma como "no es docente".
+    cliente.rpc('mi_docente_id').then(({ data, error }) => setEsDocente(error ? false : Boolean(data)));
   }, [cliente, usuarioId]);
 
-  if (esProfesional === null) return <Cargando />;
-  if (!esProfesional && !esEquipo) {
+  // Quien es SÓLO docente (sin ficha ni rol de equipo) arranca directo en "Mis clases".
+  useEffect(() => {
+    if (esDocente && esProfesional === false && !esEquipo) setPestana('clases');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [esDocente, esProfesional, esEquipo]);
+
+  if (esProfesional === null || esDocente === null) return <Cargando />;
+  if (!esProfesional && !esEquipo && !esDocente) {
     return (
       <div className="space-y-4 max-w-xl">
         <p className="rounded-xl bg-hpc-claro px-4 py-3 text-sm text-hpc">
@@ -153,6 +173,16 @@ function ZonaConSesion({ email, usuarioId, tieneContrasena, onCambiarVista }: { 
       </div>
     );
   }
+
+  // Pestañas según lo que es cada cuenta (una persona puede ser profesional, docente y admin a la vez).
+  const pestanas: [Vista, string][] = [
+    ...(esProfesional || esEquipo ? ([['ficha', 'Mi ficha']] as [Vista, string][]) : []),
+    ...(esEquipo ? ([['derivar', 'Derivar']] as [Vista, string][]) : []),
+    ...(esDocente ? ([['clases', 'Mis clases']] as [Vista, string][]) : []),
+    ...(esAdmin ? ([['docentes', 'Docentes'], ['accesos', 'Administrar accesos']] as [Vista, string][]) : []),
+  ];
+  // Si la pestaña elegida no corresponde a esta cuenta, se muestra la primera disponible.
+  const activa: Vista = pestanas.some(([id]) => id === pestana) ? pestana : pestanas[0][0];
 
   return (
     <div className="space-y-6">
@@ -172,31 +202,29 @@ function ZonaConSesion({ email, usuarioId, tieneContrasena, onCambiarVista }: { 
           Cambiar mi contraseña
         </button>
       )}
-      {esEquipo && (
-        <div role="tablist" aria-label="Opciones" className="inline-flex rounded-xl bg-hpc-claro p-1">
-          {(
-            [
-              ['ficha', 'Mi ficha'],
-              ['derivar', 'Derivar'],
-              ...(esAdmin ? ([['accesos', 'Administrar accesos']] as const) : []),
-            ] as const
-          ).map(([id, texto]) => (
+      {pestanas.length > 1 && (
+        <div role="tablist" aria-label="Opciones" className="inline-flex flex-wrap rounded-xl bg-hpc-claro p-1">
+          {pestanas.map(([id, texto]) => (
             <button
               key={id}
               role="tab"
               type="button"
-              aria-selected={pestana === id}
+              aria-selected={activa === id}
               onClick={() => setPestana(id)}
-              className={`rounded-lg px-4 py-2 text-sm font-medium ${pestana === id ? 'bg-white text-hpc shadow-sm' : 'text-hpc/70 hover:text-hpc'}`}
+              className={`rounded-lg px-4 py-2 text-sm font-medium ${activa === id ? 'bg-white text-hpc shadow-sm' : 'text-hpc/70 hover:text-hpc'}`}
             >
               {texto}
             </button>
           ))}
         </div>
       )}
-      {esAdmin && pestana === 'accesos' ? (
+      {esAdmin && activa === 'accesos' ? (
         <PanelAccesos />
-      ) : esEquipo && pestana === 'derivar' ? (
+      ) : esAdmin && activa === 'docentes' ? (
+        <PanelDocentes />
+      ) : esDocente && activa === 'clases' ? (
+        <MisClases />
+      ) : esEquipo && activa === 'derivar' ? (
         <PanelDerivar />
       ) : (
         <EditorFicha email={email} usuarioId={usuarioId} />
@@ -274,7 +302,8 @@ function Ingreso() {
     <div className="max-w-md bg-white rounded-2xl border border-hpc/10 p-6 md:p-8">
       {paso === 'contrasena' && (
         <form onSubmit={entrarConContrasena} className="space-y-4">
-          <h2 className="text-xl font-semibold text-hpc">Ingresá a tu ficha</h2>
+          <h2 className="text-xl font-semibold text-hpc">Ingresá al espacio del equipo</h2>
+          <p className="text-sm text-tinta/70">Profesionales de la red y docentes de las formaciones.</p>
           {campoCorreo}
           <label className="block">
             <span className="text-sm font-medium text-tinta">Contraseña</span>

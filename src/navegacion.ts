@@ -8,9 +8,9 @@
 // `menu: false` = no aparece en ningún menú; se llega por enlace (ej. el aviso de privacidad,
 // enlazado desde el pie de página, Contacto y el bot de WhatsApp).
 
-import { Home, HeartHandshake, Users, GraduationCap, Wind, Phone, ShieldCheck, UserRoundPen, CircleUserRound, type LucideIcon } from 'lucide-react';
+import { Home, HeartHandshake, Users, GraduationCap, Wind, Phone, ShieldCheck, UserRoundPen, CircleUserRound, ClipboardCheck, type LucideIcon } from 'lucide-react';
 
-export type Seccion = 'inicio' | 'servicios' | 'equipo' | 'formacion' | 'recursos' | 'mi-espacio' | 'contacto' | 'privacidad' | 'profesionales';
+export type Seccion = 'inicio' | 'servicios' | 'equipo' | 'formacion' | 'recursos' | 'mi-espacio' | 'contacto' | 'privacidad' | 'profesionales' | 'encuesta';
 
 export const SECCIONES: { id: Seccion; etiqueta: string; icono: LucideIcon; movil: boolean; menu?: boolean }[] = [
   { id: 'inicio', etiqueta: 'Inicio', icono: Home, movil: true },
@@ -27,6 +27,9 @@ export const SECCIONES: { id: Seccion; etiqueta: string; icono: LucideIcon; movi
   // Acceso del equipo profesional (Mi ficha). Sólo en la barra lateral de la computadora;
   // en el celular se llega por el enlace que se comparte (#profesionales) o desde el pie.
   { id: 'profesionales', etiqueta: 'Profesionales', icono: UserRoundPen, movil: false },
+  // Encuesta de las formaciones (desde 20/10/2026). Se llega sólo por el enlace que reciben los
+  // alumnos: #encuesta (general) o #encuesta?c=CODIGO (una clase puntual).
+  { id: 'encuesta', etiqueta: 'Encuesta', icono: ClipboardCheck, movil: false, menu: false },
 ];
 
 /** Las secciones que se muestran en los menús (todas menos las de `menu: false`). */
@@ -34,6 +37,7 @@ export const SECCIONES_MENU = SECCIONES.filter((s) => s.menu !== false);
 
 /** Lee la sección del hash. Si no existe o es inválida, vuelve a "inicio". */
 export function seccionDesdeHash(hash: string): Seccion {
-  const id = hash.replace('#', '');
+  // "#encuesta?c=abc" -> "encuesta": lo que va después de "?" son datos de la sección.
+  const id = hash.replace('#', '').split('?')[0];
   return SECCIONES.some((s) => s.id === id) ? (id as Seccion) : 'inicio';
 }

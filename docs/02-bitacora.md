@@ -224,3 +224,21 @@ guardar `persona` / `hablar_con_persona` sin error (pendiente del 06/10 en `bot-
 fallaba. **Causa:** el trigger de la migración 09 salteaba las reglas de paciente para el equipo y el perfil quedaba sin
 `usuario_id`. **Hecho:** migración 10, `usuario_id` explícito en el alta desde el portal, prueba 31 (sin errores) y
 regresión de las pruebas 20 y 30 (todo como lo esperado). Service worker v8. Limpieza de filas sueltas: ver `09-cuentas-pacientes.md`.
+
+## 20/10/2026 — Módulo Docentes: registro, cronograma, regla de 1 cancelación y encuesta por clase
+
+**Origen:** el 16/10 se suspendió por tercera vez una clase de Trauma porque la docente asignada canceló. Laura Flynn
+pidió un registro de docentes, ser estrictos ("quien cancela una vez, queda afuera") y seguir con la encuesta de calidad.
+**Decisiones de Matías:** 1 cancelación = baja propuesta que confirma un admin; los docentes también entran al portal.
+**Hecho (Claude, rama `modulo-docentes`):**
+- Migración 11: `formaciones` (10 cohortes), `docentes`, `clases` (una por turno; sin docente = vacante),
+  `docente_incidencias`, `encuesta_respuestas`; trigger de la regla; `resolver_baja_docente()`; vista `docentes_resumen`;
+  acceso de docentes por `#profesionales` (`mi_docente_id()` por correo de la sesión, se corta al dar de baja);
+  funciones para el/la docente (`mis_clases`, `confirmar_mi_clase`, `cargar_material_mi_clase`, `no_puedo_dar_mi_clase`,
+  `mis_resultados_encuesta`) y para la encuesta sin cuenta (`encuesta_clase`, `encuesta_clases_recientes`, `responder_encuesta`).
+- Pantallas: pestaña **Docentes** (admins), **Mis clases** (docentes), sección pública `#encuesta`. Service worker v9.
+- Carga del cronograma de Laura S. en `datos/carga-cronograma-docentes.sql` (fuera de git).
+- Pruebas: `40_prueba_docentes.sql` en Postgres 16 local, todo como lo esperado; regresión de 20 y 30 sin cambios.
+  Capturas con datos ficticios. La encuesta del .org (`habilidadesparaelcambio.org/encuesta-de-satisfaccion-formaciones-anuales`)
+  se relevó: mismas preguntas y escalas en el portal.
+**Pendiente:** ver `10-docentes.md` (puesta en marcha y datos a confirmar).

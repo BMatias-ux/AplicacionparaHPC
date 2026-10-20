@@ -56,6 +56,14 @@ Prioridad: 🔴 bloquea · 🟠 importante · 🟢 mejora · ✅ hecho
 - 🟢 Límites de correo (Supabase y Hostinger), CAPTCHA si hay registros basura, pantalla para cargar avisos.
 - 🟢 Etapa B: turnos/prestaciones desde Medexis y unión verificada con las consultas del bot.
 
+## Docentes de las formaciones (20/10/2026)
+- 🔴 Aplicar la migración 11 y la carga `datos/carga-cronograma-docentes.sql` en Supabase (ver `10-docentes.md`).
+- 🟠 Cargar correo y WhatsApp de cada docente en la pestaña Docentes.
+- 🟠 Marcar las clases de octubre ya pasadas (dictada / cancelada) y resolver la baja propuesta que resulte.
+- 🟠 Confirmar qué día de Trauma Abril (15 y 16/10) dio cada docente y los apellidos con dos grafías.
+- 🟢 Reemplazar la encuesta del sitio .org por el enlace `#encuesta` del portal.
+- 🟢 Recordatorio automático a docentes 7 días antes de cada clase (WhatsApp).
+
 ## Mercado Pago
 - 🟠 Definir con la Fundación qué se cobra primero (admisión DBT, formaciones, membresía…).
 - 🟠 Precios en la base como única fuente (bot, app y pagos leen de ahí).

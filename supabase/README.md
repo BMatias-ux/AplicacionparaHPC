@@ -10,6 +10,8 @@
 | `tests/10_prueba_permisos.sql` | Pruebas de permisos: qué ve el público, un profesional y admisión |
 | `tests/20_prueba_acceso_profesionales.sql` | Acceso de profesionales (migraciones 05–07) |
 | `tests/30_prueba_cuentas_pacientes.sql` | Cuentas de pacientes de "Mi espacio" (migración 09) |
+| `migrations/20261020000011_docentes.sql` | Docentes, clases, regla de 1 cancelación, encuesta por clase (ver `docs/10-docentes.md`) |
+| `tests/40_prueba_docentes.sql` | Pruebas del módulo Docentes (migración 11) |
 | `../scripts/importar-fichas.mjs` | Convierte la planilla "HPC · Fichas Profesionales 2026" en SQL de carga |
 
 ## Modelo, en una línea por tabla
