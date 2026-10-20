@@ -17,6 +17,10 @@ create table if not exists auth.users (
   raw_app_meta_data   jsonb not null default '{}',
   created_at          timestamptz not null default now()
 );
+-- Agregado 20/10/2026 (migración 11): auth.jwt() con el correo de la sesión, leído de test.email.
+create or replace function auth.jwt() returns jsonb language sql stable as $$
+  select jsonb_build_object('email', nullif(current_setting('test.email', true), ''))
+$$;
 create schema if not exists storage;
 create table if not exists storage.buckets (id text primary key, name text, public boolean, file_size_limit bigint, allowed_mime_types text[]);
 create table if not exists storage.objects (id uuid primary key default gen_random_uuid(), bucket_id text, name text, owner uuid);

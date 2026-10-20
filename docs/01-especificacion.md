@@ -114,6 +114,8 @@ formaciones anuales y membresía.
 | D-11 | 26/09/2026 | Recordatorios de turno por **WhatsApp (plantilla de utilidad)** como canal principal; Web Push como refuerzo | En iPhone el push sólo funciona con la PWA instalada; WhatsApp llega siempre | Propuesta |
 | D-15 | 07/10/2026 | Portal de **autogestión del paciente**: registro abierto con cualquier correo o Google; espacio privado con avisos, ánimo y ejercicios; turnos en Etapa B | Pedido de Matías para promocionar el portal en redes. Reemplaza a D-09 (v1 sin registro). Detalle en `09-cuentas-pacientes.md` | Aprobada (Etapa A hecha) |
 | D-16 | 07/10/2026 | El registro de ánimo es **privado del paciente**: sin permiso de lectura para el equipo | Es un diario personal; compartirlo con el terapeuta sería una función aparte con consentimiento | Propuesta |
+| D-17 | 20/10/2026 | Docentes: **1 cancelación = baja propuesta**, que un admin confirma o rechaza con motivo | Pedido de Laura Flynn tras la tercera suspensión de una clase de Trauma; la base lo registra sola para que no dependa de la memoria de nadie. Detalle en `10-docentes.md` | Aprobada |
+| D-18 | 20/10/2026 | Los **docentes entran al portal** por `#profesionales` (sin ficha profesional) y la encuesta de alumnos va **por clase** en `#encuesta` | Que confirmen y suban material sin depender del grupo de WhatsApp; respuestas atadas a la clase y al docente correctos | Aprobada |
 
 ## Marco legal a tener presente
 

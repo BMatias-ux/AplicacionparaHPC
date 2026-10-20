@@ -20,6 +20,8 @@ import { Privacidad } from './screens/Privacidad';
 // ~50 KB) se descarga sólo cuando alguien abre esa sección. El público no lo paga.
 const Profesionales = lazy(() => import('./screens/Profesionales').then((m) => ({ default: m.Profesionales })));
 // Lo mismo para "Mi espacio" (cuenta del paciente): sólo lo descarga quien entra.
+// Encuesta de las formaciones: la abren alumnos con un enlace, no hace falta en la carga inicial.
+const Encuesta = lazy(() => import('./screens/Encuesta').then((m) => ({ default: m.Encuesta })));
 const MiEspacio = lazy(() => import('./screens/MiEspacio').then((m) => ({ default: m.MiEspacio })));
 
 const PANTALLAS: Record<Seccion, React.ComponentType> = {
@@ -32,6 +34,7 @@ const PANTALLAS: Record<Seccion, React.ComponentType> = {
   contacto: Contacto,
   privacidad: Privacidad,
   profesionales: Profesionales,
+  encuesta: Encuesta,
 };
 
 export default function App() {
