@@ -57,7 +57,7 @@ Prioridad: 🔴 bloquea · 🟠 importante · 🟢 mejora · ✅ hecho
 - 🟢 Etapa B: turnos/prestaciones desde Medexis y unión verificada con las consultas del bot.
 
 ## Docentes de las formaciones (20/10/2026)
-- 🔴 Aplicar la migración 11 y la carga `datos/carga-cronograma-docentes.sql` en Supabase (ver `10-docentes.md`).
+- ✅ Migración 11 y carga del cronograma aplicadas en Supabase (20/10, 19 docentes, 100 clases). Portal publicado (PR #9).
 - 🟠 Cargar correo y WhatsApp de cada docente en la pestaña Docentes.
 - 🟠 Marcar las clases de octubre ya pasadas (dictada / cancelada) y resolver la baja propuesta que resulte.
 - 🟠 Confirmar qué día de Trauma Abril (15 y 16/10) dio cada docente y los apellidos con dos grafías.
